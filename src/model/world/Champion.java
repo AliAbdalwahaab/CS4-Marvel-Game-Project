@@ -5,10 +5,8 @@
 package model.world;
 
 import model.effects.Effect;
-
 import java.awt.*;
 import java.util.ArrayList;
-
 import static model.world.Condition.ACTIVE;
 
 public class Champion {
@@ -38,17 +36,14 @@ public class Champion {
         this.attackRange = attackRange;
         this.attackDamage = attackDamage;
         condition = ACTIVE;
-
     }
 
     //Getters
     public String getName() {
-
         return name;
     }
 
     public int getMaxHP() {
-
         return maxHP;
     }
 
@@ -120,12 +115,4 @@ public class Champion {
     public void setLocation(Point location) {
         this.location = location;
     }
-
-
-
-
-
-
-
-
 }
