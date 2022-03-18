@@ -8,7 +8,7 @@ public class Cover {
     private Point location;
 
     public Cover(int x, int y) {
-        currentHP = (int) Math.random()*1000+1;
+        currentHP = (int) (Math.random()*1000+1);
         location = new Point(x,y);
     }
 
