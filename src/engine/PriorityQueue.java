@@ -13,7 +13,7 @@ class PriorityQueue {
    public void insert(Comparable item) {
       
       int i;
-      for (i = nItems - 1;i >= 0 && item.compareTo(elements[i]) > 0;i--)
+      for (i = nItems - 1; i >= 0 && item.compareTo(elements[i]) > 0; i--)
          elements[i + 1] = elements[i];
 
       elements[i + 1] = item;
