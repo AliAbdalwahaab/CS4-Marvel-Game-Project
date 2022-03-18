@@ -31,6 +31,10 @@ public class Champion {
         return name;
     }
 
+    public int getMaxHP() {
+        return maxHP;
+    }
+
 
 
 
