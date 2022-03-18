@@ -19,7 +19,7 @@ public class Champion {
     private ArrayList<Abilities> abilities; //READ ONLY
     private ArrayList<Effect> appliedEffects; //READ ONLY
     private Condition condition; //READ and WRITE
-    private  Point location; //READ and WRITE
+    private Point location; //READ and WRITE
 
     //Constructor
     public  Champion(String name, int maxHP, int mana, int maxActions, int speed, int attackRange, int attackDamage) {
