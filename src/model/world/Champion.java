@@ -4,6 +4,12 @@
  */
 package model.world;
 
+import model.effects.Effect;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.concurrent.locks.Condition;
+
 public class Champion {
 
     //Attributes
