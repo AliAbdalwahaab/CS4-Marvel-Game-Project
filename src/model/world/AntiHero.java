@@ -1,9 +1,14 @@
 package model.world;
 
-public class AntiHero extends model.world.Champion {
+import static model.world.HeroClass.ANTIHERO;
+
+public class AntiHero extends Champion {
 
     //Attributes
-    private model.world.HeroClass ANTIHERO;
+    private final HeroClass HEROCLASS = ANTIHERO ;
 
     //Constructor
+    public AntiHero(String name, int maxHP, int mana, int maxActions, int speed, int attackRange, int attackDamage) {
+        super(name, maxHP, mana, maxActions, speed, attackRange, attackDamage);
+    }
 }
