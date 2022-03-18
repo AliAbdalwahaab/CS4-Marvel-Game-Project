@@ -4,7 +4,6 @@ package model.world;
 import static model.world.HeroClass.HERO;
 
 public class Hero extends Champion {
-
     //Attributes
     private final HeroClass HEROCLASS = HERO;
 
