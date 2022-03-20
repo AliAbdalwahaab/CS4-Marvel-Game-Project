@@ -2,6 +2,8 @@ package exceptions;
 
 public class NotYourTurnException extends GameActionExceptions{
 
+    private String exceptionPrintedMessage = "Illegal action, your turn hasn't started.";
+
     //Constructors
     public NotYourTurnException(){
         super();
