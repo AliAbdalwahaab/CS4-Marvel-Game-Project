@@ -12,19 +12,19 @@ import static model.world.Condition.ACTIVE;
 abstract public class Champion {
 
     //Attributes
-    private String name; //READ ONLY (GETTER DONE)
-    private int maxHP; //READ ONLY (GETTER DONE)
-    private int currentHP; //READ and WRITE (GETTER and SETTER DONE)
-    private int mana; //READ ONLY (GETTER DONE)
-    private int maxActionPointsPerTurn; //READ and WRITE (GETTER and SETTER DONE)
-    private int currentActionPoints; //READ ONLY (GETTER DONE)
-    private int attackRange; //READ ONLY (GETTER DONE)
-    private int attackDamage; //READ and WRITE (GETTER and SETTER DONE)
-    private int speed; //READ and WRITE (GETTER and SETTER DONE)
-    private ArrayList<Ability> abilities; //READ ONLY (GETTER DONE)
-    private ArrayList<Effect> appliedEffects; //READ ONLY (GETTER DONE)
-    private Condition condition; //READ and WRITE (GETTER and SETTER DONE)
-    private Point location; //READ and WRITE (GETTER and SETTER DONE)
+    private String name; //R
+    private int maxHP; //R
+    private int currentHP; //RW
+    private int mana; //R
+    private int maxActionPointsPerTurn; //RW
+    private int currentActionPoints; //R
+    private int attackRange; //R
+    private int attackDamage; //RW
+    private int speed; //RW
+    private ArrayList<Ability> abilities; //R
+    private ArrayList<Effect> appliedEffects; //R
+    private Condition condition; //RW
+    private Point location; //RW
 
     //Constructor
     public  Champion(String name, int maxHP, int mana, int maxActions, int speed, int attackRange, int attackDamage) {
