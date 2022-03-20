@@ -5,6 +5,7 @@
 package model.world;
 
 import model.effects.Effect;
+import model.abilities.Ability;
 import java.awt.*;
 import java.util.ArrayList;
 import static model.world.Condition.ACTIVE;
