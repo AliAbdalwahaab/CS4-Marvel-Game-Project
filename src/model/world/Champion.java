@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import static model.world.Condition.ACTIVE;
 
-public class Champion {
+abstract public class Champion {
 
     //Attributes
     private String name; //READ ONLY (GETTER DONE)
