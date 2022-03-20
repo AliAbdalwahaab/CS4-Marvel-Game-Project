@@ -1,12 +1,14 @@
 package model.abilities;
 
+import model.effects.Effect;
+
 public class DamagingAbility extends Ability{
     private int damadgeAmount; //RW
 
 
-    public DamagingAbility(int damageAmount){
-        super("DamagingAbility",1,1,1,AreaOfEffect.SURROUND,1);
-        this.damadgeAmount = damageAmount;
+    public DamagingAbility(String name, int cost, int baseCoolDown, int castRange, AreaOfEffect area, int required, int amount){
+        super(name,cost,baseCoolDown,castRange,area,required);
+        this.damadgeAmount = amount;
 
     }
 

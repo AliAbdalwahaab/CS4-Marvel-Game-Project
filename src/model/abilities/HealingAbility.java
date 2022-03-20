@@ -4,9 +4,9 @@ public class HealingAbility extends Ability{
     private int healAmount;  //RW
 
 
-    public HealingAbility(int healAmount){
-        super("HealingAbility",1,1,1,AreaOfEffect.SURROUND,1);
-        this.healAmount = healAmount;
+    public HealingAbility(String name, int cost, int baseCoolDown, int castRange, AreaOfEffect area, int required, int amount){
+        super(name,cost,baseCoolDown,castRange,area,required);
+        this.healAmount = amount;
 
     }
 
