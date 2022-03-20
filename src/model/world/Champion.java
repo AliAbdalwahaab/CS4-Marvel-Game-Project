@@ -36,6 +36,10 @@ public class Champion {
         this.attackRange = attackRange;
         this.attackDamage = attackDamage;
         condition = ACTIVE;
+        abilities = new ArrayList<>(3);
+        appliedEffects = new ArrayList<>():
+        location = new Point();
+
     }
 
     //Getters
