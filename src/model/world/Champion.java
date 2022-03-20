@@ -28,7 +28,7 @@ abstract public class Champion {
     private Point location; //RW
 
     //Constructor
-    public  Champion(String name, int maxHP, int mana, int maxActions, int speed, int attackRange, int attackDamage) {
+    public Champion(String name, int maxHP, int mana, int maxActions, int speed, int attackRange, int attackDamage) {
         this.name = name;
         this.maxHP = maxHP;
         this.mana = mana;
@@ -37,10 +37,9 @@ abstract public class Champion {
         this.attackRange = attackRange;
         this.attackDamage = attackDamage;
         condition = ACTIVE;
-        abilities = new ArrayList<Ability>(3);
+        abilities = new ArrayList<>(3);
         appliedEffects = new ArrayList<>();
         location = new Point();
-
     }
 
     //Getters
