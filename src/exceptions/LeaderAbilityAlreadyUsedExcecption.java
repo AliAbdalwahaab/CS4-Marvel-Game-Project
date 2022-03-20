@@ -11,5 +11,6 @@ public class LeaderAbilityAlreadyUsedExcecption extends GameActionExceptions{
 
     public LeaderAbilityAlreadyUsedExcecption (String s){
         super(s);
+        System.out.println("Illegal action, leader ability could be only used once. \n");
     }
 }
