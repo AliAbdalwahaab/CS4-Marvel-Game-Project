@@ -7,9 +7,9 @@ abstract public class Effect {
     private EffectType type; // R
 
     public Effect(String name, int duration, EffectType type) {
-      this.name = name;
-      this.duration = duration;
-      this.type = type;
+        this.name = name;
+        this.duration = duration;
+        this.type = type;
     }
 
     // getters
