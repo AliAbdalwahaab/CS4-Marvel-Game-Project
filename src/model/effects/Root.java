@@ -4,7 +4,7 @@ import static model.effects.EffectType.*;
 
 public class Root extends Effect {
 
-    public Root(){
-        super("Root",1,DEBUFF);
+    public Root(String name, int duration, EffectType effect) {
+        super(name, duration, effect);
     }
 }

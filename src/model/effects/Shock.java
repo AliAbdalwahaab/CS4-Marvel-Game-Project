@@ -4,7 +4,7 @@ import static model.effects.EffectType.*;
 
 public class Shock extends Effect {
 
-    public Shock(){
-        super("Shock",1,DEBUFF);
+    public Shock(String name,int duration, EffectType effect){
+        super(name,duration,effect);
     }
 }

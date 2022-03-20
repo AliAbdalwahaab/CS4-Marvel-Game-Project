@@ -4,7 +4,7 @@ import static model.effects.EffectType.*;
 
 public class Silence extends Effect {
 
-    public Silence(){
-        super("Silence",1,DEBUFF);
+    public Silence(String name, int duration, EffectType effect) {
+        super(name, duration, effect);
     }
 }

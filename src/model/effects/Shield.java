@@ -4,7 +4,7 @@ import static model.effects.EffectType.*;
 
 public class Shield extends Effect {
 
-    public Shield(){
-        super("Shield",1,BUFF);
+    public Shield(String name, int duration, EffectType effect) {
+        super(name, duration, effect);
     }
 }
