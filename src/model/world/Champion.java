@@ -37,7 +37,7 @@ abstract public class Champion {
         this.attackDamage = attackDamage;
         condition = ACTIVE;
         abilities = new ArrayList<>(3);
-        appliedEffects = new ArrayList<>():
+        appliedEffects = new ArrayList<>();
         location = new Point();
 
     }
