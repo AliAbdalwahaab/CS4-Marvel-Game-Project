@@ -2,7 +2,7 @@ package exceptions;
 
 public class UnallowedMovementException extends GameActionExceptions{
 
-    private String exceptionPrintedMessage = "Illegal action, occupied or illegal standing space.";
+
 
     //Constructors
 public UnallowedMovementException (){
@@ -11,7 +11,7 @@ public UnallowedMovementException (){
 
 public UnallowedMovementException (String s){
     super(s);
-    System.out.println("Illegal action, occupied or illegal standing space.\n");
+    //System.out.println("Illegal action, occupied or illegal standing space.\n");
 }
 
 }
