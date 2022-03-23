@@ -2,7 +2,7 @@ package exceptions;
 
 public class AbilityUseException extends GameActionExceptions{
 
-    private String exceptionPrintedMessage = "Illegal action, Ability isn't available for use.";
+
 
     //Constructors
     public AbilityUseException (){
@@ -11,7 +11,7 @@ public class AbilityUseException extends GameActionExceptions{
 
     public AbilityUseException (String s){
         super(s);
-        System.out.println("Illegal action, Ability isn't available for use. \n");
+        //System.out.println("Illegal action, Ability isn't available for use. \n");
     }
 
 }
