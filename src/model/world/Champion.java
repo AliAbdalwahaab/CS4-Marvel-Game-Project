@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import static model.world.Condition.ACTIVE;
 
-abstract public class Champion {
+abstract public class Champion implements Comparable{
 
     //Attributes
     private String name; //R
@@ -40,6 +40,15 @@ abstract public class Champion {
         abilities = new ArrayList<>(3);
         appliedEffects = new ArrayList<>();
         location = new Point();
+    }
+
+    public int compareTo(Object o) {
+        // Revise Here!
+        // compare avg. of attack dmg and health betweeen two champions
+        Champion c2 = (Champion) o;
+        int avg1 = (maxHP + attackDamage) / 2;
+        int avg2 = (c2.maxHP + c2.attackDamage) / 2;
+        return avg1 - avg2;
     }
 
     //Getters
