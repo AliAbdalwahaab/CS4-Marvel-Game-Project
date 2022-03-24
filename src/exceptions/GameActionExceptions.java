@@ -5,7 +5,6 @@ public class GameActionExceptions {
 
     private String exception;
 
-
     //Constructors
     public GameActionExceptions (){
     }

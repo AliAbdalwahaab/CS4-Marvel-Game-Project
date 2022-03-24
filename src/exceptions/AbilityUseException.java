@@ -2,8 +2,6 @@ package exceptions;
 
 public class AbilityUseException extends GameActionExceptions{
 
-
-
     //Constructors
     public AbilityUseException (){
         super();

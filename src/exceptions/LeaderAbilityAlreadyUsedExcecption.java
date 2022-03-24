@@ -2,8 +2,6 @@ package exceptions;
 
 public class LeaderAbilityAlreadyUsedExcecption extends GameActionExceptions{
 
-
-
     //Constructors
     public LeaderAbilityAlreadyUsedExcecption (){
         super();
