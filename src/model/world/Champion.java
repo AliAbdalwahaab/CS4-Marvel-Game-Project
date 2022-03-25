@@ -13,13 +13,13 @@ import static model.world.Condition.ACTIVE;
 abstract public class Champion implements Comparable{
 
     //Attributes
-    private String name; //R
-    private int maxHP; //R
+    private final String name; //R
+    private final int maxHP; //R
     private int currentHP; //RW
-    private int mana; //R
+    private int mana; //RW
     private int maxActionPointsPerTurn; //RW
-    private int currentActionPoints; //R
-    private int attackRange; //R
+    private int currentActionPoints; //RW
+    private final int attackRange; //R
     private int attackDamage; //RW
     private int speed; //RW
     private ArrayList<Ability> abilities; //R
@@ -109,8 +109,16 @@ abstract public class Champion implements Comparable{
         this.currentHP = currentHP;
     }
 
+    public void setMana( int mana) {
+        this.mana = mana;
+    }
+
     public void setMaxActionPointsPerTurn(int maxActionPointsPerTurn) {
         this.maxActionPointsPerTurn = maxActionPointsPerTurn;
+    }
+
+    public void setCurrentActionPoints (int currentActionPoints) {
+        this.currentActionPoints = currentActionPoints;
     }
 
     public void setAttackDamage(int attackDamage) {
