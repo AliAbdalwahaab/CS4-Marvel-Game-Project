@@ -22,8 +22,8 @@ abstract public class Champion implements Comparable{
     private final int attackRange; //R
     private int attackDamage; //RW
     private int speed; //RW
-    private ArrayList<Ability> abilities; //R
-    private ArrayList<Effect> appliedEffects; //R
+    private final ArrayList<Ability> abilities; //R
+    private final ArrayList<Effect> appliedEffects; //R
     private Condition condition; //RW
     private Point location; //RW
 
