@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import static model.world.Condition.ACTIVE;
 
-abstract public class Champion implements Comparable{
+public class Champion implements Comparable{
 
     //Attributes
     private final String name; //R
