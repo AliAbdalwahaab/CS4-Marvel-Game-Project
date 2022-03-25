@@ -67,8 +67,8 @@ public class Game {
         this.secondLeaderAbilityUsed = false;
         // loadAbilities("csv/Abilities.csv"); // not sure of path
         // loadChampions("csv/Champions.csv"); // not sure of path
-        //placeChampions();
-        //placeCovers();
+        // placeChampions();
+        placeCovers();
         // What to do with turnOrder ?? load all champs or only chosen 6?
     }
 

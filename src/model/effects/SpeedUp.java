@@ -8,6 +8,6 @@ public class SpeedUp extends Effect {
     }
 
     public SpeedUp (int duration) {
-        super(duration);
+        super("SpeedUp", duration, EffectType.BUFF);
     }
 }

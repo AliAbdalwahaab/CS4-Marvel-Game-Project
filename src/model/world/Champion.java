@@ -41,7 +41,7 @@ public class Champion implements Comparable{
         condition = ACTIVE;
         abilities = new ArrayList<>(3);
         appliedEffects = new ArrayList<>();
-        location = new Point();
+        //location = new Point();
     }
 
     public Champion (String name, int maxHP, int mana, int maxActions, int speed, int attackRange, int attackDamage,
