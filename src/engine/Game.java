@@ -16,8 +16,8 @@ public class Game {
     private boolean firstLeaderAbilityUsed;
     private boolean secondLeaderAbilityUsed;
     private Object[][] board;
-    private static ArrayList<Champion> availableChampions = new ArrayList<>();
-    private static ArrayList<Ability> availableAbilities = new ArrayList<>();
+    private static ArrayList<Champion> availableChampions;
+    private static ArrayList<Ability> availableAbilities;
     private PriorityQueue turnOrder;
     final private static int BOARDHEIGHT = 5;
     final private static int BOARDWIDTH = 5;
@@ -156,7 +156,7 @@ public class Game {
         requiredActionsPerTurn, damageAmount/healAmount/effect name, effect duration
 
         */
-
+        availableAbilities = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line = "";
         while (true) {
@@ -200,6 +200,7 @@ public class Game {
 
          */
         // loadAbilities("Abilities.csv"); // load to use when adding abilities to champs
+        availableChampions = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line = "";
         while (true) {
