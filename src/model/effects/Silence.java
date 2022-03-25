@@ -7,6 +7,6 @@ public class Silence extends Effect {
     }
 
     public Silence (int duration) {
-        super(duration);
+        super("Silence", duration, EffectType.DEBUFF);
     }
 }

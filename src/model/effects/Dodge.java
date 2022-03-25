@@ -7,6 +7,6 @@ public class Dodge extends Effect {
     }
 
     public Dodge (int duration) {
-        super(duration);
+        super("Dodge", duration, EffectType.BUFF);
     }
 }

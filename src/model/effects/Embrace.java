@@ -7,6 +7,6 @@ public class Embrace extends Effect {
     }
 
     public Embrace (int duration) {
-        super(duration);
+        super("Embrace", duration, EffectType.BUFF);
     }
 }

@@ -7,6 +7,6 @@ public class Root extends Effect {
     }
 
     public Root (int duration) {
-        super(duration);
+        super("Root", duration, EffectType.DEBUFF);
     }
 }

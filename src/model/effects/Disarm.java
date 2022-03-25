@@ -7,6 +7,6 @@ public class Disarm extends Effect {
     }
 
     public Disarm (int duration) {
-        super(duration);
+        super("Disarm", duration, EffectType.DEBUFF);
     }
 }
