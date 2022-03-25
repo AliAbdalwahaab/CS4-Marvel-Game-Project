@@ -46,6 +46,7 @@ public class Champion implements Comparable{
                      Ability ability1, Ability ability2,Ability ability3) {
         this.name = name;
         this.maxHP = maxHP;
+        this.currentHP = maxHP;
         this.mana = mana;
         this.maxActionPointsPerTurn = maxActions;
         this.speed = speed;
@@ -128,7 +129,8 @@ public class Champion implements Comparable{
             this.currentHP = 0;
         } else if (currentHP > maxHP) {
             this.currentHP = maxHP;
-        }
+        } else
+            this.currentHP = currentHP;
     }
 
     public void setMana( int mana) {
