@@ -9,4 +9,8 @@ public class Embrace extends Effect {
     public Embrace(String name,int duration) {
         super(name, duration, EffectType.BUFF);
     }
+
+    public Embrace (int duration) {
+        super(duration);
+    }
 }
