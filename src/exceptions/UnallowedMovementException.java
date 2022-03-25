@@ -1,6 +1,6 @@
 package exceptions;
 
-public class UnallowedMovementException extends GameActionExceptions{
+public class UnallowedMovementException extends GameActionException{
 
     //Constructors
     public UnallowedMovementException (){

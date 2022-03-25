@@ -1,16 +1,16 @@
 package exceptions;
 
 
-public class GameActionExceptions extends Exception {
+public class GameActionException extends Exception {
 
     private String exception;
 
     //Constructors
-    public GameActionExceptions (){
+    public GameActionException (){
         super();
     }
 
-    public GameActionExceptions (String s){
+    public GameActionException (String s){
 
         super(s);
     }

@@ -1,6 +1,6 @@
 package exceptions;
 
-public class NotEnoughResources extends GameActionExceptions{
+public class NotEnoughResources extends GameActionException{
 
 
     //Constructors

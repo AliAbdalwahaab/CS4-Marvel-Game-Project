@@ -1,6 +1,6 @@
 package exceptions;
 
-public class LeaderAbilityAlreadyUsedException extends GameActionExceptions{
+public class LeaderAbilityAlreadyUsedException extends GameActionException{
 
     //Constructors
     public LeaderAbilityAlreadyUsedException(){
