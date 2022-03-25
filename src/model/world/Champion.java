@@ -124,7 +124,11 @@ public class Champion implements Comparable{
 
     //Setters
     public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP;
+        if (currentHP < 0) {
+            this.currentHP = 0;
+        } else if (currentHP > maxHP) {
+            this.currentHP = maxHP;
+        }
     }
 
     public void setMana( int mana) {
