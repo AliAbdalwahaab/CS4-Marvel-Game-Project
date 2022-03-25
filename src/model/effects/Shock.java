@@ -6,7 +6,11 @@ public class Shock extends Effect {
         super(name, duration, type);
     }
 
-    public Shock(String name,int duration){
+    public Shock(String name, int duration){
         super(name, duration, EffectType.DEBUFF);
+    }
+
+    public Shock (int duration) {
+        super(duration);
     }
 }
