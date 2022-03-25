@@ -13,17 +13,17 @@ import static model.world.Condition.ACTIVE;
 public class Champion implements Comparable{
 
     //Attributes
-    private final String name; //R
-    private final int maxHP; //R
+    private String name; //R
+    private int maxHP; //R
     private int currentHP; //RW
     private int mana; //RW
     private int maxActionPointsPerTurn; //RW
     private int currentActionPoints; //RW
-    private final int attackRange; //R
+    private int attackRange; //R
     private int attackDamage; //RW
     private int speed; //RW
-    private final ArrayList<Ability> abilities; //R
-    private final ArrayList<Effect> appliedEffects; //R
+    private ArrayList<Ability> abilities; //R
+    private ArrayList<Effect> appliedEffects; //R
     private Condition condition; //RW
     private Point location; //RW
 
@@ -31,22 +31,22 @@ public class Champion implements Comparable{
     public Champion(String name, int maxHP, int mana, int maxActions, int speed, int attackRange, int attackDamage) {
         this.name = name;
         this.maxHP = maxHP;
+        this.currentHP = maxHP;
         this.mana = mana;
         this.maxActionPointsPerTurn = maxActions;
+        this.currentActionPoints = maxActions;
         this.speed = speed;
         this.attackRange = attackRange;
         this.attackDamage = attackDamage;
         condition = ACTIVE;
         abilities = new ArrayList<>(3);
         appliedEffects = new ArrayList<>();
-        location = new Point();
     }
 
     public Champion (String name, int maxHP, int mana, int maxActions, int speed, int attackRange, int attackDamage,
                      Ability ability1, Ability ability2,Ability ability3) {
         this.name = name;
         this.maxHP = maxHP;
-        this.currentHP = maxHP;
         this.mana = mana;
         this.maxActionPointsPerTurn = maxActions;
         this.speed = speed;
@@ -129,8 +129,10 @@ public class Champion implements Comparable{
             this.currentHP = 0;
         } else if (currentHP > maxHP) {
             this.currentHP = maxHP;
-        } else
+        }
+        else {
             this.currentHP = currentHP;
+        }
     }
 
     public void setMana( int mana) {
