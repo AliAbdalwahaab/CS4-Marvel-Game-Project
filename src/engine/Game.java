@@ -87,7 +87,7 @@ public class Game {
         Random r = new Random();
         int covers = 5;
         while(covers > 0) { // till covers reach 0 (5 covers placed)
-            int x = 1 + r.nextInt(BOARDWIDTH - 2);
+            int x = r.nextInt(BOARDWIDTH);
             int y = 1 + r.nextInt(BOARDHEIGHT - 2);
             if (board[y][x] == null) {
                 covers--;
