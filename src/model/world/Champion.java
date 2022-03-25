@@ -129,8 +129,7 @@ public class Champion implements Comparable{
             this.currentHP = 0;
         } else if (currentHP > maxHP) {
             this.currentHP = maxHP;
-        }
-        else {
+        } else {
             this.currentHP = currentHP;
         }
     }
