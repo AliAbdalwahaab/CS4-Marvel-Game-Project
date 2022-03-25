@@ -3,6 +3,8 @@ package engine;
 import model.abilities.*;
 import model.effects.*;
 import model.world.*;
+
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -14,8 +16,8 @@ public class Game {
     private boolean firstLeaderAbilityUsed;
     private boolean secondLeaderAbilityUsed;
     private Object[][] board;
-    private static ArrayList<Champion> availableChampions;
-    private static ArrayList<Ability> availableAbilities;
+    private static ArrayList<Champion> availableChampions = new ArrayList<>();
+    private static ArrayList<Ability> availableAbilities = new ArrayList<>();
     private PriorityQueue turnOrder;
     final private static int BOARDHEIGHT = 5;
     final private static int BOARDWIDTH = 5;
@@ -57,8 +59,8 @@ public class Game {
         this.secondLeaderAbilityUsed = false;
         // loadAbilities("csv/Abilities.csv"); // not sure of path
         // loadChampions("csv/Champions.csv"); // not sure of path
-        placeChampions();
-        placeCovers();
+        //placeChampions();
+        //placeCovers();
         // What to do with turnOrder ?? load all champs or only chosen 6?
     }
 
@@ -68,6 +70,8 @@ public class Game {
         for (int i = 0; i < 3; i++) {
             board[BOARDHEIGHT - 1][1 + i] = team2.get(i);
             board[0][1 + i] = team1.get(i);
+            team2.get(i).setLocation(new Point(BOARDHEIGHT - 1, 1 + i));
+            team1.get(i).setLocation(new Point(0, i + 1));
         }
     }
 
@@ -75,11 +79,11 @@ public class Game {
         Random r = new Random();
         int covers = 5;
         while(covers > 0) { // till covers reach 0 (5 covers placed)
-            int x = r.nextInt(BOARDWIDTH);
-            int y = 1 + r.nextInt(BOARDHEIGHT - 1);
-            if (board[x][y] == null) {
+            int x = 1 + r.nextInt(BOARDWIDTH - 2);
+            int y = 1 + r.nextInt(BOARDHEIGHT - 2);
+            if (board[y][x] == null) {
                 covers--;
-                board[x][y] = new Cover(x, y);
+                board[y][x] = new Cover(x, y);
             }
         }
     }
@@ -147,8 +151,9 @@ public class Game {
 
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line = "";
-        while (br.ready()) {
+        while (true) {
             line = br.readLine();
+            if (line == null) break;
             String[] data = line.split(",");
             if (data[0].equals("CC")) { // Crowd Control Ability
                 /* public CrowdControlAbility(String name, int cost, int baseCoolDown, int castRange, AreaOfEffect area, int required, Effect effect)
@@ -186,11 +191,12 @@ public class Game {
         ability1 name, ability2 name, ability3 name
 
          */
-        loadAbilities("csv/Abilities.csv"); // load to use when adding abilities to champs
+        // loadAbilities("Abilities.csv"); // load to use when adding abilities to champs
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line = "";
-        while (br.ready()) {
+        while (true) {
             line = br.readLine();
+            if (line == null) break;
             String[] data = line.split(",");
             if (data[0].equals("A")) { // Anti Hero
                 AntiHero ah = new AntiHero(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]),
