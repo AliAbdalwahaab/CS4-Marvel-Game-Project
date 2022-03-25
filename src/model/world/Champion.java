@@ -27,7 +27,7 @@ abstract public class Champion implements Comparable{
     private Condition condition; //RW
     private Point location; //RW
 
-    //Constructor
+    //Constructors
     public Champion(String name, int maxHP, int mana, int maxActions, int speed, int attackRange, int attackDamage) {
         this.name = name;
         this.maxHP = maxHP;
@@ -38,6 +38,24 @@ abstract public class Champion implements Comparable{
         this.attackDamage = attackDamage;
         condition = ACTIVE;
         abilities = new ArrayList<>(3);
+        appliedEffects = new ArrayList<>();
+        location = new Point();
+    }
+
+    public Champion (String name, int maxHP, int mana, int maxActions, int speed, int attackRange, int attackDamage,
+                     Ability ability1, Ability ability2,Ability ability3) {
+        this.name = name;
+        this.maxHP = maxHP;
+        this.mana = mana;
+        this.maxActionPointsPerTurn = maxActions;
+        this.speed = speed;
+        this.attackRange = attackRange;
+        this.attackDamage = attackDamage;
+        condition = ACTIVE;
+        abilities = new ArrayList<>(3);
+        abilities.add(ability1);
+        abilities.add(ability2);
+        abilities.add(ability3);
         appliedEffects = new ArrayList<>();
         location = new Point();
     }
