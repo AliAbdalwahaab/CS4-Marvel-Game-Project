@@ -43,6 +43,14 @@ public class Game {
         return this.board;
     }
 
+    public int getBoardheight() {
+        return BOARDHEIGHT;
+    }
+
+    public int getBoardwidth() {
+        return BOARDWIDTH;
+    }
+
     public ArrayList<Ability> getAvailableAbilities() {
         return availableAbilities;
     }

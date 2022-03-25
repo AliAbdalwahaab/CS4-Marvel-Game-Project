@@ -13,6 +13,7 @@ public class Player {
     //Constructor
     public Player(String name) {
         this.name = name;
+        this.team = new ArrayList<>(3);
     }
 
     //Getters

@@ -33,7 +33,7 @@ public class Ability {
         return this.manaCost;
     }
 
-    public int getBaseCoolDown() {
+    public int getBaseCooldown() {
         return this.baseCooldown;
     }
 
