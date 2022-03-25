@@ -17,8 +17,8 @@ public class Game {
     private static ArrayList<Champion> availableChampions;
     private static ArrayList<Ability> availableAbilities;
     private PriorityQueue turnOrder;
-    private static int BOARDHEIGHT = 5;
-    private static int BOARDWIDTH = 5;
+    final private static int BOARDHEIGHT = 5;
+    final private static int BOARDWIDTH = 5;
 
     // Getters
     public Player getFirstPlayer() {
@@ -120,6 +120,16 @@ public class Game {
         }
     }
 
+    // helper method to fetch ability and return to champion constructor
+    private static Ability fetchAbility(String name) {
+        for (Ability a : availableAbilities) {
+            if (a.getName().equals(name)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
     public static void loadAbilities(String filePath) throws Exception {
         /*
         indices of data[] array for each line in Abilities.csv
@@ -172,6 +182,7 @@ public class Game {
         ability1 name, ability2 name, ability3 name
 
          */
+        loadAbilities("csv/Abilities.csv"); // load to use when adding abilities to champs
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line = "";
         while (br.ready()) {
@@ -179,17 +190,20 @@ public class Game {
             String[] data = line.split(",");
             if (data[0].equals("A")) { // Anti Hero
                 AntiHero ah = new AntiHero(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]),
-                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]));
+                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]),
+                        fetchAbility(data[8]), fetchAbility(data[9]), fetchAbility(data[10]));
                 availableChampions.add(ah);
 
             } else if (data[0].equals("H")) { // Hero
                 Hero h = new Hero(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]),
-                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]));
+                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]),
+                        fetchAbility(data[8]), fetchAbility(data[9]), fetchAbility(data[10]));
                 availableChampions.add(h);
 
             } else { // Villain
                 Villain v = new Villain(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]),
-                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]));
+                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]),
+                        fetchAbility(data[8]), fetchAbility(data[9]), fetchAbility(data[10]));
                 availableChampions.add(v);
 
             }
