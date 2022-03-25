@@ -59,7 +59,6 @@ public class Champion implements Comparable{
         abilities.add(ability2);
         abilities.add(ability3);
         appliedEffects = new ArrayList<>();
-        location = new Point();
     }
 
     public int compareTo(Object o) {
