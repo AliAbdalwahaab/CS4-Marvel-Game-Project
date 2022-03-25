@@ -66,8 +66,8 @@ public class Game {
         ArrayList<Champion> team1 = firstPlayer.getTeam();
         ArrayList<Champion> team2 = secondPlayer.getTeam();
         for (int i = 0; i < 3; i++) {
-            board[BOARDHEIGHT - 1][1 + i] = team1.get(i);
-            board[0][1 + i] = team2.get(i);
+            board[BOARDHEIGHT - 1][1 + i] = team2.get(i);
+            board[0][1 + i] = team1.get(i);
         }
     }
 
