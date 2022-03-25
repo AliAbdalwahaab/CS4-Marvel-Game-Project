@@ -41,6 +41,10 @@ public class Game {
         return this.board;
     }
 
+    public ArrayList<Ability> getAvailableAbilities() {
+        return availableAbilities;
+    }
+
     public PriorityQueue getTurnOrder() {
         return this.turnOrder;
     }
