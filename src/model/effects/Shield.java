@@ -7,6 +7,6 @@ public class Shield extends Effect {
     }
 
     public Shield (int duration) {
-        super(duration);
+        super("Shield", duration, EffectType.BUFF);
     }
 }

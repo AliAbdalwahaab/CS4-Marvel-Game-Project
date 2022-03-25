@@ -7,6 +7,6 @@ public class PowerUp extends Effect {
     }
 
     public PowerUp (int duration) {
-        super(duration);
+        super("PowerUp", duration, EffectType.BUFF);
     }
 }
