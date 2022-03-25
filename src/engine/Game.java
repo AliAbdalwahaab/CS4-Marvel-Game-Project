@@ -31,6 +31,7 @@ public class Game {
         return this.secondPlayer;
     }
 
+
     public boolean isFirstLeaderAbilityUsed() {
         return this.firstLeaderAbilityUsed;
     }
@@ -65,16 +66,24 @@ public class Game {
         this.board = new Object[BOARDHEIGHT][BOARDWIDTH];
         this.firstLeaderAbilityUsed = false;
         this.secondLeaderAbilityUsed = false;
-        // loadAbilities("csv/Abilities.csv"); // not sure of path
-        // loadChampions("csv/Champions.csv"); // not sure of path
-        // placeChampions();
+        placeChampions();
         placeCovers();
+        // initTurnOrder();
+
         // What to do with turnOrder ?? load all champs or only chosen 6?
     }
+
+//    public void initTurnOrder() {
+//        if (availableChampions == null) return;
+//        for (Champion c: availableChampions) {
+//            if(c != null) turnOrder.insert(c);
+//        }
+//    }
 
     private void placeChampions() {
         ArrayList<Champion> team1 = firstPlayer.getTeam();
         ArrayList<Champion> team2 = secondPlayer.getTeam();
+        if (team1.size() == 0 || team2.size() == 0) return;
         for (int i = 0; i < 3; i++) {
             board[BOARDHEIGHT - 1][1 + i] = team2.get(i);
             board[0][1 + i] = team1.get(i);
