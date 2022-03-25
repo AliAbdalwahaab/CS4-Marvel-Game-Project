@@ -86,7 +86,7 @@ public class Champion implements Comparable{
         return mana;
     }
 
-    public int maxActionPointsPerTurn() {
+    public int getMaxActionPointsPerTurn() {
         return maxActionPointsPerTurn;
     }
 
