@@ -13,17 +13,17 @@ import static model.world.Condition.ACTIVE;
 public class Champion implements Comparable{
 
     //Attributes
-    private final String name; //R
-    private final int maxHP; //R
+    private String name; //R
+    private int maxHP; //R
     private int currentHP; //RW
     private int mana; //RW
     private int maxActionPointsPerTurn; //RW
     private int currentActionPoints; //RW
-    private final int attackRange; //R
+    private int attackRange; //R
     private int attackDamage; //RW
     private int speed; //RW
-    private final ArrayList<Ability> abilities; //R
-    private final ArrayList<Effect> appliedEffects; //R
+    private ArrayList<Ability> abilities; //R
+    private ArrayList<Effect> appliedEffects; //R
     private Condition condition; //RW
     private Point location; //RW
 
