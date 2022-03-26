@@ -3,7 +3,6 @@ package engine;
 import model.abilities.*;
 import model.effects.*;
 import model.world.*;
-
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -30,7 +29,6 @@ public class Game {
     public Player getSecondPlayer() {
         return this.secondPlayer;
     }
-
 
     public boolean isFirstLeaderAbilityUsed() {
         return this.firstLeaderAbilityUsed;
@@ -71,7 +69,6 @@ public class Game {
         placeChampions();
         placeCovers();
         turnOrder = new PriorityQueue(6);
-
     }
 
     private void placeChampions() {
@@ -192,7 +189,7 @@ public class Game {
         }
     }
 
-    public static void loadChampions(String filePath) throws Exception{
+    public static void loadChampions(String filePath) throws Exception {
         /*
 
         0     1     2      3     4        5      6            7
