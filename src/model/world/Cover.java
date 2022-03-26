@@ -22,6 +22,6 @@ public class Cover {
 
     //Setters
     public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP;
+        if (currentHP >= 0 ) this.currentHP = currentHP;
     }
 }
