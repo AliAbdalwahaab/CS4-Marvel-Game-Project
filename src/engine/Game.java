@@ -66,21 +66,13 @@ public class Game {
         this.board = new Object[BOARDHEIGHT][BOARDWIDTH];
         this.firstLeaderAbilityUsed = false;
         this.secondLeaderAbilityUsed = false;
+        availableChampions = new ArrayList<>();
+        availableAbilities = new ArrayList<>();
         placeChampions();
         placeCovers();
         turnOrder = new PriorityQueue(6);
-        availableChampions = new ArrayList<>();
-        availableAbilities = new ArrayList<>();
 
-        // What to do with turnOrder ?? load all champs or only chosen 6?
     }
-
-//    public void initTurnOrder() {
-//        if (availableChampions == null) return;
-//        for (Champion c: availableChampions) {
-//            if(c != null) turnOrder.insert(c);
-//        }
-//    }
 
     private void placeChampions() {
         ArrayList<Champion> team1 = firstPlayer.getTeam();
@@ -167,7 +159,6 @@ public class Game {
         requiredActionsPerTurn, damageAmount/healAmount/effect name, effect duration
 
         */
-        //availableAbilities = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line = "";
         while (true) {
@@ -210,8 +201,6 @@ public class Game {
         ability1 name, ability2 name, ability3 name
 
          */
-        // loadAbilities("Abilities.csv"); // load to use when adding abilities to champs
-        //availableChampions = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line = "";
         while (true) {
@@ -239,6 +228,4 @@ public class Game {
             }
         }
     }
-
-
 }
