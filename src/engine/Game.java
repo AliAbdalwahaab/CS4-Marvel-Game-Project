@@ -158,9 +158,8 @@ public class Game {
         */
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line = "";
-        while (true) {
-            line = br.readLine();
-            if (line == null) break;
+        while ((line = br.readLine()) != null) {
+
             String[] data = line.split(",");
             if (data[0].equals("CC")) { // Crowd Control Ability
                 /* public CrowdControlAbility(String name, int cost, int baseCoolDown, int castRange, AreaOfEffect area, int required, Effect effect)
