@@ -58,7 +58,7 @@ public class Game {
         return this.turnOrder;
     }
 
-    public Game(Player first, Player second) throws Exception {
+    public Game(Player first, Player second) {
         this.firstPlayer = first;
         this.secondPlayer = second;
         this.board = new Object[BOARDHEIGHT][BOARDWIDTH];
