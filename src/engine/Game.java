@@ -159,7 +159,6 @@ public class Game {
         BufferedReader br = new BufferedReader(new FileReader(filePath));
         String line = "";
         while ((line = br.readLine()) != null) {
-
             String[] data = line.split(",");
             if (data[0].equals("CC")) { // Crowd Control Ability
                 /* public CrowdControlAbility(String name, int cost, int baseCoolDown, int castRange, AreaOfEffect area, int required, Effect effect)
@@ -220,7 +219,6 @@ public class Game {
                         Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]),
                         fetchAbility(data[8]), fetchAbility(data[9]), fetchAbility(data[10]));
                 availableChampions.add(v);
-
             }
         }
     }
