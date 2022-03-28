@@ -91,7 +91,7 @@ public class Game {
             int y = 1 + r.nextInt(BOARDHEIGHT - 2);
             if (board[y][x] == null) {
                 covers--;
-                board[y][x] = new Cover(x, y);
+                board[y][x] = new Cover(y, x);
             }
         }
     }
