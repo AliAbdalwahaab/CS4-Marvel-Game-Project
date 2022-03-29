@@ -20,6 +20,6 @@ public class DamagingAbility extends Ability{
     }
 
     public String toString() {
-        return getName() + getManaCost() + getBaseCooldown() + getCastRange() + getCastArea() + getRequiredActionPoints();
+        return getName() + getManaCost() + getBaseCooldown() + getCastRange() + getCastArea().toString() + getRequiredActionPoints() + getDamageAmount();
     }
 }
