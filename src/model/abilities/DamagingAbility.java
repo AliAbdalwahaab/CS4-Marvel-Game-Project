@@ -18,4 +18,8 @@ public class DamagingAbility extends Ability{
     public void setDamageAmount(int damageAmount) {
         this.damageAmount = damageAmount;
     }
+
+    public String toString() {
+        return getName() + getManaCost() + getBaseCooldown() + getCastRange() + getCastArea() + getRequiredActionPoints();
+    }
 }

@@ -113,25 +113,25 @@ public class Game {
     private static Effect processEffect(String name, int duration) {
         switch (name) {
             case "Disarm" :
-                return new Disarm(name, duration);
+                return new Disarm(duration);
             case "Dodge" :
-                return new Dodge(name, duration);
+                return new Dodge(duration);
             case "Embrace" :
-                return new Embrace(name, duration);
+                return new Embrace(duration);
             case "PowerUp" :
-                return new PowerUp(name, duration);
+                return new PowerUp(duration);
             case "Root" :
-                return new Root(name, duration);
+                return new Root(duration);
             case "Shield" :
-                return new Shield(name, duration);
+                return new Shield(duration);
             case "Shock" :
-                return new Shock(name, duration);
+                return new Shock(duration);
             case "Silence" :
-                return new Silence(name, duration);
+                return new Silence(duration);
             case "SpeedUp" :
-                return new SpeedUp(name, duration);
+                return new SpeedUp(duration);
             case "Stun" :
-                return new Stun(name, duration);
+                return new Stun(duration);
             default: return null;
         }
     }
@@ -144,6 +144,16 @@ public class Game {
             }
         }
         return null;
+    }
+
+    // check if Ability a1 is already in the availableAbilities arrayList
+    private static boolean isDuplicate (Ability a1) {
+        for (Ability a: availableAbilities){
+            if (a.toString().equals(a1.toString())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void loadAbilities(String filePath) throws Exception {
@@ -166,6 +176,7 @@ public class Game {
                 Effect efct = processEffect(data[7], Integer.parseInt(data[8]));
                 CrowdControlAbility ccb = new CrowdControlAbility(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[4]),
                         Integer.parseInt(data[3]), fetchAreaEnum(data[5]), Integer.parseInt(data[6]) , efct);
+                if (isDuplicate(ccb)) continue;
                 availableAbilities.add(ccb);
 
             } else if (data[0].equals("DMG")) { // Damage Ability
@@ -174,6 +185,7 @@ public class Game {
                 DamagingAbility dmgA = new DamagingAbility(data[1], Integer.parseInt(data[2]),
                         Integer.parseInt(data[4]), Integer.parseInt(data[3]), fetchAreaEnum(data[5]),
                         Integer.parseInt(data[6]), Integer.parseInt(data[7]));
+                if (isDuplicate(dmgA)) continue;
                 availableAbilities.add(dmgA);
 
             } else { // Heal Ability
@@ -182,6 +194,7 @@ public class Game {
                 HealingAbility HelA = new HealingAbility(data[1], Integer.parseInt(data[2]),
                         Integer.parseInt(data[4]), Integer.parseInt(data[3]), fetchAreaEnum(data[5]),
                         Integer.parseInt(data[6]), Integer.parseInt(data[7]));
+                if (isDuplicate(HelA)) continue;
                 availableAbilities.add(HelA);
             }
         }
@@ -204,20 +217,26 @@ public class Game {
             String[] data = line.split(",");
             if (data[0].equals("A")) { // Anti Hero
                 AntiHero ah = new AntiHero(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]),
-                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]),
-                        fetchAbility(data[8]), fetchAbility(data[9]), fetchAbility(data[10]));
+                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]));
+                ah.getAbilities().add(fetchAbility(data[8]));
+                ah.getAbilities().add(fetchAbility(data[9]));
+                ah.getAbilities().add(fetchAbility(data[10]));
                 availableChampions.add(ah);
 
             } else if (data[0].equals("H")) { // Hero
                 Hero h = new Hero(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]),
-                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]),
-                        fetchAbility(data[8]), fetchAbility(data[9]), fetchAbility(data[10]));
+                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]));
+                h.getAbilities().add(fetchAbility(data[8]));
+                h.getAbilities().add(fetchAbility(data[9]));
+                h.getAbilities().add(fetchAbility(data[10]));
                 availableChampions.add(h);
 
             } else { // Villain
                 Villain v = new Villain(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]),
-                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]),
-                        fetchAbility(data[8]), fetchAbility(data[9]), fetchAbility(data[10]));
+                        Integer.parseInt(data[4]), Integer.parseInt(data[5]), Integer.parseInt(data[6]), Integer.parseInt(data[7]));
+                v.getAbilities().add(fetchAbility(data[8]));
+                v.getAbilities().add(fetchAbility(data[9]));
+                v.getAbilities().add(fetchAbility(data[10]));
                 availableChampions.add(v);
             }
         }
