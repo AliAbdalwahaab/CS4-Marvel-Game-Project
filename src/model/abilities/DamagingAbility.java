@@ -19,7 +19,9 @@ public class DamagingAbility extends Ability{
         this.damageAmount = damageAmount;
     }
 
+    /*
     public String toString() {
         return getName() + getManaCost() + getBaseCooldown() + getCastRange() + getCastArea().toString() + getRequiredActionPoints() + getDamageAmount();
     }
+    */
 }

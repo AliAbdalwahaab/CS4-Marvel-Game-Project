@@ -15,8 +15,10 @@ public class CrowdControlAbility extends Ability{
         return this.effect;
     }
 
+    /*
     public String toString() {
         return getName() + getManaCost() + getBaseCooldown() + getCastRange() + getCastArea().toString() + getRequiredActionPoints() + getEffect().toString();
     }
+    */
 
 }

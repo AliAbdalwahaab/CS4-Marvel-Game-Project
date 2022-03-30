@@ -147,6 +147,7 @@ public class Game {
     }
 
     // check if Ability a1 is already in the availableAbilities arrayList
+    /*
     private static boolean isDuplicate (Ability a1) {
         for (Ability a: availableAbilities){
             if (a.toString().equals(a1.toString())) {
@@ -155,6 +156,7 @@ public class Game {
         }
         return false;
     }
+    */
 
     public static void loadAbilities(String filePath) throws Exception {
         /*
@@ -176,7 +178,7 @@ public class Game {
                 Effect efct = processEffect(data[7], Integer.parseInt(data[8]));
                 CrowdControlAbility ccb = new CrowdControlAbility(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[4]),
                         Integer.parseInt(data[3]), fetchAreaEnum(data[5]), Integer.parseInt(data[6]) , efct);
-                if (isDuplicate(ccb)) continue;
+                // if (isDuplicate(ccb)) continue;
                 availableAbilities.add(ccb);
 
             } else if (data[0].equals("DMG")) { // Damage Ability
@@ -185,7 +187,7 @@ public class Game {
                 DamagingAbility dmgA = new DamagingAbility(data[1], Integer.parseInt(data[2]),
                         Integer.parseInt(data[4]), Integer.parseInt(data[3]), fetchAreaEnum(data[5]),
                         Integer.parseInt(data[6]), Integer.parseInt(data[7]));
-                if (isDuplicate(dmgA)) continue;
+                // if (isDuplicate(dmgA)) continue;
                 availableAbilities.add(dmgA);
 
             } else { // Heal Ability
@@ -194,7 +196,7 @@ public class Game {
                 HealingAbility HelA = new HealingAbility(data[1], Integer.parseInt(data[2]),
                         Integer.parseInt(data[4]), Integer.parseInt(data[3]), fetchAreaEnum(data[5]),
                         Integer.parseInt(data[6]), Integer.parseInt(data[7]));
-                if (isDuplicate(HelA)) continue;
+                // if (isDuplicate(HelA)) continue;
                 availableAbilities.add(HelA);
             }
         }

@@ -46,11 +46,9 @@ public class Champion implements Comparable{
 
     public int compareTo(Object o) {
         // Revise Here!
-        // compare avg. of attack dmg and health betweeen two champions
+        // compare speeds of 2 champions
         Champion c2 = (Champion) o;
-        int avg1 = (maxHP + attackDamage) / 2;
-        int avg2 = (c2.maxHP + c2.attackDamage) / 2;
-        return avg1 - avg2;
+        return speed - c2.speed;
     }
 
     //Getters
@@ -117,7 +115,7 @@ public class Champion implements Comparable{
         }
     }
 
-    public void setMana( int mana) {
+    public void setMana(int mana) {
         this.mana = mana;
     }
 

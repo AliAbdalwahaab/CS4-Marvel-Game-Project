@@ -34,8 +34,10 @@ public class Effect {
         this.duration = duration;
     }
 
+    /*
     public String toString() {
         return name + duration + type.toString();
     }
+    */
 
 }

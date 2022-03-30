@@ -17,7 +17,9 @@ public class HealingAbility extends Ability{
         this.healAmount = healAmount;
     }
 
+    /*
     public String toString() {
         return getName() + getManaCost() + getBaseCooldown() + getCastRange() + getCastArea().toString() + getRequiredActionPoints() + getHealAmount();
     }
+    */
 }
