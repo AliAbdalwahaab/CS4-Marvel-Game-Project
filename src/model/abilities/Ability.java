@@ -54,7 +54,7 @@ public class Ability {
 
         if (currentCooldown < 0) {
             this.currentCooldown = 0;
-        }
-        this.currentCooldown = currentCooldown;
+        } else
+            this.currentCooldown = currentCooldown;
     }
 }
