@@ -121,8 +121,8 @@ public class Champion implements Comparable{
         if (mana < 0) {
             this.mana = 0;
             //this.condition = INACTIVE;
-        }
-        this.mana = mana;
+        } else
+            this.mana = mana;
     }
 
     public void setMaxActionPointsPerTurn(int maxActionPointsPerTurn) {
