@@ -9,6 +9,7 @@ import model.abilities.Ability;
 import java.awt.*;
 import java.util.ArrayList;
 import static model.world.Condition.ACTIVE;
+import static model.world.Condition.INACTIVE;
 
 public class Champion implements Comparable{
 
@@ -116,6 +117,11 @@ public class Champion implements Comparable{
     }
 
     public void setMana(int mana) {
+
+        if (mana < 0) {
+            this.mana = 0;
+            //this.condition = INACTIVE;
+        }
         this.mana = mana;
     }
 
