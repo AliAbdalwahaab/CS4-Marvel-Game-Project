@@ -131,20 +131,26 @@ public class Champion implements Comparable{
 
     public void setCurrentActionPoints (int currentActionPoints) {
 
-        if( currentActionPoints< 0) {
+        if (currentActionPoints < 0) {
             this.currentActionPoints = 0;
-        } else if (currentActionPoints> this.maxActionPointsPerTurn) {
+        } else if (currentActionPoints > this.maxActionPointsPerTurn) {
             this.currentActionPoints = this.maxActionPointsPerTurn;
         } else
             this.currentActionPoints = currentActionPoints;
     }
 
     public void setAttackDamage(int attackDamage) {
-        this.attackDamage = attackDamage;
+        if (attackDamage < 0)
+            this.attackDamage = 0;
+        else
+            this.attackDamage = attackDamage;
     }
 
     public void setSpeed(int speed) {
-        this.speed = speed;
+        if (speed < 0)
+            this.speed = 0;
+        else
+            this.speed = speed;
     }
 
     public void setCondition(Condition condition) {

@@ -16,7 +16,10 @@ public class DamagingAbility extends Ability{
     }
 
     public void setDamageAmount(int damageAmount) {
-        this.damageAmount = damageAmount;
+        if (damageAmount < 0)
+            this.damageAmount = 0;
+        else
+            this.damageAmount = damageAmount;
     }
 
     /*

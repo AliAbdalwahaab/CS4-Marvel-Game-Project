@@ -14,7 +14,10 @@ public class HealingAbility extends Ability{
     }
 
     public void setHealAmount(int healAmount) {
-        this.healAmount = healAmount;
+        if (healAmount < 0)
+            this.healAmount= 0;
+        else
+            this.healAmount = healAmount;
     }
 
     /*
