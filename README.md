@@ -15,8 +15,8 @@ position.
 ## Champions
 Champions are the fighters that each player will form his team from. Each champion will have
 a certain type which influences how the champion deals damage to other types as well as how
-much damage it will receive from them. The available types are:- 
-• Heroes: they deal extra damage when attacking villains.
-• Villains: they deal extra damage when attacking heroes.
-• Anti-Heroes: when being attacked or attacking a hero or villain, the antihero will always
+much damage it will receive from them. The available types are :- 
+- Heroes: they deal extra damage when attacking villains.
+- Villains: they deal extra damage when attacking heroes.
+- Anti-Heroes: when being attacked or attacking a hero or villain, the antihero will always
 act as the opposite type. If attacking an antihero, damage is calculated normally.
