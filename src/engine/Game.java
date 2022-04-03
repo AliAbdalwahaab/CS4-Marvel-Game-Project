@@ -58,6 +58,10 @@ public class Game {
         return this.turnOrder;
     }
 
+    public ArrayList<Champion> getAvailableChampions() {
+        return this.availableChampions;
+    }
+
     public Game(Player first, Player second) {
         this.firstPlayer = first;
         this.secondPlayer = second;

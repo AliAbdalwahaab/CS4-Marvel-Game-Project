@@ -105,6 +105,10 @@ public class Champion implements Comparable{
         return location;
     }
 
+    public ArrayList<Effect> getAppliedEffects() {
+        return this.appliedEffects;
+    }
+
     //Setters
     public void setCurrentHP(int currentHP) {
         if (currentHP < 0) {
