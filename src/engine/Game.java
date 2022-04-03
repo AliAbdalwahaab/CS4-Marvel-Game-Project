@@ -160,6 +160,7 @@ public class Game {
         }
         return false;
     }
+    //removed check since it has no use
     */
 
     public static void loadAbilities(String filePath) throws Exception {
