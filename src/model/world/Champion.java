@@ -93,10 +93,6 @@ public class Champion implements Comparable{
         return abilities;
     }
 
-    public ArrayList<Effect> getEffects() {
-        return appliedEffects;
-    }
-
     public Condition getCondition() {
         return condition;
     }
