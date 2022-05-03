@@ -1,6 +1,6 @@
 package model.abilities;
 
-public class Ability {
+public abstract class Ability {
 
     private String name;
     private int manaCost;

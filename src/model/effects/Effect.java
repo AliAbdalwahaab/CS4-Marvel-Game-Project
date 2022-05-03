@@ -1,6 +1,6 @@
 package model.effects;
 
-public class Effect {
+public abstract class Effect {
 
     private String name; // R
     private int duration; // RW

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static model.world.Condition.ACTIVE;
 import static model.world.Condition.INACTIVE;
 
-public class Champion implements Comparable{
+public abstract class Champion implements Comparable{
 
     //Attributes
     private String name; //R
@@ -46,10 +46,12 @@ public class Champion implements Comparable{
     }
 
     public int compareTo(Object o) {
-        // Revise Here!
-        // compare speeds of 2 champions
+
         Champion c2 = (Champion) o;
-        return speed - c2.speed;
+        if (speed == c2.speed)
+            return name.compareTo(c2.name);
+        else
+            return speed - c2.speed;
     }
 
     //Getters
@@ -159,5 +161,10 @@ public class Champion implements Comparable{
 
     public void setLocation(Point location) {
         this.location = location;
+    }
+
+    //Additional methods for Milestone 2
+    public  void useLeaderAbility(ArrayList<Champion> targets) {
+
     }
 }
