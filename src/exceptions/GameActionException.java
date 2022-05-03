@@ -1,7 +1,7 @@
 package exceptions;
 
 
-public class GameActionException extends Exception {
+abstract public class GameActionException extends Exception {
 
     private String exception;
 
