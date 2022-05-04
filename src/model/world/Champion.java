@@ -50,8 +50,7 @@ public abstract class Champion implements Comparable{
         Champion c2 = (Champion) o;
         if (speed == c2.speed)
             return name.compareTo(c2.name);
-        else
-            return speed - c2.speed;
+        return speed - c2.speed;
     }
 
     //Getters
