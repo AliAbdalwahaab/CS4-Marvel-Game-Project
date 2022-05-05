@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static model.world.Condition.ACTIVE;
 import static model.world.Condition.INACTIVE;
 
-public abstract class Champion implements Comparable{
+public abstract class Champion implements Comparable, Damageable{
 
     //Attributes
     private String name; //R
@@ -46,7 +46,6 @@ public abstract class Champion implements Comparable{
     }
 
     public int compareTo(Object o) {
-
         Champion c2 = (Champion) o;
         if (speed == c2.speed)
             return name.compareTo(c2.name);
