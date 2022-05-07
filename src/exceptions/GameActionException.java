@@ -2,7 +2,7 @@ package exceptions;
 
 
 abstract public class GameActionException extends Exception {
-
+//help bois
     private String exception;
 
     //Constructors
