@@ -1,5 +1,6 @@
 package exceptions;
-
+//Is thrown when a champion is trying to move while violating
+//the move regulations.
 public class UnallowedMovementException extends GameActionException{
 
     //Constructors
