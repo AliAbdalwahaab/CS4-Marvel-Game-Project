@@ -2,7 +2,7 @@ package model.abilities;
 
 import model.effects.Effect;
 
-public class DamagingAbility extends Ability{
+public class DamagingAbility extends Ability {
 
     private int damageAmount; // RW
 
@@ -22,9 +22,4 @@ public class DamagingAbility extends Ability{
             this.damageAmount = damageAmount;
     }
 
-    /*
-    public String toString() {
-        return getName() + getManaCost() + getBaseCooldown() + getCastRange() + getCastArea().toString() + getRequiredActionPoints() + getDamageAmount();
-    }
-    */
 }

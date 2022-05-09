@@ -2,7 +2,7 @@ package model.abilities;
 
 import model.effects.Effect;
 
-public class CrowdControlAbility extends Ability{
+public class CrowdControlAbility extends Ability {
 
     private Effect effect; //R only
 
@@ -15,11 +15,5 @@ public class CrowdControlAbility extends Ability{
         return this.effect;
     }
 
-    /*
-    public String toString() {
-        return getName() + getManaCost() + getBaseCooldown() + getCastRange() + getCastArea().toString() + getRequiredActionPoints() + getEffect().toString();
-    }
-    //NOTE: i asked TA and he replied that too much comments can actually be bad for tests on eclipse for some reason, keep in mind.
-    */
 
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static model.world.Condition.ACTIVE;
 import static model.world.Condition.INACTIVE;
 
-public abstract class Champion implements Comparable, Damageable{
+public abstract class Champion implements Comparable, Damageable {
 
     //Attributes
     private String name; //R
@@ -163,6 +163,6 @@ public abstract class Champion implements Comparable, Damageable{
 
     //Additional methods for Milestone 2
     public  void useLeaderAbility(ArrayList<Champion> targets) {
-
+        //TODO
     }
 }

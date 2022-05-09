@@ -1,6 +1,6 @@
 package model.abilities;
 
-public class HealingAbility extends Ability{
+public class HealingAbility extends Ability {
 
     private int healAmount; // RW
 
@@ -19,10 +19,4 @@ public class HealingAbility extends Ability{
         else
             this.healAmount = healAmount;
     }
-
-    /*
-    public String toString() {
-        return getName() + getManaCost() + getBaseCooldown() + getCastRange() + getCastArea().toString() + getRequiredActionPoints() + getHealAmount();
-    }
-    */
 }
