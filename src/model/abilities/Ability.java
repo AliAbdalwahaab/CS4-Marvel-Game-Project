@@ -1,5 +1,8 @@
 package model.abilities;
 
+import model.world.Damageable;
+import java.util.ArrayList;
+
 public abstract class Ability {
 
     private String name;
@@ -58,5 +61,10 @@ public abstract class Ability {
            this.currentCooldown = baseCooldown;
         } else
             this.currentCooldown = currentCooldown;
+    }
+
+    public void execute(ArrayList<Damageable> targets) {
+        //Will work differently in each subclass
+        //TODO
     }
 }
