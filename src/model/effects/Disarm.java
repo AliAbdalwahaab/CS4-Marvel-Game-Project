@@ -33,7 +33,6 @@ public class Disarm extends Effect {
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof Disarm && e.getDuration() == 0) {
                 c.getAppliedEffects().remove(e);
-                return;
             }
         }
     }
