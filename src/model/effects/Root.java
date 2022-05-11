@@ -4,6 +4,7 @@ import model.abilities.Ability;
 import model.abilities.DamagingAbility;
 import model.abilities.HealingAbility;
 import model.world.Champion;
+import model.world.Condition;
 
 public class Root extends Effect {
 
@@ -13,6 +14,7 @@ public class Root extends Effect {
 
     public void apply(Champion c) {
         // TODO: Target cannot move
+        c.setCondition(Condition.ROOTED);
         c.getAppliedEffects().add(this);
     }
 

@@ -16,13 +16,11 @@ public class PowerUp extends Effect {
             if (a instanceof DamagingAbility) {
                 DamagingAbility dmg = (DamagingAbility) a;
                 dmg.setDamageAmount((int) (dmg.getDamageAmount() * 1.2));
-                c.getAbilities().remove(a);
-                c.getAbilities().add(dmg); // replace old with new
+                a = dmg;
             } else if (a instanceof HealingAbility) {
                 HealingAbility heal = (HealingAbility) a;
                 heal.setHealAmount((int) (heal.getHealAmount() * 1.2));
-                c.getAbilities().remove(a);
-                c.getAbilities().add(heal); // replace old with new
+                a = heal;
             }
         }
         c.getAppliedEffects().add(this);
@@ -32,14 +30,12 @@ public class PowerUp extends Effect {
         for (Ability a: c.getAbilities()) {
             if (a instanceof DamagingAbility) {
                 DamagingAbility dmg = (DamagingAbility) a;
-                dmg.setDamageAmount((int) (dmg.getDamageAmount() * 0.8));
-                c.getAbilities().remove(a);
-                c.getAbilities().add(dmg); // retract to original
+                dmg.setDamageAmount((int) (dmg.getDamageAmount() / 1.2));
+                a = dmg;
             } else if (a instanceof HealingAbility) {
                 HealingAbility heal = (HealingAbility) a;
-                heal.setHealAmount((int) (heal.getHealAmount() * 0.8));
-                c.getAbilities().remove(a);
-                c.getAbilities().add(heal); // retract to original
+                heal.setHealAmount((int) (heal.getHealAmount() / 1.2));
+                a = heal;
             }
         }
 

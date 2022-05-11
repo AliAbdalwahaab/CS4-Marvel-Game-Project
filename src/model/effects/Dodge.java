@@ -16,7 +16,7 @@ public class Dodge extends Effect {
 
     public void remove(Champion c) {
         //TODO
-        c.setSpeed((int) (c.getSpeed() * 0.95)); //retract the 5%
+        c.setSpeed((int) (c.getSpeed()/1.05)); //retract the 5%
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof Dodge && e.getDuration() == 0) {
                 c.getAppliedEffects().remove(e);

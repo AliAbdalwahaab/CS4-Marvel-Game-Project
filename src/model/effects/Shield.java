@@ -19,7 +19,7 @@ public class Shield extends Effect {
     }
 
     public void remove(Champion c) {
-        c.setSpeed((int) (c.getSpeed() * 0.98)); // retract by -2%
+        c.setSpeed((int) (c.getSpeed() / 1.02)); // retract by -2%
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof Shield && e.getDuration() == 0) {
                 c.getAppliedEffects().remove(e);
