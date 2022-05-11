@@ -292,7 +292,24 @@ public class Game {
                             return;
                         }
                     } else if (c instanceof AntiHero) {
-                        //TODO
+                        ArrayList<Champion> targets = new ArrayList<Champion>();
+                        for (int i = 0; i < firstPlayer.getTeam().size();i++) {
+                            targets.add(firstPlayer.getTeam().get(i));
+                        }
+
+                        for (int i = 0; i < secondPlayer.getTeam().size();i++) {
+                            targets.add(secondPlayer.getTeam().get(i));
+                        }
+
+                        targets.remove(c);
+                        targets.remove(secondPlayer.getLeader());
+
+                        try {
+                            c.useLeaderAbility(targets);
+                        } catch (AbilityUseException e) {
+                            System.out.println("Cannot use leader ability at the moment");
+                            return;
+                        }
                     }
                 }
                 else
@@ -321,7 +338,24 @@ public class Game {
                             return;
                         }
                     } else if (c instanceof AntiHero) {
-                        //TODO
+                        ArrayList<Champion> targets = new ArrayList<Champion>();
+                        for (int i = 0; i < firstPlayer.getTeam().size();i++) {
+                            targets.add(firstPlayer.getTeam().get(i));
+                        }
+
+                        for (int i = 0; i < secondPlayer.getTeam().size();i++) {
+                            targets.add(secondPlayer.getTeam().get(i));
+                        }
+
+                        targets.remove(c);
+                        targets.remove(firstPlayer.getLeader());
+
+                        try {
+                            c.useLeaderAbility(targets);
+                        } catch (AbilityUseException e) {
+                            System.out.println("Cannot use leader ability at the moment");
+                            return;
+                        }
                     }
                 }
                 else
