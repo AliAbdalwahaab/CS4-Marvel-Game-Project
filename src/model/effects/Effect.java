@@ -2,7 +2,7 @@ package model.effects;
 
 import model.world.Champion;
 
-public abstract class Effect implements Cloneable {
+public abstract class Effect<abstarct> implements Cloneable {
 
     private String name; // R
     private int duration; // RW
@@ -39,13 +39,9 @@ public abstract class Effect implements Cloneable {
             this.duration = duration;
     }
 
-    public void apply(Champion c) {
-        //TODO
-    }
+    abstract public void apply(Champion c);
 
-    public void remove(Champion c) {
-        //TODO
-    }
+    abstract public void remove(Champion c);
 
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
