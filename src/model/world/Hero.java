@@ -39,6 +39,8 @@ public class Hero extends Champion {
                 Embrace e = new Embrace(2);
                 e.apply(targets.get(i));
             }
+            //Embrace e = new Embrace(2);
+            //e.apply(this);
         }
     }
 }
