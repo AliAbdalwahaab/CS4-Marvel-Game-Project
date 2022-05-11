@@ -311,6 +311,7 @@ public class Game {
                             return;
                         }
                     }
+                    firstLeaderAbilityUsed = true;
                 }
                 else
                     throw new LeaderAbilityAlreadyUsedException("Leader Ability has already been used");
@@ -357,6 +358,7 @@ public class Game {
                             return;
                         }
                     }
+                    secondLeaderAbilityUsed = true;
                 }
                 else
                     throw new LeaderAbilityAlreadyUsedException("Leader Ability has already been used");
