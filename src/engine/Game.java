@@ -261,8 +261,7 @@ public class Game {
 
     //Methods required for Milestone 2
     public Champion getCurrentChampion() {
-        //TODO
-        return null;
+        return (Champion) turnOrder.peekMin();
     }
 
     public void useLeaderAbility() throws LeaderNotCurrentException, LeaderAbilityAlreadyUsedException {
