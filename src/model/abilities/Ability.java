@@ -63,7 +63,7 @@ public abstract class Ability {
             this.currentCooldown = currentCooldown;
     }
 
-    public void execute(ArrayList<Damageable> targets) {
+    public void execute(ArrayList<Damageable> targets) throws CloneNotSupportedException {
 
     }
 }

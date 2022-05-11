@@ -20,12 +20,16 @@ public class CrowdControlAbility extends Ability {
         return this.effect;
     }
 
-    public void execute(ArrayList<Damageable> targets) {
+    public void execute(ArrayList<Damageable> targets) throws CloneNotSupportedException {
         //Assuming every item in the arraylist implements the Damageable interface
         for (int i = 0; i < targets.size();i++) {
-            if (targets.get(i) instanceof Champion) {
+            if (!(targets.get(i) instanceof Cover)) {
                 Champion c = (Champion) targets.get(i);
-                this.effect.apply(c);
+                Effect e = (Effect) this.effect.clone();
+                c.getAppliedEffects().add(e);
+                e.apply(c);
+
+
             }
             //Since we cannot apply an effect on a Cover there is no else part
 
