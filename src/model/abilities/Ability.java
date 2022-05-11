@@ -1,6 +1,5 @@
 package model.abilities;
 
-import exceptions.AbilityUseException;
 import model.world.Damageable;
 import java.util.ArrayList;
 
@@ -64,7 +63,7 @@ public abstract class Ability {
             this.currentCooldown = currentCooldown;
     }
 
-    public void execute(ArrayList<Damageable> targets) throws AbilityUseException {
+    public void execute(ArrayList<Damageable> targets) {
 
     }
 }
