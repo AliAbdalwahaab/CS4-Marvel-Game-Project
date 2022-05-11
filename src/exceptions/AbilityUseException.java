@@ -10,7 +10,6 @@ public class AbilityUseException extends GameActionException{
 
     public AbilityUseException (String s){
         super(s);
-        //System.out.println("Illegal action, Ability isn't available for use. \n");
     }
 
 }

@@ -4,6 +4,9 @@
  */
 package model.world;
 
+import exceptions.AbilityUseException;
+import exceptions.ChampionDisarmedException;
+import exceptions.NotEnoughResourcesException;
 import model.effects.Effect;
 import model.abilities.Ability;
 import java.awt.*;
@@ -162,7 +165,7 @@ public abstract class Champion implements Comparable, Damageable {
     }
 
     //Additional methods for Milestone 2
-    public  void useLeaderAbility(ArrayList<Champion> targets) {
-        //TODO
+    public  void useLeaderAbility(ArrayList<Champion> targets) throws AbilityUseException {
+
     }
 }
