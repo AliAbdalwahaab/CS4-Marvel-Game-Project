@@ -1,5 +1,8 @@
 package engine;
 
+import exceptions.AbilityUseException;
+import exceptions.LeaderAbilityAlreadyUsedException;
+import exceptions.LeaderNotCurrentException;
 import model.abilities.*;
 import model.effects.*;
 import model.world.*;
@@ -90,7 +93,7 @@ public class Game {
     private void placeCovers() {
         Random r = new Random();
         int covers = 5;
-        while(covers > 0) { // till covers reach 0 (5 covers placed)
+        while (covers > 0) { // till covers reach 0 (5 covers placed)
             int x = r.nextInt(BOARDWIDTH);
             int y = 1 + r.nextInt(BOARDHEIGHT - 2);
             if (board[y][x] == null) {
@@ -104,39 +107,46 @@ public class Game {
     private static AreaOfEffect fetchAreaEnum(String enm) {
         // SELFTARGET, SINGLETARGET, TEAMTARGET, DIRECTIONAL, SURROUND
         switch (enm) {
-            case "SELFTARGET": return AreaOfEffect.SELFTARGET;
-            case "SINGLETARGET": return AreaOfEffect.SINGLETARGET;
-            case "TEAMTARGET": return AreaOfEffect.TEAMTARGET;
-            case "DIRECTIONAL": return AreaOfEffect.DIRECTIONAL;
-            case "SURROUND": return AreaOfEffect.SURROUND;
-            default: return null;
+            case "SELFTARGET":
+                return AreaOfEffect.SELFTARGET;
+            case "SINGLETARGET":
+                return AreaOfEffect.SINGLETARGET;
+            case "TEAMTARGET":
+                return AreaOfEffect.TEAMTARGET;
+            case "DIRECTIONAL":
+                return AreaOfEffect.DIRECTIONAL;
+            case "SURROUND":
+                return AreaOfEffect.SURROUND;
+            default:
+                return null;
         }
     }
 
     // helper method to produce an effect according to effect name
     private static Effect processEffect(String name, int duration) {
         switch (name) {
-            case "Disarm" :
+            case "Disarm":
                 return new Disarm(duration);
-            case "Dodge" :
+            case "Dodge":
                 return new Dodge(duration);
-            case "Embrace" :
+            case "Embrace":
                 return new Embrace(duration);
-            case "PowerUp" :
+            case "PowerUp":
                 return new PowerUp(duration);
-            case "Root" :
+            case "Root":
                 return new Root(duration);
-            case "Shield" :
+            case "Shield":
                 return new Shield(duration);
-            case "Shock" :
+            case "Shock":
                 return new Shock(duration);
-            case "Silence" :
+            case "Silence":
                 return new Silence(duration);
-            case "SpeedUp" :
+            case "SpeedUp":
                 return new SpeedUp(duration);
-            case "Stun" :
+            case "Stun":
                 return new Stun(duration);
-            default: return null;
+            default:
+                return null;
         }
     }
 
@@ -182,7 +192,7 @@ public class Game {
                  Effect(String name, int duration, EffectType type) */
                 Effect efct = processEffect(data[7], Integer.parseInt(data[8]));
                 CrowdControlAbility ccb = new CrowdControlAbility(data[1], Integer.parseInt(data[2]), Integer.parseInt(data[4]),
-                        Integer.parseInt(data[3]), fetchAreaEnum(data[5]), Integer.parseInt(data[6]) , efct);
+                        Integer.parseInt(data[3]), fetchAreaEnum(data[5]), Integer.parseInt(data[6]), efct);
                 // if (isDuplicate(ccb)) continue;
                 availableAbilities.add(ccb);
 
@@ -247,5 +257,81 @@ public class Game {
                 availableChampions.add(v);
             }
         }
+    }
+
+    //Methods required for Milestone 2
+    public Champion getCurrentChampion() {
+        //TODO
+        return null;
+    }
+
+    public void useLeaderAbility() throws LeaderNotCurrentException, LeaderAbilityAlreadyUsedException {
+        Champion c = getCurrentChampion();
+
+        //Check if current champion is a Leader
+        if (firstPlayer.getLeader().compareTo(c) == 0 || secondPlayer.getLeader().compareTo(c) == 0) {
+            //Check if current champion is Leader of first team
+            if (firstPlayer.getLeader().compareTo(c) == 0) {
+                //Check if leader ability already used
+                if (!firstLeaderAbilityUsed) {
+                    //Choose targets based on Hero Class
+                    if (c instanceof Hero) {
+                        ArrayList<Champion> targets = firstPlayer.getTeam();
+                        try {
+                            c.useLeaderAbility(targets);
+                        } catch (AbilityUseException e) {
+                            System.out.println("Cannot use leader ability at the moment");
+                            return;
+                        }
+                    } else if (c instanceof Villain) {
+                        ArrayList<Champion> targets = secondPlayer.getTeam();
+                        try {
+                            c.useLeaderAbility(targets);
+                        } catch (AbilityUseException e) {
+                            System.out.println("Cannot use leader ability at the moment");
+                            return;
+                        }
+                    } else if (c instanceof AntiHero) {
+                        //TODO
+                    }
+                }
+                else
+                    throw new LeaderAbilityAlreadyUsedException("Leader Ability has already been used");
+            }
+
+            //Check if current champion is leader of second team
+            else if (secondPlayer.getLeader().compareTo(c) == 0) {
+                //Check if leader ability is already used
+                if (!secondLeaderAbilityUsed) {
+                    //Choose targets based on Hero Class
+                    if (c instanceof Hero) {
+                        ArrayList<Champion> targets = secondPlayer.getTeam();
+                        try {
+                            c.useLeaderAbility(targets);
+                        } catch (AbilityUseException e) {
+                            System.out.println("Cannot use leader ability at the moment");
+                            return;
+                        }
+                    } else if (c instanceof Villain) {
+                        ArrayList<Champion> targets = firstPlayer.getTeam();
+                        try {
+                            c.useLeaderAbility(targets);
+                        } catch (AbilityUseException e) {
+                            System.out.println("Cannot use leader ability at the moment");
+                            return;
+                        }
+                    } else if (c instanceof AntiHero) {
+                        //TODO
+                    }
+                }
+                else
+                    throw new LeaderAbilityAlreadyUsedException("Leader Ability has already been used");
+
+            }
+            else
+                throw new LeaderNotCurrentException("The Champion whose turn is currently taking place is not a leader");
+
+        }
+
     }
 }
