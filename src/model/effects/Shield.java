@@ -15,7 +15,7 @@ public class Shield extends Effect {
         /* TODO: Block the next attack or damaging ability cast on target.
             Once an attack or ability is blocked, the effect should be removed. */
         c.setSpeed((int) (c.getSpeed() * 1.02));
-        c.getAppliedEffects().add(this);
+        //c.getAppliedEffects().add(this);
     }
 
     public void remove(Champion c) {

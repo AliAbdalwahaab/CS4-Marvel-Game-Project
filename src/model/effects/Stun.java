@@ -22,7 +22,7 @@ public class Stun extends Effect {
     public void apply(Champion c) {
         // TODO: Target is not allowed to play their turn for the duration.
         c.setCondition(Condition.INACTIVE);
-        c.getAppliedEffects().add(this);
+        //c.getAppliedEffects().add(this);
     }
 
     public void remove(Champion c) {

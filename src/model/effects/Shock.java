@@ -13,7 +13,7 @@ public class Shock extends Effect {
         c.setAttackDamage((int) (c.getAttackDamage() * 0.9));
         c.setCurrentActionPoints(c.getCurrentActionPoints() - 1);
         c.setMaxActionPointsPerTurn(c.getMaxActionPointsPerTurn() - 1);
-        c.getAppliedEffects().add(this);
+        //c.getAppliedEffects().add(this);
     }
 
     public void remove(Champion c) {
