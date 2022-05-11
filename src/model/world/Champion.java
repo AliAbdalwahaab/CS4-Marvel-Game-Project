@@ -52,7 +52,7 @@ public abstract class Champion implements Comparable, Damageable {
         Champion c2 = (Champion) o;
         if (speed == c2.speed)
             return name.compareTo(c2.name);
-        return speed - c2.speed;
+        return c2.speed-speed;
     }
 
     //Getters
