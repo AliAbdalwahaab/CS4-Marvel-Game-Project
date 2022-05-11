@@ -75,7 +75,9 @@ public class Game {
         availableAbilities = new ArrayList<>();
         placeChampions();
         placeCovers();
-        turnOrder = new PriorityQueue(6);
+        turnOrder = new PriorityQueue(first.getTeam().size()+second.getTeam().size());
+        prepareChampionTurns();
+
     }
 
     private void placeChampions() {
@@ -259,6 +261,16 @@ public class Game {
         }
     }
 
+    public void prepareChampionTurns(){
+
+        for(int i=0; i<3; i++) {
+            turnOrder.insert(firstPlayer.getTeam().get(i));
+        }
+        for(int i=0; i<3; i++) {
+            turnOrder.insert(secondPlayer.getTeam().get(i));
+        }
+    }
+
     //Methods required for Milestone 2
     public Champion getCurrentChampion() {
         return (Champion) turnOrder.peekMin();
@@ -369,4 +381,6 @@ public class Game {
         }
 
     }
+
+
 }
