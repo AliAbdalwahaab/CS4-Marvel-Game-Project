@@ -18,7 +18,6 @@ public class Disarm extends Effect {
         DamagingAbility punch = new DamagingAbility("Punch", 0, 1, 1,
                 AreaOfEffect.SINGLETARGET, 1, 50);
         c.getAbilities().add(punch);
-        //Disarm d = new Disarm(2); //not sure of the duration
         c.getAppliedEffects().add(this);
     }
 
