@@ -25,7 +25,7 @@ public class CrowdControlAbility extends Ability {
         for (int i = 0; i < targets.size();i++) {
             if (targets.get(i) instanceof Champion) {
                 Champion c = (Champion) targets.get(i);
-                effect.apply(c);
+                this.effect.apply(c);
             }
             //Since we cannot apply an effect on a Cover there is no else part
 
