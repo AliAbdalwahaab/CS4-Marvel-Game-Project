@@ -260,22 +260,13 @@ public class Game {
         }
     }
 
-    public void prepareChampionTurns(){
 
-            for (int i = 0; i < 3; i++) {
-                if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
-                turnOrder.insert(firstPlayer.getTeam().get(i));
-            }
-        }
-
-            for (int i = 0; i < 3; i++) {
-                if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
-                turnOrder.insert(secondPlayer.getTeam().get(i));
-            }
-        }
-    }
 
     //Methods required for Milestone 2
+    public void castAbility(Ability a) {
+        //TODO
+        //Will finish implementing later
+    }
     public Champion getCurrentChampion() {
         return (Champion) turnOrder.peekMin();
     }
@@ -362,6 +353,21 @@ public class Game {
 
         }
 
+    }
+
+    public void prepareChampionTurns(){
+
+        for (int i = 0; i < 3; i++) {
+            if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
+                turnOrder.insert(firstPlayer.getTeam().get(i));
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
+                turnOrder.insert(secondPlayer.getTeam().get(i));
+            }
+        }
     }
 
 }
