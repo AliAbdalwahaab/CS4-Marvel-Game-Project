@@ -16,7 +16,7 @@ public class Root extends Effect {
         // TODO: Target cannot move
         if (c.getCondition() != Condition.INACTIVE)
             c.setCondition(Condition.ROOTED);
-        //c.getAppliedEffects().add(this);
+        // c.getAppliedEffects().add(this);
     }
 
     public void remove(Champion c) {
