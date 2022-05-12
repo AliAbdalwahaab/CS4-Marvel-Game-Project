@@ -5,6 +5,7 @@ import exceptions.AbilityUseException;
 import exceptions.ChampionDisarmedException;
 import exceptions.NotEnoughResourcesException;
 import model.abilities.Ability;
+import model.effects.Effect;
 import model.effects.Embrace;
 
 import java.util.ArrayList;
@@ -31,13 +32,13 @@ public class Hero extends Champion {
             throw new AbilityUseException("Hero is either knocked out or inactive. Cannot use Leader Ability");
         else {
             //Removing all negative effects from team and applying embrace effect
-            for (int i = 0; i < targets.size();i++) {
-                for (int j = 0; j < targets.get(i).getAppliedEffects().size();j++) {
-                    if (getAppliedEffects().get(j).getType() == DEBUFF)
-                        getAppliedEffects().remove(j);
+            for (Champion target: targets) {
+                for (Effect ef: target.getAppliedEffects()) {
+                    if (ef.getType() == DEBUFF)
+                        target.getAppliedEffects().remove(ef);
                 }
                 Embrace e = new Embrace(2);
-                e.apply(targets.get(i));
+                e.apply(target);
             }
         }
     }
