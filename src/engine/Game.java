@@ -280,7 +280,7 @@ public class Game {
         return (Champion) turnOrder.peekMin();
     }
 
-    public void useLeaderAbility() throws LeaderNotCurrentException, LeaderAbilityAlreadyUsedException {
+    public void useLeaderAbility() throws LeaderNotCurrentException, LeaderAbilityAlreadyUsedException, AbilityUseException {
         Champion c = getCurrentChampion();
 
         //Check if current champion is a Leader
@@ -292,20 +292,12 @@ public class Game {
                     //Choose targets based on Hero Class
                     if (c instanceof Hero) {
                         ArrayList<Champion> targets = firstPlayer.getTeam();
-                        try {
-                            c.useLeaderAbility(targets);
-                        } catch (AbilityUseException e) {
-                            System.out.println("Cannot use leader ability at the moment");
-                            return;
-                        }
+                        c.useLeaderAbility(targets);
+
                     } else if (c instanceof Villain) {
                         ArrayList<Champion> targets = secondPlayer.getTeam();
-                        try {
-                            c.useLeaderAbility(targets);
-                        } catch (AbilityUseException e) {
-                            System.out.println("Cannot use leader ability at the moment");
-                            return;
-                        }
+                        c.useLeaderAbility(targets);
+
                     } else if (c instanceof AntiHero) {
                         ArrayList<Champion> targets = new ArrayList<Champion>();
                         for (int i = 0; i < firstPlayer.getTeam().size();i++) {
@@ -318,13 +310,8 @@ public class Game {
 
                         targets.remove(c);
                         targets.remove(secondPlayer.getLeader());
+                        c.useLeaderAbility(targets);
 
-                        try {
-                            c.useLeaderAbility(targets);
-                        } catch (AbilityUseException e) {
-                            System.out.println("Cannot use leader ability at the moment");
-                            return;
-                        }
                     }
                     firstLeaderAbilityUsed = true;
                 }
@@ -339,12 +326,8 @@ public class Game {
                     //Choose targets based on Hero Class
                     if (c instanceof Hero) {
                         ArrayList<Champion> targets = secondPlayer.getTeam();
-                        try {
-                            c.useLeaderAbility(targets);
-                        } catch (AbilityUseException e) {
-                            System.out.println("Cannot use leader ability at the moment");
-                            return;
-                        }
+                        c.useLeaderAbility(targets);
+
                     } else if (c instanceof Villain) {
                         ArrayList<Champion> targets = firstPlayer.getTeam();
                         try {
@@ -365,13 +348,8 @@ public class Game {
 
                         targets.remove(c);
                         targets.remove(firstPlayer.getLeader());
+                        c.useLeaderAbility(targets);
 
-                        try {
-                            c.useLeaderAbility(targets);
-                        } catch (AbilityUseException e) {
-                            System.out.println("Cannot use leader ability at the moment");
-                            return;
-                        }
                     }
                     secondLeaderAbilityUsed = true;
                 }
