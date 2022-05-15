@@ -3,6 +3,7 @@ package engine;
 import exceptions.AbilityUseException;
 import exceptions.LeaderAbilityAlreadyUsedException;
 import exceptions.LeaderNotCurrentException;
+import exceptions.NotEnoughResourcesException;
 import model.abilities.*;
 import model.effects.*;
 import model.world.*;
@@ -11,6 +12,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
+
+import static model.abilities.AreaOfEffect.SELFTARGET;
 
 public class Game {
     private Player firstPlayer;
@@ -109,7 +112,7 @@ public class Game {
         // SELFTARGET, SINGLETARGET, TEAMTARGET, DIRECTIONAL, SURROUND
         switch (enm) {
             case "SELFTARGET":
-                return AreaOfEffect.SELFTARGET;
+                return SELFTARGET;
             case "SINGLETARGET":
                 return AreaOfEffect.SINGLETARGET;
             case "TEAMTARGET":
@@ -160,19 +163,6 @@ public class Game {
         }
         return null;
     }
-
-    // check if Ability a1 is already in the availableAbilities arrayList
-    /*
-    private static boolean isDuplicate (Ability a1) {
-        for (Ability a: availableAbilities){
-            if (a.toString().equals(a1.toString())) {
-                return true;
-            }
-        }
-        return false;
-    }
-    //removed check since it has no use
-    */
 
     public static void loadAbilities(String filePath) throws Exception {
         /*
@@ -263,12 +253,174 @@ public class Game {
 
 
     //Methods required for Milestone 2
-    public void castAbility(Ability a) {
-        //TODO
-        //Will finish implementing later
+    public void castAbility(Ability a) throws CloneNotSupportedException, NotEnoughResourcesException,AbilityUseException {
+        Champion c = getCurrentChampion();
+        //Check for exceptions
+        if (a.getManaCost() > c.getMana()) {
+            throw new NotEnoughResourcesException("The current champion does not have enough resources to cast this Ability");
+
+        } else if (!c.getAppliedEffects().isEmpty()) {
+            for (int i = 0; i < c.getAppliedEffects().size(); i++) {
+                if (c.getAppliedEffects().get(i) instanceof Silence)
+                    throw new AbilityUseException("The current champion cannot use this ability at this moment");
+            }
+
+        }
+
+
+        if (a.getCastArea() == AreaOfEffect.SURROUND) {
+            ArrayList<Damageable> targets = this.getSurroundTargets(c, a);
+            a.execute(targets);
+            kill(targets);
+        }
+
+        else if (a.getCastArea() == AreaOfEffect.SELFTARGET)
+        {
+            ArrayList<Damageable> targets = new ArrayList<Damageable>();
+            targets.add(c);
+            a.execute(targets);
+        }
+
+        else if (a.getCastArea() == AreaOfEffect.TEAMTARGET) {
+            ArrayList<Damageable> targets = new ArrayList<Damageable>();
+            if (firstPlayer.getTeam().contains(c)) {
+                for (Damageable target: firstPlayer.getTeam())
+                    targets.add(target);
+            } else {
+                for (Damageable target: secondPlayer.getTeam())
+                    targets.add(target);
+            }
+            a.execute(targets);
+        }
+
+    }
+
+    private ArrayList<Damageable> getSurroundTargets(Champion c, Ability a) {
+        int theY = c.getLocation().x;
+        int theX = c.getLocation().y;
+        byte team = (byte) 2;
+        if (this.firstPlayer.getTeam().contains(c))
+            team = 1;
+
+       ArrayList<Damageable> targets = new ArrayList<Damageable>();
+
+       //i represents y
+        // j represents x
+       for (int i = theY-1; i <= theY+1;i++) {
+           for (int j = theX -1;j <= theX+1;j++)
+           {
+               if (((i > 0 && i < BOARDHEIGHT) && (j > 0 && j < BOARDWIDTH)) && (i != theY && j != theX)) {
+                   Object currentCell = board[i][j];
+
+                   //Adding targets assuming a is a DamagingAbility
+                   if (a instanceof DamagingAbility) {
+                       if (currentCell instanceof Cover)
+                           targets.add((Damageable) board[i][j]);
+                       else if (currentCell instanceof Champion) {
+                           if (team == 1) {
+                               if (secondPlayer.getTeam().contains(currentCell))
+                                   targets.add((Damageable) currentCell);
+                           }
+                           else {
+                               if (firstPlayer.getTeam().contains(currentCell))
+                                   targets.add((Damageable) currentCell);
+                           }
+                       }
+                   }
+
+                   //Adding targets assuming a is a HealingAbility
+                   else if (a instanceof HealingAbility) {
+                       if (currentCell instanceof Champion) {
+                           if (team == 1) {
+                               if (firstPlayer.getTeam().contains(currentCell))
+                                   targets.add((Damageable) currentCell);
+                           }
+                           else {
+                               if (secondPlayer.getTeam().contains(currentCell))
+                                   targets.add((Damageable) currentCell);
+                           }
+                       }
+                   }
+
+                   //Adding targets assuming a is a CrowdControlAbility
+                   else {
+                       if (currentCell instanceof Champion) {
+                           if (team == 1) {
+                                if ( ((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
+                                    if (firstPlayer.getTeam().contains(currentCell))
+                                        targets.add((Damageable) currentCell);
+                                }
+                                else {
+                                    if (secondPlayer.getTeam().contains(currentCell))
+                                        targets.add((Damageable) currentCell);
+                                }
+
+                           }
+
+                           else {
+                               if ( ((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
+                                   if (secondPlayer.getTeam().contains(currentCell))
+                                       targets.add((Damageable) currentCell);
+                               }
+                               else {
+                                   if (firstPlayer.getTeam().contains(currentCell))
+                                       targets.add((Damageable) currentCell);
+                               }
+                           }
+                       }
+                   }
+               }
+           }
+       }
+
+
+
+       return targets;
     }
     public Champion getCurrentChampion() {
         return (Champion) turnOrder.peekMin();
+    }
+
+    //helper method to remove dead champions
+    public void kill(ArrayList<Damageable> targets) {
+        for (int i = 0; i < targets.size(); i++) {
+            if (targets.get(i) instanceof Cover) {
+                Cover co = (Cover) targets.get(i);
+                if (co.getCurrentHP() == 0)
+                {
+                    int coverY = targets.get(i).getLocation().x;
+                    int coverX = targets.get(i).getLocation().y;
+                    this.board[coverX][coverY] = null;
+                }
+            }
+            else
+            {
+                if (((Champion) targets.get(i)).getCondition() == Condition.KNOCKEDOUT) {
+                    int championY = targets.get(i).getLocation().x;
+                    int championX = targets.get(i).getLocation().y;
+                    this.board[championX][championY] = null;
+                    if (firstPlayer.getTeam().contains(targets.get(i)))
+                        firstPlayer.getTeam().remove(i);
+                    else
+                        secondPlayer.getTeam().remove(i);
+                }
+
+            }
+        }
+    }
+
+    public void killChampion(ArrayList<Champion> targets) {
+        for (int i = 0; i < targets.size(); i++) {
+            if (((Champion) targets.get(i)).getCondition() == Condition.KNOCKEDOUT) {
+                int championY = targets.get(i).getLocation().x;
+                int championX = targets.get(i).getLocation().y;
+                this.board[championX][championY] = null;
+                if (firstPlayer.getTeam().contains(targets.get(i)))
+                    firstPlayer.getTeam().remove(i);
+                else
+                    secondPlayer.getTeam().remove(i);
+            }
+        }
     }
 
     public void useLeaderAbility() throws LeaderNotCurrentException, LeaderAbilityAlreadyUsedException, AbilityUseException {
@@ -288,6 +440,8 @@ public class Game {
                     } else if (c instanceof Villain) {
                         ArrayList<Champion> targets = secondPlayer.getTeam();
                         c.useLeaderAbility(targets);
+                        killChampion(targets);
+
 
                     } else if (c instanceof AntiHero) {
                         ArrayList<Champion> targets = new ArrayList<Champion>();
@@ -321,12 +475,9 @@ public class Game {
 
                     } else if (c instanceof Villain) {
                         ArrayList<Champion> targets = firstPlayer.getTeam();
-                        try {
-                            c.useLeaderAbility(targets);
-                        } catch (AbilityUseException e) {
-                            System.out.println("Cannot use leader ability at the moment");
-                            return;
-                        }
+                        c.useLeaderAbility(targets);
+                        killChampion(targets);
+
                     } else if (c instanceof AntiHero) {
                         ArrayList<Champion> targets = new ArrayList<Champion>();
                         for (int i = 0; i < firstPlayer.getTeam().size();i++) {
@@ -355,7 +506,7 @@ public class Game {
 
     }
 
-    public void prepareChampionTurns(){
+    public void prepareChampionTurns() {
 
         for (int i = 0; i < 3; i++) {
             if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
