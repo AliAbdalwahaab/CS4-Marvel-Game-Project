@@ -97,9 +97,9 @@ public class Game {
         while (covers > 0) { // till covers reach 0 (5 covers placed)
             int x = r.nextInt(BOARDWIDTH);
             int y = 1 + r.nextInt(BOARDHEIGHT - 2);
-            if (board[y][x] == null) {
+            if (board[x][y] == null) {
                 covers--;
-                board[y][x] = new Cover(y, x);
+                board[x][y] = new Cover(x, y);
             }
         }
     }
