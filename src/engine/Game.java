@@ -281,6 +281,7 @@ public class Game {
             a.execute(targets);
         }
 
+        //missing checking for manhattan distance for team members
         else if (a.getCastArea() == AreaOfEffect.TEAMTARGET) {
             ArrayList<Damageable> targets = new ArrayList<Damageable>();
             if (firstPlayer.getTeam().contains(c)) {
