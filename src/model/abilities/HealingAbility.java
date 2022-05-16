@@ -1,6 +1,7 @@
 package model.abilities;
 
 import model.world.Champion;
+import model.world.Cover;
 import model.world.Damageable;
 import java.util.ArrayList;
 
@@ -26,10 +27,10 @@ public class HealingAbility extends Ability {
 
     public void execute(ArrayList<Damageable> targets) {
         //Assuming every item in the arraylist implements the Damageable interface
-        for (int i = 0; i < targets.size();i++) {
-            if (targets.get(i) instanceof Champion) {
-                int newHP = targets.get(i).getCurrentHP() + this.healAmount;
-                targets.get(i).setCurrentHP(newHP);
+        for (Damageable target : targets) {
+            if (!(target instanceof Cover)) {
+                int newHP = target.getCurrentHP() + this.healAmount;
+                target.setCurrentHP(newHP);
             }
 
         }

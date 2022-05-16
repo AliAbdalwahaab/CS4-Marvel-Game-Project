@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static java.lang.Math.abs;
 import static model.abilities.AreaOfEffect.SELFTARGET;
 
 public class Game {
@@ -264,8 +265,8 @@ public class Game {
                 if (c.getAppliedEffects().get(i) instanceof Silence)
                     throw new AbilityUseException("The current champion cannot use this ability at this moment");
             }
-
-        }
+        } else if (a.getCurrentCooldown() != 0 )
+            throw new AbilityUseException("The current champion cannot use this ability at this moment");
 
 
         if (a.getCastArea() == AreaOfEffect.SURROUND) {
@@ -276,25 +277,103 @@ public class Game {
 
         else if (a.getCastArea() == AreaOfEffect.SELFTARGET)
         {
-            ArrayList<Damageable> targets = new ArrayList<Damageable>();
-            targets.add(c);
-            a.execute(targets);
+            //ArrayList<Damageable> targets = new ArrayList<Damageable>();
+            //targets.add(c);
+            //a.execute(targets);
+            if (a instanceof HealingAbility) {
+                int newHP = c.getCurrentHP() + ((HealingAbility) a).getHealAmount();
+                c.setCurrentHP(newHP);
+            } else if (a instanceof CrowdControlAbility) {
+                Effect e = (Effect) (((CrowdControlAbility) a).getEffect().clone());
+                c.getAppliedEffects().add(e);
+                e.apply(c);
+            }
         }
 
-        //missing checking for manhattan distance for team members
         else if (a.getCastArea() == AreaOfEffect.TEAMTARGET) {
+
             ArrayList<Damageable> targets = new ArrayList<Damageable>();
-            if (firstPlayer.getTeam().contains(c)) {
-                for (Damageable target: firstPlayer.getTeam())
-                    targets.add(target);
-            } else {
-                for (Damageable target: secondPlayer.getTeam())
-                    targets.add(target);
+            if (a instanceof HealingAbility) {
+                if (firstPlayer.getTeam().contains(c)) {
+                    for (Damageable target: firstPlayer.getTeam()) {
+                        int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                abs(target.getLocation().y - c.getLocation().y);
+                        if (a.getCastRange() <= manhattanDistance)
+                            targets.add(target);
+                    }
+
+                } else {
+                    for (Damageable target: secondPlayer.getTeam())
+                    {
+                        int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                abs(target.getLocation().y - c.getLocation().y);
+                        if (a.getCastRange() <= manhattanDistance)
+                            targets.add(target);
+                    }
+                }
+            } else if (a instanceof DamagingAbility) {
+                if (firstPlayer.getTeam().contains(c)) {
+                    for (Damageable target: secondPlayer.getTeam()) {
+                        int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                abs(target.getLocation().y - c.getLocation().y);
+                        if (a.getCastRange() <= manhattanDistance)
+                            targets.add(target);
+                    }
+
+                } else {
+                    for (Damageable target: firstPlayer.getTeam())
+                    {
+                        int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                abs(target.getLocation().y - c.getLocation().y);
+                        if (a.getCastRange() <= manhattanDistance)
+                            targets.add(target);
+                    }
+                }
+            } else if (a instanceof CrowdControlAbility) {
+                if (((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
+                    if (firstPlayer.getTeam().contains(c)) {
+                        for (Damageable target: firstPlayer.getTeam()) {
+                            int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                    abs(target.getLocation().y - c.getLocation().y);
+                            if (a.getCastRange() <= manhattanDistance)
+                                targets.add(target);
+                        }
+
+                    } else {
+                        for (Damageable target: secondPlayer.getTeam())
+                        {
+                            int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                    abs(target.getLocation().y - c.getLocation().y);
+                            if (a.getCastRange() <= manhattanDistance)
+                                targets.add(target);
+                        }
+                    }
+                } else {
+                    if (firstPlayer.getTeam().contains(c)) {
+                        for (Damageable target: secondPlayer.getTeam()) {
+                            int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                    abs(target.getLocation().y - c.getLocation().y);
+                            if (a.getCastRange() <= manhattanDistance)
+                                targets.add(target);
+                        }
+
+                    } else {
+                        for (Damageable target: firstPlayer.getTeam())
+                        {
+                            int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                    abs(target.getLocation().y - c.getLocation().y);
+                            if (a.getCastRange() <= manhattanDistance)
+                                targets.add(target);
+                        }
+                    }
+                }
             }
             a.execute(targets);
+            kill(targets);
         }
-
-        c.setMana(c.getMana()-a.getManaCost());
+        int newChampionMana = c.getMana()-a.getManaCost();
+        c.setMana(newChampionMana);
+        a.setCurrentCooldown(a.getBaseCooldown());
 
     }
 
@@ -312,13 +391,14 @@ public class Game {
        for (int i = theY-1; i <= theY+1;i++) {
            for (int j = theX -1;j <= theX+1;j++)
            {
-               if (((i > 0 && i < BOARDHEIGHT) && (j > 0 && j < BOARDWIDTH)) && (i != theY && j != theX)) {
+               if (((i > 0 && i < BOARDHEIGHT) && (j > 0 && j < BOARDWIDTH))) { //i removed the the
+                   // && (i != theY && j != theX) part because it fixed a lot of failed tests
                    Object currentCell = board[i][j];
 
                    //Adding targets assuming a is a DamagingAbility
                    if (a instanceof DamagingAbility) {
                        if (currentCell instanceof Cover)
-                           targets.add((Damageable) board[i][j]);
+                           targets.add((Damageable) currentCell);
                        else if (currentCell instanceof Champion) {
                            if (team == 1) {
                                if (secondPlayer.getTeam().contains(currentCell))
@@ -358,9 +438,7 @@ public class Game {
                                         targets.add((Damageable) currentCell);
                                 }
 
-                           }
-
-                           else {
+                           } else {
                                if ( ((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
                                    if (secondPlayer.getTeam().contains(currentCell))
                                        targets.add((Damageable) currentCell);

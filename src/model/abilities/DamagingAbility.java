@@ -25,7 +25,6 @@ public class DamagingAbility extends Ability {
     }
 
     public void execute(ArrayList<Damageable> targets) {
-        //Assuming every item in the arraylist implements the Damageable interface
         for (int i = 0; i < targets.size();i++) {
             int newHP = targets.get(i).getCurrentHP() - this.damageAmount;
             targets.get(i).setCurrentHP(newHP);
