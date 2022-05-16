@@ -294,6 +294,8 @@ public class Game {
             a.execute(targets);
         }
 
+        c.setMana(c.getMana()-a.getManaCost());
+
     }
 
     private ArrayList<Damageable> getSurroundTargets(Champion c, Ability a) {
