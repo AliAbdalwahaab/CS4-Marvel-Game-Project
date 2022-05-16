@@ -961,4 +961,19 @@ public class Game {
 
         c.setCurrentActionPoints(c.getCurrentActionPoints() - 2);
     }
+
+    public Player checkGameOver(){
+
+        if(this.firstPlayer.getTeam().size() == 0)
+            return this.secondPlayer;
+        if (this.secondPlayer.getTeam().size() == 0)
+            return this.firstPlayer;
+        return null;
+
+    }
+
+//    public void endTurn(){
+//        this.turnOrder.remove();
+//
+//    }
 }
