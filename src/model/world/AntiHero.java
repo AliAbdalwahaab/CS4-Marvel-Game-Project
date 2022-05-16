@@ -33,6 +33,7 @@ public class AntiHero extends Champion {
             for (Champion c: targets) {
                 Stun theEffect = (Stun) s.clone();
                 theEffect.apply(c);
+                c.getAppliedEffects().add(theEffect);
             }
         }
     }

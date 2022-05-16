@@ -28,9 +28,9 @@ public class Villain extends Champion {
             throw new AbilityUseException("Villain is either knocked out or inactive. Cannot use Leader Ability");
         else {
             //killing all enemy champions with less than 30% health
-            for (int i = 0; i < targets.size();i++) {
-                if (targets.get(i).getCurrentHP() < targets.get(i).getMaxHP()*0.3)
-                    targets.get(i).setCondition(Condition.KNOCKEDOUT);
+            for (Champion c: targets) {
+                if (c.getCurrentHP() < c.getMaxHP()*0.3)
+                    c.setCondition(Condition.KNOCKEDOUT);
 
 
             }
