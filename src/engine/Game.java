@@ -549,6 +549,7 @@ public class Game {
         int newChampionMana = c.getMana() - a.getManaCost();
         c.setMana(newChampionMana);
         a.setCurrentCooldown(a.getBaseCooldown());
+        c.setCurrentActionPoints(c.getCurrentActionPoints() - a.getRequiredActionPoints());
     }
 
     private ArrayList<Damageable> getSurroundTargets(Champion c, Ability a) {
@@ -972,8 +973,56 @@ public class Game {
 
     }
 
-//    public void endTurn(){
-//        this.turnOrder.remove();
-//
-//    }
+    public void endTurn() {
+        this.turnOrder.remove();
+        ArrayList<Effect> toRemove = new ArrayList<>();
+
+        for(Champion c: firstPlayer.getTeam()) {
+            for(Effect e : c.getAppliedEffects()) {
+                if (e.getDuration() >= 1)
+                    e.setDuration(e.getDuration() - 1);
+                toRemove.add(e);
+            }
+
+            for (Ability a: c.getAbilities()) {
+                a.setCurrentCooldown(a.getCurrentCooldown() - 1);
+            }
+
+            for (Effect e : toRemove) {
+                if (c.getAppliedEffects().contains(e)) c.getAppliedEffects().remove(e);
+            }
+        }
+
+        for(Champion c: secondPlayer.getTeam()) {
+            for(Effect e : c.getAppliedEffects()) {
+                if (e.getDuration() >= 1)
+                    e.setDuration(e.getDuration() - 1);
+                toRemove.add(e);
+            }
+
+            for (Ability a: c.getAbilities()) {
+                a.setCurrentCooldown(a.getCurrentCooldown() - 1);
+            }
+
+            for (Effect e : toRemove) {
+                if (c.getAppliedEffects().contains(e)) c.getAppliedEffects().remove(e);
+            }
+        }
+
+
+
+        while (!turnOrder.isEmpty() && ((Champion) turnOrder.peekMin()).getCondition() == Condition.INACTIVE) {
+            ((Champion) turnOrder.peekMin()).setCondition(Condition.ACTIVE);
+            turnOrder.remove();
+        }
+
+        if (turnOrder.isEmpty()) {
+            prepareChampionTurns();
+        }
+
+        Champion c = (Champion) turnOrder.peekMin();
+        c.setCurrentActionPoints(c.getMaxActionPointsPerTurn());
+        c.setMana(c.getMana());
+
+   }
 }
