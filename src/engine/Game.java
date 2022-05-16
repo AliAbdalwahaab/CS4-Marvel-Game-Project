@@ -801,8 +801,8 @@ public class Game {
         switch (d) {
             case LEFT: x--; break;
             case RIGHT: x++; break;
-            case UP: y--; break;
-            case DOWN: y++; break;
+            case DOWN: y--; break;
+            case UP: y++; break;
         }
 
         if (!validIndices(y, x)) {
@@ -843,7 +843,7 @@ public class Game {
         int range = c.getAttackRange();
         // fetching first target in the specific direction
         switch (d) {
-            case DOWN :
+            case UP :
                 for (int y = c.getLocation().x + 1; y < BOARDHEIGHT && range > 0; y++, range--) {
                     if (board[y][c.getLocation().y] != null) {
                         target = (Damageable) board[y][c.getLocation().y];
@@ -851,7 +851,7 @@ public class Game {
                     }
                 }
                 break;
-            case UP:
+            case DOWN:
                 for (int y = c.getLocation().x - 1; y >= 0 && range > 0; y--, range--) {
                     if (board[y][c.getLocation().y] != null) {
                         target = (Damageable) board[y][c.getLocation().y];
