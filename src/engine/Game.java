@@ -460,7 +460,8 @@ public class Game {
        return targets;
     }
     public Champion getCurrentChampion() {
-        return (Champion) turnOrder.remove();
+        // will remove current champion when turn ends
+        return (Champion) turnOrder.peekMin();
     }
 
     //helper method to remove dead champions
@@ -601,6 +602,10 @@ public class Game {
                 turnOrder.insert(secondPlayer.getTeam().get(i));
             }
         }
+    }
+
+    public void move(Direction d) {
+
     }
 
 }
