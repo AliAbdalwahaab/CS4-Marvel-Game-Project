@@ -686,9 +686,9 @@ public class Game {
         Champion c = getCurrentChampion();
 
         //Check if current champion is a Leader
-        if (firstPlayer.getLeader().compareTo(c) == 0 || secondPlayer.getLeader().compareTo(c) == 0) {
+        if (firstPlayer.getLeader() == c || secondPlayer.getLeader() == c) {
             //Check if current champion is Leader of first team
-            if (firstPlayer.getLeader().compareTo(c) == 0) {
+            if (firstPlayer.getLeader() == c) {
                 //Check if leader ability already used
                 if (!firstLeaderAbilityUsed) {
                     //Choose targets based on Hero Class
@@ -724,7 +724,7 @@ public class Game {
             }
 
             //Check if current champion is leader of second team
-            else if (secondPlayer.getLeader().compareTo(c) == 0) {
+            else if (secondPlayer.getLeader() == c) {
                 //Check if leader ability is already used
                 if (!secondLeaderAbilityUsed) {
                     //Choose targets based on Hero Class
@@ -758,10 +758,9 @@ public class Game {
                     throw new LeaderAbilityAlreadyUsedException("Leader Ability has already been used");
 
             }
-            else
-                throw new LeaderNotCurrentException("The Champion whose turn is currently taking place is not a leader");
-
         }
+        else
+            throw new LeaderNotCurrentException("The Champion whose turn is currently taking place is not a leader");
 
     }
 
@@ -824,6 +823,11 @@ public class Game {
         // move on map
         board[y][x] = c;
         c.setCurrentActionPoints(c.getCurrentActionPoints() - 1);
+
+    }
+
+    private void removeFromQueue(Champion c) {
+        ArrayList<Champion> newQ = new ArrayList<>();
 
     }
 
