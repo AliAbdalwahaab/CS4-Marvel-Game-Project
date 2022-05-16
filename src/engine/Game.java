@@ -459,7 +459,7 @@ public class Game {
        return targets;
     }
     public Champion getCurrentChampion() {
-        return (Champion) turnOrder.peekMin();
+        return (Champion) turnOrder.remove();
     }
 
     //helper method to remove dead champions
