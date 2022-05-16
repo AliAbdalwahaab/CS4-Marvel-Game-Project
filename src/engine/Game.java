@@ -657,6 +657,7 @@ public class Game {
                     int championY = targets.get(i).getLocation().x;
                     int championX = targets.get(i).getLocation().y;
                     this.board[championX][championY] = null;
+                    removeFromQueue(((Champion) targets.get(i)));
                     if (firstPlayer.getTeam().contains(targets.get(i)))
                         firstPlayer.getTeam().remove(i);
                     else
@@ -674,6 +675,7 @@ public class Game {
                 int championY = targets.get(i).getLocation().x;
                 int championX = targets.get(i).getLocation().y;
                 this.board[championX][championY] = null;
+                removeFromQueue(((Champion) targets.get(i)));
                 if (firstPlayer.getTeam().contains(targets.get(i)))
                     firstPlayer.getTeam().remove(i);
                 else
