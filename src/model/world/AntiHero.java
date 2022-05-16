@@ -24,14 +24,15 @@ public class AntiHero extends Champion {
         return HEROCLASS;
     }
 
-    public  void useLeaderAbility(ArrayList<Champion> targets) throws AbilityUseException {
+    public  void useLeaderAbility(ArrayList<Champion> targets) throws AbilityUseException, CloneNotSupportedException {
+        Stun s = new Stun(2);
         if (this.getCondition() == INACTIVE || this.getCondition() == KNOCKEDOUT)
             throw new AbilityUseException("AntiHero is either knocked out or inactive. Cannot use Leader Ability");
         else {
             //stuns all champions on the board (leaders already excluded before method call) for 2 turns
-            for (int i = 0; i < targets.size();i++) {
-                Stun s = new Stun(2);
-                s.apply(targets.get(i));
+            for (Champion c: targets) {
+                Stun theEffect = (Stun) s.clone();
+                theEffect.apply(c);
             }
         }
     }

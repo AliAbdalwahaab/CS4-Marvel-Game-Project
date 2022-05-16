@@ -165,5 +165,5 @@ public abstract class Champion implements Comparable, Damageable {
     }
 
     //Additional methods for Milestone 2
-    public abstract void useLeaderAbility(ArrayList<Champion> targets) throws AbilityUseException;
+    public abstract void useLeaderAbility(ArrayList<Champion> targets) throws AbilityUseException, CloneNotSupportedException;
 }

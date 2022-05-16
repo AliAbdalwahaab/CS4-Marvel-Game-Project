@@ -265,7 +265,7 @@ public class Game {
                 if (c.getAppliedEffects().get(i) instanceof Silence)
                     throw new AbilityUseException("The current champion cannot use this ability at this moment");
             }
-        } else if (a.getCurrentCooldown() != 0 )
+        } else if (a.getCurrentCooldown() > 0 )
             throw new AbilityUseException("The current champion cannot use this ability at this moment");
 
 
@@ -504,7 +504,7 @@ public class Game {
         }
     }
 
-    public void useLeaderAbility() throws LeaderNotCurrentException, LeaderAbilityAlreadyUsedException, AbilityUseException {
+    public void useLeaderAbility() throws LeaderNotCurrentException, LeaderAbilityAlreadyUsedException, AbilityUseException, CloneNotSupportedException {
         Champion c = getCurrentChampion();
 
         //Check if current champion is a Leader
