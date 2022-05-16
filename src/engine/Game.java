@@ -257,7 +257,7 @@ public class Game {
     public void castAbility(Ability a) throws CloneNotSupportedException, NotEnoughResourcesException,AbilityUseException {
         Champion c = getCurrentChampion();
         //Check for exceptions
-        if (a.getManaCost() > c.getMana()) {
+        if (a.getManaCost() > c.getMana() || c.getCurrentActionPoints() < a.getRequiredActionPoints()) {
             throw new NotEnoughResourcesException("The current champion does not have enough resources to cast this Ability");
 
         } else if (!c.getAppliedEffects().isEmpty()) {
@@ -373,6 +373,7 @@ public class Game {
         }
         int newChampionMana = c.getMana()-a.getManaCost();
         c.setMana(newChampionMana);
+        c.setCurrentActionPoints(c.getCurrentActionPoints() - a.getRequiredActionPoints());
         a.setCurrentCooldown(a.getBaseCooldown());
 
     }
