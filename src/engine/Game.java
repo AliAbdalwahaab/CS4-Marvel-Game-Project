@@ -779,7 +779,51 @@ public class Game {
         }
     }
 
-    public void move(Direction d) {
+    private boolean validIndices(int y, int x) {
+        return (y >= 0 && y < BOARDHEIGHT) && (x >= 0 && x < BOARDWIDTH);
+    }
+
+    public void move(Direction d) throws UnallowedMovementException, NotEnoughResourcesException {
+        Champion c = getCurrentChampion();
+        if (c.getCurrentActionPoints() == 0) {
+            throw new NotEnoughResourcesException("Champion doesn't have enough action points to move");
+        }
+
+        // check for root effect
+        for (Effect e: c.getAppliedEffects()) {
+            if (e instanceof Root && e.getDuration() != 0) {
+                throw new UnallowedMovementException("Champion is rooted and cannot move");
+            }
+        }
+
+        int y = c.getLocation().x;
+        int x = c.getLocation().y;
+
+        switch (d) {
+            case LEFT: x -= 1; break;
+            case RIGHT: x += 1; break;
+            case UP: y -= 1; break;
+            case DOWN: y += 1; break;
+        }
+
+        if (!validIndices(y, x)) {
+            throw new UnallowedMovementException("Movement out of map range");
+        }
+
+        if (board[y][x] != null) {
+            throw new UnallowedMovementException("Cannot move to a populated cell");
+        }
+
+        // nullify current position
+        board[c.getLocation().x][c.getLocation().y] = null;
+
+        // update champs location attribute
+        Point newLocation = new Point(y, x);
+        c.setLocation(newLocation);
+
+        // move on map
+        board[y][x] = c;
+        c.setCurrentActionPoints(c.getCurrentActionPoints() - 1);
 
     }
 
