@@ -23,7 +23,7 @@ public class PowerUp extends Effect {
                 a = heal;
             }
         }
-        c.getAppliedEffects().add(this);
+        //c.getAppliedEffects().add(this);
     }
 
     public void remove(Champion c) {
