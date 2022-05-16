@@ -828,7 +828,16 @@ public class Game {
 
     private void removeFromQueue(Champion c) {
         ArrayList<Champion> newQ = new ArrayList<>();
+        while(!turnOrder.isEmpty()) {
+            if (((Champion) turnOrder.peekMin()) != c) {
+                newQ.add((Champion) turnOrder.peekMin());
+            }
+            turnOrder.remove();
+        }
 
+        for (Champion champ : newQ) {
+            turnOrder.insert(champ);
+        }
     }
 
     public void attack(Direction d) throws ChampionDisarmedException, NotEnoughResourcesException {
@@ -923,6 +932,7 @@ public class Game {
                     enemy.setCurrentHP(enemy.getCurrentHP() - dmgAmount);
                     if (enemy.getCurrentHP() <= 0) {
                         enemy.setCondition(Condition.KNOCKEDOUT);
+                        removeFromQueue(enemy);
                         board[enemy.getLocation().x][enemy.getLocation().y] = null;
                         if (firstPlayer.getTeam().contains(enemy)) {
                             firstPlayer.getTeam().remove(enemy);
@@ -938,6 +948,7 @@ public class Game {
                     enemy.setCurrentHP(enemy.getCurrentHP() - dmgAmount);
                     if (enemy.getCurrentHP() <= 0) {
                         enemy.setCondition(Condition.KNOCKEDOUT);
+                        removeFromQueue(enemy);
                         board[enemy.getLocation().x][enemy.getLocation().y] = null;
                         if (firstPlayer.getTeam().contains(enemy)) {
                             firstPlayer.getTeam().remove(enemy);
@@ -953,6 +964,7 @@ public class Game {
                     enemy.setCurrentHP(enemy.getCurrentHP() - dmgAmount);
                     if (enemy.getCurrentHP() <= 0) {
                         enemy.setCondition(Condition.KNOCKEDOUT);
+                        removeFromQueue(enemy);
                         board[enemy.getLocation().x][enemy.getLocation().y] = null;
                         if (firstPlayer.getTeam().contains(enemy)) {
                             firstPlayer.getTeam().remove(enemy);
