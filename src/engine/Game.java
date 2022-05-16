@@ -381,7 +381,7 @@ public class Game {
         if (firstPlayer.getTeam().contains(c))
             team = 1;
         //Check for exceptions
-        if (a.getManaCost() > c.getMana())
+        if (a.getManaCost() > c.getMana() || c.getCurrentActionPoints() < a.getRequiredActionPoints())
             throw new NotEnoughResourcesException("The current champion does not have enough resources to cast this Ability");
 
         else if (!c.getAppliedEffects().isEmpty()) {
