@@ -394,7 +394,7 @@ public class Game {
         else if (a.getCastArea() != AreaOfEffect.SINGLETARGET)
             return;
 
-        Object currentCell = board[y][x]; //assuming we don't switch the y and the x when invoking the method
+        Object currentCell = board[x][y]; //assuming we don't switch the y and the x when invoking the method
         if (currentCell == null) {
             //deduct resources with no results
             int newChampionMana = c.getMana() - a.getManaCost();
