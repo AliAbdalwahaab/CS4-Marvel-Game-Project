@@ -76,7 +76,7 @@ public class Game {
         availableAbilities = new ArrayList<>();
         placeChampions();
         placeCovers();
-        turnOrder = new PriorityQueue(first.getTeam().size()+second.getTeam().size());
+        turnOrder = new PriorityQueue(6);
         prepareChampionTurns();
     }
 
@@ -98,9 +98,9 @@ public class Game {
         while (covers > 0) { // till covers reach 0 (5 covers placed)
             int x = r.nextInt(BOARDWIDTH);
             int y = 1 + r.nextInt(BOARDHEIGHT - 2);
-            if (board[x][y] == null) {
+            if (board[y][x] == null) {
                 covers--;
-                board[x][y] = new Cover(x, y);
+                board[y][x] = new Cover(y, x);
             }
         }
     }
@@ -800,10 +800,10 @@ public class Game {
         int x = c.getLocation().y;
 
         switch (d) {
-            case LEFT: x -= 1; break;
-            case RIGHT: x += 1; break;
-            case UP: y -= 1; break;
-            case DOWN: y += 1; break;
+            case LEFT: x--; break;
+            case RIGHT: x++; break;
+            case UP: y--; break;
+            case DOWN: y++; break;
         }
 
         if (!validIndices(y, x)) {
