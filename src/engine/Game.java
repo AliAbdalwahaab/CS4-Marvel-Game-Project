@@ -375,6 +375,66 @@ public class Game {
 
     }
 
+    public void castAbility(Ability a, Direction d) throws NotEnoughResourcesException, AbilityUseException {
+        Champion c = getCurrentChampion();
+        byte team = (byte) 2;
+        if (firstPlayer.getTeam().contains(c))
+            team = 1;
+
+        //Check for exceptions
+        if (a.getManaCost() > c.getMana() || c.getCurrentActionPoints() < a.getRequiredActionPoints()) {
+            throw new NotEnoughResourcesException("The current champion does not have enough resources to cast this Ability");
+
+        } else if (!c.getAppliedEffects().isEmpty()) {
+            for (int i = 0; i < c.getAppliedEffects().size(); i++) {
+                if (c.getAppliedEffects().get(i) instanceof Silence)
+                    throw new AbilityUseException("The current champion cannot use this ability at this moment");
+            }
+        } else if (a.getCurrentCooldown() > 0 )
+            throw new AbilityUseException("The current champion cannot use this ability at this moment");
+
+        Damageable target = null; // target to be damaged
+        int range = a.getCastRange();
+        // fetching first target in the specific direction
+        switch (d) {
+            case UP :
+                for (int y = c.getLocation().x + 1; y < BOARDHEIGHT && range > 0; y++, range--) {
+                    if (board[y][c.getLocation().y] != null) {
+                        target = (Damageable) board[y][c.getLocation().y];
+                        break;
+                    }
+                }
+                break;
+            case DOWN:
+                for (int y = c.getLocation().x - 1; y >= 0 && range > 0; y--, range--) {
+                    if (board[y][c.getLocation().y] != null) {
+                        target = (Damageable) board[y][c.getLocation().y];
+                        break;
+                    }
+                }
+                break;
+            case LEFT:
+                for (int x = c.getLocation().y - 1; x >= 0 && range > 0; x--, range--) {
+                    if (board[c.getLocation().x][x] != null) {
+                        target = (Damageable) board[c.getLocation().x][x];
+                        break;
+                    }
+                }
+                break;
+            case RIGHT:
+                for (int x = c.getLocation().y + 1; x <= BOARDWIDTH && range > 0; x++, range--) {
+                    if (board[c.getLocation().x][x] != null) {
+                        target = (Damageable) board[c.getLocation().x][x];
+                        break;
+                    }
+                }
+                break;
+        }
+
+        // TODO :  Implement Logic on the given target
+
+    }
+
     public void castAbility(Ability a, int x, int y) throws NotEnoughResourcesException, AbilityUseException, InvalidTargetException, CloneNotSupportedException {
         Champion c = getCurrentChampion();
         byte team = (byte) 2;
@@ -858,6 +918,7 @@ public class Game {
         Damageable target = null; // target to be damaged
         int range = c.getAttackRange();
         // fetching first target in the specific direction
+        // TODO: WHAT HAPPENS IF THE FIRST CHAMP IN THE DIRECTION IS A FRIENDLY?
         switch (d) {
             case UP :
                 for (int y = c.getLocation().x + 1; y < BOARDHEIGHT && range > 0; y++, range--) {
