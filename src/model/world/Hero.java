@@ -31,14 +31,19 @@ public class Hero extends Champion {
         if (this.getCondition() == INACTIVE || this.getCondition() == KNOCKEDOUT)
             throw new AbilityUseException("Hero is either knocked out or inactive. Cannot use Leader Ability");
         else {
+            ArrayList<Effect> toRemove = new ArrayList<>();
             //Removing all negative effects from team and applying embrace effect
             for (Champion target: targets) {
                 for (Effect ef: target.getAppliedEffects()) {
                     if (ef.getType() == DEBUFF)
-                        target.getAppliedEffects().remove(ef);
+                        toRemove.add(ef);
                 }
                 Embrace e = new Embrace(2);
                 e.apply(target);
+
+                for (Effect ef: toRemove) {
+                    target.getAppliedEffects().remove(ef);
+                }
             }
         }
     }
