@@ -24,7 +24,7 @@ public class Shield extends Effect {
         c.setSpeed((int) (c.getSpeed() / 1.02)); // retract by -2%
         ArrayList<Effect> toRemove = new ArrayList<>();
         for (Effect e: c.getAppliedEffects()) {
-            if (e instanceof Shield && e.getDuration() == 0) {
+            if (e instanceof Shield && e.getDuration() == 0 || e == this) {
                 toRemove.add(e);
             }
         }
