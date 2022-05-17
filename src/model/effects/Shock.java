@@ -2,6 +2,8 @@ package model.effects;
 
 import model.world.Champion;
 
+import java.util.ArrayList;
+
 public class Shock extends Effect {
 
     public Shock (int duration) {
@@ -21,10 +23,15 @@ public class Shock extends Effect {
         c.setAttackDamage((int) (c.getAttackDamage() / 0.9));
         c.setCurrentActionPoints(c.getCurrentActionPoints() + 1);
         c.setMaxActionPointsPerTurn(c.getMaxActionPointsPerTurn() + 1);
+        ArrayList<Effect> toRemove = new ArrayList<>();
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof Shock && e.getDuration() == 0) {
-                c.getAppliedEffects().remove(e);
+                toRemove.add(e);
             }
+        }
+
+        for (Effect e: toRemove) {
+            c.getAppliedEffects().remove(e);
         }
     }
 }

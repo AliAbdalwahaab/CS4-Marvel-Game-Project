@@ -6,6 +6,8 @@ import model.abilities.HealingAbility;
 import model.world.Champion;
 import model.world.Condition;
 
+import java.util.ArrayList;
+
 public class Root extends Effect {
 
     public Root (int duration) {
@@ -20,10 +22,15 @@ public class Root extends Effect {
     }
 
     public void remove(Champion c) {
+        ArrayList<Effect> toRemove = new ArrayList<>();
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof Root && e.getDuration() == 0) {
-                c.getAppliedEffects().remove(e);
+                toRemove.add(e);
             }
+        }
+
+        for (Effect e: toRemove) {
+            c.getAppliedEffects().remove(e);
         }
     }
 }

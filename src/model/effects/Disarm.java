@@ -5,6 +5,8 @@ import model.abilities.AreaOfEffect;
 import model.abilities.DamagingAbility;
 import model.world.Champion;
 
+import java.util.ArrayList;
+
 public class Disarm extends Effect {
 
     public Disarm (int duration) {
@@ -31,10 +33,15 @@ public class Disarm extends Effect {
         }
 
         // remove disarm effect from champions effects ??
+        ArrayList<Effect> toRemove = new ArrayList<>();
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof Disarm && e.getDuration() == 0) {
-                c.getAppliedEffects().remove(e);
+                toRemove.add(e);
             }
+        }
+
+        for (Effect e: toRemove) {
+            c.getAppliedEffects().remove(e);
         }
     }
 }

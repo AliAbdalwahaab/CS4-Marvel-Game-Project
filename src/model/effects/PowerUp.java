@@ -5,6 +5,8 @@ import model.abilities.DamagingAbility;
 import model.abilities.HealingAbility;
 import model.world.Champion;
 
+import java.util.ArrayList;
+
 public class PowerUp extends Effect {
 
     public PowerUp (int duration) {
@@ -39,10 +41,15 @@ public class PowerUp extends Effect {
             }
         }
 
+        ArrayList<Effect> toRemove = new ArrayList<>();
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof PowerUp && e.getDuration() == 0) {
-                c.getAppliedEffects().remove(e);
+                toRemove.add(e);
             }
+        }
+
+        for (Effect e: toRemove) {
+            c.getAppliedEffects().remove(e);
         }
     }
 }

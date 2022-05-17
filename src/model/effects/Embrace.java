@@ -2,6 +2,8 @@ package model.effects;
 
 import model.world.Champion;
 
+import java.util.ArrayList;
+
 public class Embrace extends Effect {
 
     public Embrace (int duration) {
@@ -19,10 +21,15 @@ public class Embrace extends Effect {
     public void remove(Champion c) {
         c.setSpeed((int) (c.getSpeed()/1.2)); //retract 20%
         c.setAttackDamage((int) (c.getAttackDamage()/1.2)); //retract 20%
+        ArrayList<Effect> toRemove = new ArrayList<>();
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof Embrace && e.getDuration() == 0) {
-                c.getAppliedEffects().remove(e);
+                toRemove.add(e);
             }
+        }
+
+        for (Effect e: toRemove) {
+            c.getAppliedEffects().remove(e);
         }
     }
 }

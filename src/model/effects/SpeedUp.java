@@ -2,6 +2,8 @@ package model.effects;
 
 import model.world.Champion;
 
+import java.util.ArrayList;
+
 public class SpeedUp extends Effect {
 
     public SpeedUp (int duration) {
@@ -19,10 +21,15 @@ public class SpeedUp extends Effect {
         c.setSpeed((int) (c.getSpeed() / 1.15));
         c.setCurrentActionPoints(c.getCurrentActionPoints() - 1);
         c.setMaxActionPointsPerTurn(c.getMaxActionPointsPerTurn() - 1);
+        ArrayList<Effect> toRemove = new ArrayList<>();
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof SpeedUp && e.getDuration() == 0) {
-                c.getAppliedEffects().remove(e);
+                toRemove.add(e);
             }
+        }
+
+        for (Effect e: toRemove) {
+            c.getAppliedEffects().remove(e);
         }
     }
 }

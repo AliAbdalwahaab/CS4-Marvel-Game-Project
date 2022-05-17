@@ -1007,7 +1007,8 @@ public class Game {
             }
 
             for (Effect e : toRemove) {
-                if (c.getAppliedEffects().contains(e)) c.getAppliedEffects().remove(e);
+                if (c.getAppliedEffects().contains(e) && e.getDuration() == 0)
+                    e.remove(c);
             }
         }
 
@@ -1023,7 +1024,8 @@ public class Game {
             }
 
             for (Effect e : toRemove) {
-                if (c.getAppliedEffects().contains(e)) c.getAppliedEffects().remove(e);
+                if (c.getAppliedEffects().contains(e) && e.getDuration() == 0)
+                    e.remove(c);
             }
         }
 

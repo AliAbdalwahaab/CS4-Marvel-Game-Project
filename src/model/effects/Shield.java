@@ -5,6 +5,8 @@ import model.abilities.DamagingAbility;
 import model.abilities.HealingAbility;
 import model.world.Champion;
 
+import java.util.ArrayList;
+
 public class Shield extends Effect {
 
     public Shield (int duration) {
@@ -20,10 +22,15 @@ public class Shield extends Effect {
 
     public void remove(Champion c) {
         c.setSpeed((int) (c.getSpeed() / 1.02)); // retract by -2%
+        ArrayList<Effect> toRemove = new ArrayList<>();
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof Shield && e.getDuration() == 0) {
-                c.getAppliedEffects().remove(e);
+                toRemove.add(e);
             }
+        }
+
+        for (Effect e: toRemove) {
+            c.getAppliedEffects().remove(e);
         }
     }
 }

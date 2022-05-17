@@ -3,6 +3,8 @@ package model.effects;
 import model.world.Champion;
 import model.world.Condition;
 
+import java.util.ArrayList;
+
 public class Stun extends Effect {
 
     public Stun (int duration) {
@@ -26,10 +28,15 @@ public class Stun extends Effect {
     }
 
     public void remove(Champion c) {
-        for (Effect e : c.getAppliedEffects()) {
+        ArrayList<Effect> toRemove = new ArrayList<>();
+        for (Effect e: c.getAppliedEffects()) {
             if (e instanceof Stun && e.getDuration() == 0) {
-                c.getAppliedEffects().remove(e);
+                toRemove.add(e);
             }
+        }
+
+        for (Effect e: toRemove) {
+            c.getAppliedEffects().remove(e);
         }
         if (disabilities_free(c)) c.setCondition(Condition.ACTIVE);
 
