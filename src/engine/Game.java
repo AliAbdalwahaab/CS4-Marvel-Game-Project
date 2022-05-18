@@ -914,6 +914,12 @@ public class Game {
     public void attack(Direction d) throws ChampionDisarmedException, NotEnoughResourcesException {
         Champion c = getCurrentChampion();
 
+        byte team = (byte) 2;
+        if (this.firstPlayer.getTeam().contains(c))
+            team = 1;
+
+        boolean friendly = false; // true when target found is a friendly
+
         if (c.getCurrentActionPoints() < 2) {
             throw new NotEnoughResourcesException("Not enough action points to do normal attack");
         }
@@ -933,6 +939,10 @@ public class Game {
                 for (int y = c.getLocation().x + 1; y < BOARDHEIGHT && range > 0; y++, range--) {
                     if (board[y][c.getLocation().y] != null) {
                         target = (Damageable) board[y][c.getLocation().y];
+                        if ((team == 1 && firstPlayer.getTeam().contains(board[y][c.getLocation().y])) ||
+                                (team == 2 && secondPlayer.getTeam().contains(board[y][c.getLocation().y]))) {
+                            friendly = true;
+                        }
                         break;
                     }
                 }
@@ -941,6 +951,10 @@ public class Game {
                 for (int y = c.getLocation().x - 1; y >= 0 && range > 0; y--, range--) {
                     if (board[y][c.getLocation().y] != null) {
                         target = (Damageable) board[y][c.getLocation().y];
+                        if ((team == 1 && firstPlayer.getTeam().contains(board[y][c.getLocation().y])) ||
+                                (team == 2 && secondPlayer.getTeam().contains(board[y][c.getLocation().y]))) {
+                            friendly = true;
+                        }
                         break;
                     }
                 }
@@ -949,6 +963,10 @@ public class Game {
                 for (int x = c.getLocation().y - 1; x >= 0 && range > 0; x--, range--) {
                     if (board[c.getLocation().x][x] != null) {
                         target = (Damageable) board[c.getLocation().x][x];
+                        if ((team == 1 && firstPlayer.getTeam().contains(board[c.getLocation().x][x])) ||
+                                (team == 2 && secondPlayer.getTeam().contains(board[c.getLocation().x][x]))) {
+                            friendly = true;
+                        }
                         break;
                     }
                 }
@@ -957,91 +975,96 @@ public class Game {
                 for (int x = c.getLocation().y + 1; x <= BOARDWIDTH && range > 0; x++, range--) {
                     if (board[c.getLocation().x][x] != null) {
                         target = (Damageable) board[c.getLocation().x][x];
+                        if ((team == 1 && firstPlayer.getTeam().contains(board[c.getLocation().x][x])) ||
+                                (team == 2 && secondPlayer.getTeam().contains(board[c.getLocation().x][x]))) {
+                            friendly = true;
+                        }
                         break;
                     }
                 }
                 break;
         }
-
-        if (target instanceof Cover) {
-            Cover cvr = (Cover) target;
-            int remHP = cvr.getCurrentHP() - c.getAttackDamage();
-            if (remHP <= 0) {
-                // remove cover
-                board[cvr.getLocation().x][cvr.getLocation().y] = null;
-            }
-            cvr.setCurrentHP(remHP);
-        } else if (target instanceof Champion) {
-            Champion enemy = (Champion) target;
-            boolean shielded = false;
-            boolean dodged = false;
-
-            // block damage if a shield exits
-            for (Effect e: enemy.getAppliedEffects()) {
-                if (e instanceof Shield && e.getDuration() != 0) {
-                    e.remove(enemy); // remove shield effect [no effect on target]
-                    shielded = true;
-                    break;
+        if (!friendly) {
+            if (target instanceof Cover) {
+                Cover cvr = (Cover) target;
+                int remHP = cvr.getCurrentHP() - c.getAttackDamage();
+                if (remHP <= 0) {
+                    // remove cover
+                    board[cvr.getLocation().x][cvr.getLocation().y] = null;
                 }
-            }
+                cvr.setCurrentHP(remHP);
+            } else if (target instanceof Champion) {
+                Champion enemy = (Champion) target;
+                boolean shielded = false;
+                boolean dodged = false;
 
-            for (Effect e: enemy.getAppliedEffects()) {
-                if (e instanceof Dodge && e.getDuration() != 0) {
-                    int chance =  (int) (Math.random() * 2); // generates 0 or 1 (1 for dodge, 0 for no dodge)
-                    if (chance == 1) { // dodge [no effect on target]
-                        dodged = true;
+                // block damage if a shield exits
+                for (Effect e : enemy.getAppliedEffects()) {
+                    if (e instanceof Shield && e.getDuration() != 0) {
+                        e.remove(enemy); // remove shield effect [no effect on target]
+                        shielded = true;
+                        break;
                     }
-                    break;
                 }
-            }
 
-            if (!shielded && !dodged) { // check all possible pairs of champion and target types
-                if (c instanceof Hero) {
-                    int dmgAmount = c.getAttackDamage();
-                    if (enemy instanceof Villain || enemy instanceof AntiHero) { // deal extra 50% dmg
-                        dmgAmount = (int) (c.getAttackDamage() * 1.5);
-                    }
-                    enemy.setCurrentHP(enemy.getCurrentHP() - dmgAmount);
-                    if (enemy.getCurrentHP() <= 0) {
-                        enemy.setCondition(Condition.KNOCKEDOUT);
-                        removeFromQueue(enemy);
-                        board[enemy.getLocation().x][enemy.getLocation().y] = null;
-                        if (firstPlayer.getTeam().contains(enemy)) {
-                            firstPlayer.getTeam().remove(enemy);
-                        } else {
-                            secondPlayer.getTeam().remove(enemy);
+                for (Effect e : enemy.getAppliedEffects()) {
+                    if (e instanceof Dodge && e.getDuration() != 0) {
+                        int chance = (int) (Math.random() * 2); // generates 0 or 1 (1 for dodge, 0 for no dodge)
+                        if (chance == 1) { // dodge [no effect on target]
+                            dodged = true;
                         }
+                        break;
                     }
-                } else if (c instanceof Villain) {
-                    int dmgAmount = c.getAttackDamage();
-                    if (enemy instanceof Hero || enemy instanceof AntiHero) { // deal extra 50% dmg
-                        dmgAmount = (int) (c.getAttackDamage() * 1.5);
-                    }
-                    enemy.setCurrentHP(enemy.getCurrentHP() - dmgAmount);
-                    if (enemy.getCurrentHP() <= 0) {
-                        enemy.setCondition(Condition.KNOCKEDOUT);
-                        removeFromQueue(enemy);
-                        board[enemy.getLocation().x][enemy.getLocation().y] = null;
-                        if (firstPlayer.getTeam().contains(enemy)) {
-                            firstPlayer.getTeam().remove(enemy);
-                        } else {
-                            secondPlayer.getTeam().remove(enemy);
+                }
+
+                if (!shielded && !dodged) { // check all possible pairs of champion and target types
+                    if (c instanceof Hero) {
+                        int dmgAmount = c.getAttackDamage();
+                        if (enemy instanceof Villain || enemy instanceof AntiHero) { // deal extra 50% dmg
+                            dmgAmount = (int) (c.getAttackDamage() * 1.5);
                         }
-                    }
-                } else { // c is Anti-Hero
-                    int dmgAmount = c.getAttackDamage();
-                    if (enemy instanceof Hero || enemy instanceof Villain) { // deal extra 50% dmg
-                        dmgAmount = (int) (c.getAttackDamage() * 1.5);
-                    }
-                    enemy.setCurrentHP(enemy.getCurrentHP() - dmgAmount);
-                    if (enemy.getCurrentHP() <= 0) {
-                        enemy.setCondition(Condition.KNOCKEDOUT);
-                        removeFromQueue(enemy);
-                        board[enemy.getLocation().x][enemy.getLocation().y] = null;
-                        if (firstPlayer.getTeam().contains(enemy)) {
-                            firstPlayer.getTeam().remove(enemy);
-                        } else {
-                            secondPlayer.getTeam().remove(enemy);
+                        enemy.setCurrentHP(enemy.getCurrentHP() - dmgAmount);
+                        if (enemy.getCurrentHP() <= 0) {
+                            enemy.setCondition(Condition.KNOCKEDOUT);
+                            removeFromQueue(enemy);
+                            board[enemy.getLocation().x][enemy.getLocation().y] = null;
+                            if (firstPlayer.getTeam().contains(enemy)) {
+                                firstPlayer.getTeam().remove(enemy);
+                            } else {
+                                secondPlayer.getTeam().remove(enemy);
+                            }
+                        }
+                    } else if (c instanceof Villain) {
+                        int dmgAmount = c.getAttackDamage();
+                        if (enemy instanceof Hero || enemy instanceof AntiHero) { // deal extra 50% dmg
+                            dmgAmount = (int) (c.getAttackDamage() * 1.5);
+                        }
+                        enemy.setCurrentHP(enemy.getCurrentHP() - dmgAmount);
+                        if (enemy.getCurrentHP() <= 0) {
+                            enemy.setCondition(Condition.KNOCKEDOUT);
+                            removeFromQueue(enemy);
+                            board[enemy.getLocation().x][enemy.getLocation().y] = null;
+                            if (firstPlayer.getTeam().contains(enemy)) {
+                                firstPlayer.getTeam().remove(enemy);
+                            } else {
+                                secondPlayer.getTeam().remove(enemy);
+                            }
+                        }
+                    } else { // c is Anti-Hero
+                        int dmgAmount = c.getAttackDamage();
+                        if (enemy instanceof Hero || enemy instanceof Villain) { // deal extra 50% dmg
+                            dmgAmount = (int) (c.getAttackDamage() * 1.5);
+                        }
+                        enemy.setCurrentHP(enemy.getCurrentHP() - dmgAmount);
+                        if (enemy.getCurrentHP() <= 0) {
+                            enemy.setCondition(Condition.KNOCKEDOUT);
+                            removeFromQueue(enemy);
+                            board[enemy.getLocation().x][enemy.getLocation().y] = null;
+                            if (firstPlayer.getTeam().contains(enemy)) {
+                                firstPlayer.getTeam().remove(enemy);
+                            } else {
+                                secondPlayer.getTeam().remove(enemy);
+                            }
                         }
                     }
                 }
