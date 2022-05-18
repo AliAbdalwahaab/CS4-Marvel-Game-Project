@@ -29,8 +29,7 @@ public class Villain extends Champion {
         else {
             //killing all enemy champions with less than 30% health
             for (Champion c: targets) {
-                if (c.getCurrentHP() < c.getMaxHP()*0.3)
-                    c.setCondition(Condition.KNOCKEDOUT);
+                c.setCondition(Condition.KNOCKEDOUT);
 
 
             }

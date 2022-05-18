@@ -759,7 +759,12 @@ public class Game {
                         c.useLeaderAbility(targets);
 
                     } else if (c instanceof Villain) {
-                        ArrayList<Champion> targets = secondPlayer.getTeam();
+
+                        ArrayList<Champion> targets = new ArrayList<Champion>();
+                        for (Champion target: secondPlayer.getTeam()) {
+                            if (c.getCurrentHP() < c.getMaxHP()*0.3)
+                                targets.add(target);
+                        }
                         c.useLeaderAbility(targets);
                         killChampion(targets);
 
@@ -795,7 +800,11 @@ public class Game {
                         c.useLeaderAbility(targets);
 
                     } else if (c instanceof Villain) {
-                        ArrayList<Champion> targets = firstPlayer.getTeam();
+                        ArrayList<Champion> targets = new ArrayList<Champion>();
+                        for (Champion target: firstPlayer.getTeam()) {
+                            if (c.getCurrentHP() < c.getMaxHP()*0.3)
+                                targets.add(target);
+                        }
                         c.useLeaderAbility(targets);
                         killChampion(targets);
 
