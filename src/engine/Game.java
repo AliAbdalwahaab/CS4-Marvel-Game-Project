@@ -313,8 +313,19 @@ public class Game {
                     for (Damageable target: secondPlayer.getTeam()) {
                         int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                 abs(target.getLocation().y - c.getLocation().y);
-                        if (a.getCastRange() <= manhattanDistance)
-                            targets.add(target);
+                        if (a.getCastRange() <= manhattanDistance) {
+                            boolean shielded = false;
+                            for (Effect e : ((Champion) target).getAppliedEffects()) {
+                                if (e instanceof Shield && e.getDuration() != 0) {
+                                    e.remove((Champion) target); // remove shield effect [no effect on target]
+                                    shielded = true;
+                                    break;
+                                }
+                            }
+                            if (!shielded)
+                                targets.add(target);
+                        }
+
                     }
 
                 } else {
@@ -322,8 +333,18 @@ public class Game {
                     {
                         int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                 abs(target.getLocation().y - c.getLocation().y);
-                        if (a.getCastRange() <= manhattanDistance)
-                            targets.add(target);
+                        if (a.getCastRange() <= manhattanDistance) {
+                            boolean shielded = false;
+                            for (Effect e : ((Champion) target).getAppliedEffects()) {
+                                if (e instanceof Shield && e.getDuration() != 0) {
+                                    e.remove((Champion) target); // remove shield effect [no effect on target]
+                                    shielded = true;
+                                    break;
+                                }
+                            }
+                            if (!shielded)
+                                targets.add(target);
+                        }
                     }
                 }
             } else if (a instanceof CrowdControlAbility) {
@@ -636,12 +657,33 @@ public class Game {
                            targets.add((Damageable) currentCell);
                        else if (currentCell instanceof Champion) {
                            if (team == 1) {
-                               if (secondPlayer.getTeam().contains(currentCell))
-                                   targets.add((Damageable) currentCell);
+                               if (secondPlayer.getTeam().contains(currentCell)) {
+                                   boolean shielded = false;
+                                   for (Effect e : ((Champion) currentCell).getAppliedEffects()) {
+                                       if (e instanceof Shield && e.getDuration() != 0) {
+                                           e.remove((Champion) currentCell); // remove shield effect [no effect on target]
+                                           shielded = true;
+                                           break;
+                                       }
+                                   }
+                                   if (!shielded)
+                                       targets.add((Damageable) currentCell);
+                               }
                            }
                            else {
-                               if (firstPlayer.getTeam().contains(currentCell))
-                                   targets.add((Damageable) currentCell);
+                               if (firstPlayer.getTeam().contains(currentCell)) {
+                                   boolean shielded = false;
+                                   for (Effect e : ((Champion) currentCell).getAppliedEffects()) {
+                                       if (e instanceof Shield && e.getDuration() != 0) {
+                                           e.remove((Champion) currentCell); // remove shield effect [no effect on target]
+                                           shielded = true;
+                                           break;
+                                       }
+                                   }
+                                   if (!shielded)
+                                       targets.add((Damageable) currentCell);
+                               }
+
                            }
                        }
                    }
