@@ -828,13 +828,13 @@ public class Game {
 
     public void prepareChampionTurns() {
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < firstPlayer.getTeam().size(); i++) {
             if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
                 turnOrder.insert(firstPlayer.getTeam().get(i));
             }
         }
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < secondPlayer.getTeam().size(); i++) {
             if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
                 turnOrder.insert(secondPlayer.getTeam().get(i));
             }
