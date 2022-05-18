@@ -396,7 +396,7 @@ public class Game {
 
     }
 
-    public void castAbility(Ability a, Direction d) throws NotEnoughResourcesException, AbilityUseException {
+    public void castAbility(Ability a, Direction d) throws NotEnoughResourcesException, AbilityUseException, InvalidTargetException, CloneNotSupportedException {
         Champion c = getCurrentChampion();
         byte team = (byte) 2;
         if (firstPlayer.getTeam().contains(c))
@@ -453,6 +453,105 @@ public class Game {
         }
 
         // TODO :  Implement Logic on the given target
+        if (a instanceof DamagingAbility) {
+            // check if cover or champ
+            if (target instanceof Cover) {
+                int newHP = ((Cover) target).getCurrentHP() -
+                        ((DamagingAbility) a).getDamageAmount();
+                ((Cover) target).setCurrentHP(newHP);
+            } else if (target instanceof Champion) {
+                // check if enemy
+                if ((team == 1 && secondPlayer.getTeam().contains((Champion) target)) ||
+                        (team == 2 && firstPlayer.getTeam().contains((Champion) target))) {
+                    // check if target has shield
+                    boolean shielded = false;
+                    for (Effect e : ((Champion) target).getAppliedEffects()) {
+                        if (e instanceof Shield && e.getDuration() != 0) {
+                            e.remove((Champion) target); // remove shield effect [no effect on target]
+                            shielded = true;
+                            break;
+                        }
+                    }
+                    if (!shielded) {
+                        int newHP = ((Champion) target).getCurrentHP() -
+                                ((DamagingAbility) a).getDamageAmount();
+                        ((Champion) target).setCurrentHP(newHP);
+                    }
+                }
+            }
+        } else if (a instanceof CrowdControlAbility) {
+            if (!(target instanceof Cover)) {
+                if (((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
+                    if (team == 1) {
+                        if (secondPlayer.getTeam().contains(target)) {
+                            //deduct resources with no results (commented cuz unsure if I should put it or not)
+                            //int newChampionMana = c.getMana() - a.getManaCost();
+                            //c.setMana(newChampionMana);
+                            //a.setCurrentCooldown(a.getBaseCooldown());
+                            throw new InvalidTargetException ("Cannot cast a BUFF crowd control ability" +
+                                    " on an enemy target");
+                        } else {
+                            Effect e = (Effect) (((CrowdControlAbility) a).getEffect().clone());
+                            ((Champion) target).getAppliedEffects().add(e);
+                            e.apply((Champion) target);
+                        }
+                    } else {
+                        if (firstPlayer.getTeam().contains(target)) {
+                            //deduct resources with no results (commented cuz unsure if I should put it or not)
+                            //int newChampionMana = c.getMana() - a.getManaCost();
+                            //c.setMana(newChampionMana);
+                            //a.setCurrentCooldown(a.getBaseCooldown());
+                            throw new InvalidTargetException ("Cannot cast a BUFF crowd control ability" +
+                                    " on an enemy target");
+                        } else {
+                            Effect e = (Effect) (((CrowdControlAbility) a).getEffect().clone());
+                            ((Champion) target).getAppliedEffects().add(e);
+                            e.apply((Champion) target);
+                        }
+
+                    }
+                } else {
+                    if (team == 1) {
+                        if (firstPlayer.getTeam().contains(target)) {
+                            //deduct resources with no results (commented cuz unsure if I should put it or not)
+                            //int newChampionMana = c.getMana() - a.getManaCost();
+                            //c.setMana(newChampionMana);
+                            //a.setCurrentCooldown(a.getBaseCooldown());
+                            throw new InvalidTargetException ("Cannot cast a DEBUFF crowd control ability" +
+                                    " on a friendly target");
+                        } else {
+                            Effect e = (Effect) (((CrowdControlAbility) a).getEffect().clone());
+                            ((Champion) target).getAppliedEffects().add(e);
+                            e.apply((Champion) target);
+                        }
+
+                    } else {
+                        if (secondPlayer.getTeam().contains(target)) {
+                            //deduct resources with no results (commented cuz unsure if I should put it or not)
+                            //int newChampionMana = c.getMana() - a.getManaCost();
+                            //c.setMana(newChampionMana);
+                            //a.setCurrentCooldown(a.getBaseCooldown());
+                            throw new InvalidTargetException ("Cannot cast a DEBUFF crowd control ability" +
+                                    " on a friendly target");
+                        } else {
+                            Effect e = (Effect) (((CrowdControlAbility) a).getEffect().clone());
+                            ((Champion) target).getAppliedEffects().add(e);
+                            e.apply((Champion) target);
+                        }
+                    }
+                }
+            } else {
+                //deduct resources with no results
+                //int newChampionMana = c.getMana() - a.getManaCost();
+                //c.setMana(newChampionMana);
+                //a.setCurrentCooldown(a.getBaseCooldown());
+                throw new InvalidTargetException ("Cannot cast a crowd control ability on a Cover");
+            } //Removed most of this else part because it reduced the number of passed tests (DO NOT DELETE)
+        }
+        int newChampionMana = c.getMana() - a.getManaCost();
+        c.setMana(newChampionMana);
+        a.setCurrentCooldown(a.getBaseCooldown());
+        c.setCurrentActionPoints(c.getCurrentActionPoints() - a.getRequiredActionPoints());
 
     }
 
@@ -485,9 +584,9 @@ public class Game {
         } else {
             if (a instanceof DamagingAbility) {
                 if (currentCell instanceof Cover) {
-                    int newHP = ((Champion) currentCell).getCurrentHP() -
+                    int newHP = ((Cover) currentCell).getCurrentHP() -
                             ((DamagingAbility) a).getDamageAmount();
-                    ((Champion) currentCell).setCurrentHP(newHP);
+                    ((Cover) currentCell).setCurrentHP(newHP);
                 } else {
                     if (team == 1) {
                             if (firstPlayer.getTeam().contains(currentCell)) {
@@ -878,6 +977,8 @@ public class Game {
     }
 
     public void prepareChampionTurns() {
+
+        //while(!turnOrder.isEmpty()) turnOrder.remove();
 
         for (int i = 0; i < firstPlayer.getTeam().size(); i++) {
             if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
