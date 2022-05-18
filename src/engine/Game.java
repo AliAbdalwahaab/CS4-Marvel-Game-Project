@@ -719,9 +719,9 @@ public class Game {
                     this.board[championX][championY] = null;
                     removeFromQueue(((Champion) targets.get(i)));
                     if (firstPlayer.getTeam().contains(targets.get(i)))
-                        firstPlayer.getTeam().remove(i);
+                        firstPlayer.getTeam().remove(targets.get(i));
                     else
-                        secondPlayer.getTeam().remove(i);
+                        secondPlayer.getTeam().remove(targets.get(i));
                 }
 
             }
@@ -737,9 +737,9 @@ public class Game {
                 this.board[championX][championY] = null;
                 removeFromQueue(((Champion) targets.get(i)));
                 if (firstPlayer.getTeam().contains(targets.get(i)))
-                    firstPlayer.getTeam().remove(i);
+                    firstPlayer.getTeam().remove(targets.get(i));
                 else
-                    secondPlayer.getTeam().remove(i);
+                    secondPlayer.getTeam().remove(targets.get(i));
             }
         }
     }
