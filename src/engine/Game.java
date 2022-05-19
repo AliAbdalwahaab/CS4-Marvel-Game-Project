@@ -984,15 +984,28 @@ public class Game {
 
         //while(!turnOrder.isEmpty()) turnOrder.remove();
 
-        for (int i = 0; i < firstPlayer.getTeam().size(); i++) {
-            if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
-                turnOrder.insert(firstPlayer.getTeam().get(i));
+//         for (int i = 0; i < firstPlayer.getTeam().size(); i++) {
+//             if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
+//                 turnOrder.insert(firstPlayer.getTeam().get(i));
+//             }
+//         }
+
+//         for (int i = 0; i < secondPlayer.getTeam().size(); i++) {
+//             if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
+//                 turnOrder.insert(secondPlayer.getTeam().get(i));
+//             }
+//         }
+	    
+    
+        for (Champion c : firstPlayer.getTeam()) {
+        	if(c.getCondition() != Condition.KNOCKEDOUT) {
+                turnOrder.insert(c);
             }
         }
-
-        for (int i = 0; i < secondPlayer.getTeam().size(); i++) {
-            if(firstPlayer.getTeam().get(i).getCondition() != Condition.KNOCKEDOUT) {
-                turnOrder.insert(secondPlayer.getTeam().get(i));
+        
+        for (Champion c : secondPlayer.getTeam()) {
+        	if(c.getCondition() != Condition.KNOCKEDOUT) {
+                turnOrder.insert(c);
             }
         }
     }
