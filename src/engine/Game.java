@@ -861,7 +861,7 @@ public class Game {
                         ((Champion) targets.get(i)).getCurrentHP() <= 0) {
                     int championY = targets.get(i).getLocation().x;
                     int championX = targets.get(i).getLocation().y;
-                    this.board[championX][championY] = null;
+                    this.board[championY][championX] = null;
                     removeFromQueue(((Champion) targets.get(i)));
                     if (firstPlayer.getTeam().contains(targets.get(i)))
                         firstPlayer.getTeam().remove(targets.get(i));
@@ -879,7 +879,7 @@ public class Game {
             ((Champion) targets.get(i)).getCurrentHP() <= 0) {
                 int championY = targets.get(i).getLocation().x;
                 int championX = targets.get(i).getLocation().y;
-                this.board[championX][championY] = null;
+                this.board[championY][championX] = null;
                 removeFromQueue(((Champion) targets.get(i)));
                 if (firstPlayer.getTeam().contains(targets.get(i)))
                     firstPlayer.getTeam().remove(targets.get(i));
