@@ -556,6 +556,7 @@ public class Game {
 	                //throw new InvalidTargetException ("Cannot cast a crowd control ability on a Cover");
 	            } //Removed most of this else part because it reduced the number of passed tests (DO NOT DELETE)
 	        }
+		kill(targets);
         }
         
         int newChampionMana = c.getMana() - a.getManaCost();
