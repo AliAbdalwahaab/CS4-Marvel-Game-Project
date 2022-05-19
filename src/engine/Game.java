@@ -348,8 +348,8 @@ public class Game {
                     }
                 }
             } else if (a instanceof CrowdControlAbility) {
-                if (((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
-                    if (firstPlayer.getTeam().contains(c)) {
+                if (firstPlayer.getTeam().contains(c)) {
+                    if (((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
                         for (Damageable target: firstPlayer.getTeam()) {
                             int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                     abs(target.getLocation().y - c.getLocation().y);
@@ -360,32 +360,38 @@ public class Game {
                     } else {
                         for (Damageable target: secondPlayer.getTeam())
                         {
-                            int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
-                                    abs(target.getLocation().y - c.getLocation().y);
-                            if (a.getCastRange() <= manhattanDistance)
-                                targets.add(target);
+                                int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                        abs(target.getLocation().y - c.getLocation().y);
+                                if (a.getCastRange() <= manhattanDistance)
+                                    targets.add(target);
+                            }
                         }
                     }
-                } else {
-                    if (firstPlayer.getTeam().contains(c)) {
-                        for (Damageable target: secondPlayer.getTeam()) {
-                            int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
-                                    abs(target.getLocation().y - c.getLocation().y);
-                            if (a.getCastRange() <= manhattanDistance)
-                                targets.add(target);
-                        }
+                else {
+                    if (secondPlayer.getTeam().contains(c)) {
+                        if (((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
+                            for (Damageable target: secondPlayer.getTeam()) {
+                                int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                        abs(target.getLocation().y - c.getLocation().y);
+                                if (a.getCastRange() <= manhattanDistance)
+                                    targets.add(target);
+                            }
 
-                    } else {
-                        for (Damageable target: firstPlayer.getTeam())
-                        {
-                            int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
-                                    abs(target.getLocation().y - c.getLocation().y);
-                            if (a.getCastRange() <= manhattanDistance)
-                                targets.add(target);
+                        }
+                        else {
+                            for (Damageable target: firstPlayer.getTeam())
+                            {
+                                int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
+                                        abs(target.getLocation().y - c.getLocation().y);
+                                if (a.getCastRange() <= manhattanDistance)
+                                    targets.add(target);
+                            }
                         }
                     }
                 }
+
             }
+
             a.execute(targets);
             kill(targets);
         }
@@ -395,6 +401,7 @@ public class Game {
         a.setCurrentCooldown(a.getBaseCooldown());
 
     }
+
 
     public void castAbility(Ability a, Direction d) throws NotEnoughResourcesException, AbilityUseException, InvalidTargetException, CloneNotSupportedException {
         Champion c = getCurrentChampion();
