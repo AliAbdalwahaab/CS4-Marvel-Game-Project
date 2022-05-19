@@ -295,7 +295,7 @@ public class Game {
                     for (Damageable target: firstPlayer.getTeam()) {
                         int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                 abs(target.getLocation().y - c.getLocation().y);
-                        if (a.getCastRange() <= manhattanDistance)
+                        if (manhattanDistance <= a.getCastRange())
                             targets.add(target);
                     }
 
@@ -304,7 +304,7 @@ public class Game {
                     {
                         int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                 abs(target.getLocation().y - c.getLocation().y);
-                        if (a.getCastRange() <= manhattanDistance)
+                        if (manhattanDistance <= a.getCastRange())
                             targets.add(target);
                     }
                 }
@@ -313,7 +313,7 @@ public class Game {
                     for (Damageable target: secondPlayer.getTeam()) {
                         int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                 abs(target.getLocation().y - c.getLocation().y);
-                        if (a.getCastRange() <= manhattanDistance) {
+                        if (manhattanDistance <= a.getCastRange()) {
                             boolean shielded = false;
                             for (Effect e : ((Champion) target).getAppliedEffects()) {
                                 if (e instanceof Shield && e.getDuration() != 0) {
@@ -333,7 +333,7 @@ public class Game {
                     {
                         int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                 abs(target.getLocation().y - c.getLocation().y);
-                        if (a.getCastRange() <= manhattanDistance) {
+                        if (manhattanDistance <= a.getCastRange()) {
                             boolean shielded = false;
                             for (Effect e : ((Champion) target).getAppliedEffects()) {
                                 if (e instanceof Shield && e.getDuration() != 0) {
@@ -353,7 +353,7 @@ public class Game {
                         for (Damageable target: firstPlayer.getTeam()) {
                             int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                     abs(target.getLocation().y - c.getLocation().y);
-                            if (a.getCastRange() <= manhattanDistance)
+                            if (manhattanDistance <= a.getCastRange())
                                 targets.add(target);
                         }
 
@@ -362,7 +362,7 @@ public class Game {
                         {
                                 int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                         abs(target.getLocation().y - c.getLocation().y);
-                                if (a.getCastRange() <= manhattanDistance)
+                                if (manhattanDistance <= a.getCastRange())
                                     targets.add(target);
                             }
                         }
@@ -373,7 +373,7 @@ public class Game {
                             for (Damageable target: secondPlayer.getTeam()) {
                                 int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                         abs(target.getLocation().y - c.getLocation().y);
-                                if (a.getCastRange() <= manhattanDistance)
+                                if (manhattanDistance <= a.getCastRange())
                                     targets.add(target);
                             }
 
@@ -383,7 +383,7 @@ public class Game {
                             {
                                 int manhattanDistance = abs(target.getLocation().x - c.getLocation().x) +
                                         abs(target.getLocation().y - c.getLocation().y);
-                                if (a.getCastRange() <= manhattanDistance)
+                                if (manhattanDistance <= a.getCastRange())
                                     targets.add(target);
                             }
                         }
