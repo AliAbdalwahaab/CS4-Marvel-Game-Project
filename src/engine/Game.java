@@ -488,7 +488,8 @@ public class Game {
 	                    }
 	                }
 	            }
-	        } else if (a instanceof CrowdControlAbility) {
+	        }
+            else if (a instanceof CrowdControlAbility) {
 	            if (!(target instanceof Cover)) {
 	                if (((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
 	                    if (team == 1) {
@@ -665,13 +666,16 @@ public class Game {
                                 ((Champion) currentCell).setCurrentHP(newHP);
                             }
                         }
-                    } else {
+                    }
+                    else {
                         //deduct resources with no results
                         //int newChampionMana = c.getMana() - a.getManaCost();
                         //c.setMana(newChampionMana);
                         //a.setCurrentCooldown(a.getBaseCooldown());
                         throw new InvalidTargetException ("Cannot cast a healing ability on a Cover");
-                    } //Removed most of this else part because it reduced the number of passed tests (DO NOT DELETE)
+                    }
+
+                    //Removed most of this else part because it reduced the number of passed tests (DO NOT DELETE)
             } else if (a instanceof CrowdControlAbility) {
                 if (!(currentCell instanceof Cover)) {
                     if (((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
@@ -853,9 +857,10 @@ public class Game {
        }
 
 
-
+       targets.remove(c);
        return targets;
     }
+
     public Champion getCurrentChampion() {
         // will remove current champion when turn ends
         return (Champion) turnOrder.peekMin();
