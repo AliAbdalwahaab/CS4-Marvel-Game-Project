@@ -585,6 +585,10 @@ public class Game {
             throw new AbilityUseException("The current champion cannot use this ability at this moment");
         else if (a.getCastArea() != AreaOfEffect.SINGLETARGET)
             return;
+	    
+        if ((abs(c.getLocation().x - x)+abs(c.getLocation().y - y)) > a.getCastRange()) {
+        	throw new AbilityUseException("Target out of range, cannot cast ability");
+        }
 
         Object currentCell = board[x][y]; //assuming we don't switch the y and the x when invoking the method
         if (currentCell == null) {
