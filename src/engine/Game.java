@@ -765,7 +765,7 @@ public class Game {
        for (int i = theY-1; i <= theY+1;i++) {
            for (int j = theX -1;j <= theX+1;j++)
            {
-               if (((i > 0 && i < BOARDHEIGHT) && (j > 0 && j < BOARDWIDTH))) { //i removed the the
+               if (validIndices(i, j)) { //i removed the the
                    // && (i != theY && j != theX) part because it fixed a lot of failed tests
                    Object currentCell = board[i][j];
 
