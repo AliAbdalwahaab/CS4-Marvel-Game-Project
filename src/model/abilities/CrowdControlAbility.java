@@ -1,6 +1,7 @@
 package model.abilities;
 
 import model.effects.Effect;
+import model.effects.Embrace;
 import model.world.Champion;
 import model.world.Cover;
 import model.world.Damageable;
@@ -25,8 +26,11 @@ public class CrowdControlAbility extends Ability {
         Effect e = (Effect) this.effect.clone();
         for (Damageable target : targets) {
            //if (!(target instanceof Cover)) {
+                //Effect e = (Effect) this.effect.clone();
                 Champion c = (Champion) target;
-                c.getAppliedEffects().add(e);
+                if (!(e instanceof Embrace)) {
+                    c.getAppliedEffects().add((Effect) effect.clone());
+                }
                 e.apply(c);
 
             //}
