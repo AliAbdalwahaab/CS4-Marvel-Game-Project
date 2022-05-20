@@ -548,16 +548,19 @@ public class Game {
 	                        }
 	                    }
 	                }
-	            } else {
-	                //deduct resources with no results
-	                //int newChampionMana = c.getMana() - a.getManaCost();
-	                //c.setMana(newChampionMana);
-	                //a.setCurrentCooldown(a.getBaseCooldown());
-	                //throw new InvalidTargetException ("Cannot cast a crowd control ability on a Cover");
-	            } //Removed most of this else part because it reduced the number of passed tests (DO NOT DELETE)
+	            }
 	        }
-		kill(targets);
+		//kill(targets);
         }
+        if (a instanceof HealingAbility) {
+            ArrayList<Damageable> trgts = new ArrayList<>();
+                for (Damageable target: targets) {
+                    if (firstPlayer.getTeam().contains(target) && team == 1 || secondPlayer.getTeam().contains(target) && team == 2)
+                        trgts.add(target);
+                }
+                a.execute(trgts);
+        }
+        kill(targets);
         
         int newChampionMana = c.getMana() - a.getManaCost();
         c.setMana(newChampionMana);
