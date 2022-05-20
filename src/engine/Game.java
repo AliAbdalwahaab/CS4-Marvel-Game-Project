@@ -268,6 +268,7 @@ public class Game {
 
         if (a.getCastArea() == AreaOfEffect.SURROUND) {
             ArrayList<Damageable> targets = this.getSurroundTargets(c, a);
+            if (targets.contains(c)) targets.remove(c);
             a.execute(targets);
             kill(targets);
         }
