@@ -588,19 +588,21 @@ public class Game {
             throw new AbilityUseException("The current champion cannot use this ability at this moment");
         else if (a.getCastArea() != AreaOfEffect.SINGLETARGET)
             return;
-	    
+	    if (board[x][y] == null) {
+            throw new InvalidTargetException("Cannot cast ability on an empty cell");
+        }
+
         if ((abs(c.getLocation().x - x)+abs(c.getLocation().y - y)) > a.getCastRange()) {
         	throw new AbilityUseException("Target out of range, cannot cast ability");
         }
 
         Object currentCell = board[x][y]; //assuming we don't switch the y and the x when invoking the method
-        if (currentCell == null) {
+        if (currentCell != null) {
             //deduct resources with no results
-            int newChampionMana = c.getMana() - a.getManaCost();
-            c.setMana(newChampionMana);
-            a.setCurrentCooldown(a.getBaseCooldown());
-            throw new InvalidTargetException("Cannot cast ability on an empty cell");
-        } else {
+//            int newChampionMana = c.getMana() - a.getManaCost();
+//            c.setMana(newChampionMana);
+//            a.setCurrentCooldown(a.getBaseCooldown());
+//            throw new InvalidTargetException("Cannot cast ability on an empty cell");
             if (a instanceof DamagingAbility) {
                 if (currentCell instanceof Cover) {
                     int newHP = ((Cover) currentCell).getCurrentHP() -
