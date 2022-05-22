@@ -600,11 +600,6 @@ public class Game {
 
         Object currentCell = board[x][y]; //assuming we don't switch the y and the x when invoking the method
         if (currentCell != null) {
-            //deduct resources with no results
-//            int newChampionMana = c.getMana() - a.getManaCost();
-//            c.setMana(newChampionMana);
-//            a.setCurrentCooldown(a.getBaseCooldown());
-//            throw new InvalidTargetException("Cannot cast ability on an empty cell");
             if (a instanceof DamagingAbility) {
                 if (currentCell instanceof Cover) {
                     int newHP = ((Cover) currentCell).getCurrentHP() -
@@ -613,29 +608,41 @@ public class Game {
                 } else {
                     if (team == 1) {
                             if (firstPlayer.getTeam().contains(currentCell)) {
-                                //deduct resources with no results (commented cuz unsure if I should put it or not)
-                                //int newChampionMana = c.getMana() - a.getManaCost();
-                                //c.setMana(newChampionMana);
-                                //a.setCurrentCooldown(a.getBaseCooldown());
                                 throw new InvalidTargetException ("Cannot cast a damaging ability on a friendly target");
                             }
 
                             else {
+                                boolean shielded = false;
+                                for (Effect e : ((Champion) currentCell).getAppliedEffects()) {
+                                    if (e instanceof Shield && e.getDuration() != 0) {
+                                        e.remove((Champion) currentCell); // remove shield effect [no effect on target]
+                                        shielded = true;
+                                        break;
+                                    }
+                                }
+                                if (!shielded) {
+                                    int newHP = ((Champion) currentCell).getCurrentHP() -
+                                            ((DamagingAbility) a).getDamageAmount();
+                                    ((Champion) currentCell).setCurrentHP(newHP);
+                                }
+                            }
+                    } else {
+                        if (secondPlayer.getTeam().contains(currentCell)) {
+                            throw new InvalidTargetException ("Cannot cast a damaging ability on a friendly target");
+                        } else {
+                            boolean shielded = false;
+                            for (Effect e : ((Champion) currentCell).getAppliedEffects()) {
+                                if (e instanceof Shield && e.getDuration() != 0) {
+                                    e.remove((Champion) currentCell); // remove shield effect [no effect on target]
+                                    shielded = true;
+                                    break;
+                                }
+                            }
+                            if (!shielded) {
                                 int newHP = ((Champion) currentCell).getCurrentHP() -
                                         ((DamagingAbility) a).getDamageAmount();
                                 ((Champion) currentCell).setCurrentHP(newHP);
                             }
-                    } else {
-                        if (secondPlayer.getTeam().contains(currentCell)) {
-                            //deduct resources with no results (commented cuz unsure if I should put it or not)
-                            //int newChampionMana = c.getMana() - a.getManaCost();
-                            //c.setMana(newChampionMana);
-                            //a.setCurrentCooldown(a.getBaseCooldown());
-                            throw new InvalidTargetException ("Cannot cast a damaging ability on a friendly target");
-                        } else {
-                            int newHP = ((Champion) currentCell).getCurrentHP() -
-                                    ((DamagingAbility) a).getDamageAmount();
-                            ((Champion) currentCell).setCurrentHP(newHP);
                         }
                     }
                 }
@@ -643,10 +650,6 @@ public class Game {
                     if (!(currentCell instanceof Cover)) {
                         if (team == 1) {
                             if (secondPlayer.getTeam().contains(currentCell)) {
-                                //deduct resources with no results (commented cuz unsure if I should put it or not)
-                                //int newChampionMana = c.getMana() - a.getManaCost();
-                                //c.setMana(newChampionMana);
-                                //a.setCurrentCooldown(a.getBaseCooldown());
                                 throw new InvalidTargetException ("Cannot cast a healing ability on an enemy target");
                             } else {
                                 int newHP = ((Champion) currentCell).getCurrentHP() +
@@ -655,10 +658,6 @@ public class Game {
                             }
                         } else {
                             if (firstPlayer.getTeam().contains(currentCell)) {
-                                //deduct resources with no results (commented cuz unsure if I should put it or not)
-                                //int newChampionMana = c.getMana() - a.getManaCost();
-                                //c.setMana(newChampionMana);
-                                //a.setCurrentCooldown(a.getBaseCooldown());
                                 throw new InvalidTargetException ("Cannot cast a healing ability on an enemy target");
                             } else {
                                 int newHP = ((Champion) currentCell).getCurrentHP() +
@@ -668,10 +667,6 @@ public class Game {
                         }
                     }
                     else {
-                        //deduct resources with no results
-                        //int newChampionMana = c.getMana() - a.getManaCost();
-                        //c.setMana(newChampionMana);
-                        //a.setCurrentCooldown(a.getBaseCooldown());
                         throw new InvalidTargetException ("Cannot cast a healing ability on a Cover");
                     }
 
@@ -681,10 +676,6 @@ public class Game {
                     if (((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
                         if (team == 1) {
                             if (secondPlayer.getTeam().contains(currentCell)) {
-                                //deduct resources with no results (commented cuz unsure if I should put it or not)
-                                //int newChampionMana = c.getMana() - a.getManaCost();
-                                //c.setMana(newChampionMana);
-                                //a.setCurrentCooldown(a.getBaseCooldown());
                                 throw new InvalidTargetException ("Cannot cast a BUFF crowd control ability" +
                                         " on an enemy target");
                             } else {
@@ -694,10 +685,6 @@ public class Game {
                             }
                         } else {
                             if (firstPlayer.getTeam().contains(currentCell)) {
-                                //deduct resources with no results (commented cuz unsure if I should put it or not)
-                                //int newChampionMana = c.getMana() - a.getManaCost();
-                                //c.setMana(newChampionMana);
-                                //a.setCurrentCooldown(a.getBaseCooldown());
                                 throw new InvalidTargetException ("Cannot cast a BUFF crowd control ability" +
                                         " on an enemy target");
                             } else {
@@ -710,10 +697,6 @@ public class Game {
                     } else {
                         if (team == 1) {
                             if (firstPlayer.getTeam().contains(currentCell)) {
-                                //deduct resources with no results (commented cuz unsure if I should put it or not)
-                                //int newChampionMana = c.getMana() - a.getManaCost();
-                                //c.setMana(newChampionMana);
-                                //a.setCurrentCooldown(a.getBaseCooldown());
                                 throw new InvalidTargetException ("Cannot cast a DEBUFF crowd control ability" +
                                         " on a friendly target");
                             } else {
@@ -724,10 +707,6 @@ public class Game {
 
                         } else {
                             if (secondPlayer.getTeam().contains(currentCell)) {
-                                //deduct resources with no results (commented cuz unsure if I should put it or not)
-                                //int newChampionMana = c.getMana() - a.getManaCost();
-                                //c.setMana(newChampionMana);
-                                //a.setCurrentCooldown(a.getBaseCooldown());
                                 throw new InvalidTargetException ("Cannot cast a DEBUFF crowd control ability" +
                                         " on a friendly target");
                             } else {
@@ -738,12 +717,8 @@ public class Game {
                         }
                     }
                 } else {
-                    //deduct resources with no results
-                    //int newChampionMana = c.getMana() - a.getManaCost();
-                    //c.setMana(newChampionMana);
-                    //a.setCurrentCooldown(a.getBaseCooldown());
                     throw new InvalidTargetException ("Cannot cast a crowd control ability on a Cover");
-                } //Removed most of this else part because it reduced the number of passed tests (DO NOT DELETE)
+                }
             }
         }
 

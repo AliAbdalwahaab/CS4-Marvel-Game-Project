@@ -25,17 +25,9 @@ public class CrowdControlAbility extends Ability {
         //Assuming every item in the arraylist implements the Damageable interface
         Effect e = (Effect) this.effect.clone();
         for (Damageable target : targets) {
-           //if (!(target instanceof Cover)) {
-                //Effect e = (Effect) this.effect.clone();
-                Champion c = (Champion) target;
-                if (!(e instanceof Embrace)) {
-                    c.getAppliedEffects().add((Effect) effect.clone());
-                }
-                e.apply(c);
-
-            //}
-            //Since we cannot apply an effect on a Cover there is no else part
-
+            Champion c = (Champion) target;
+            c.getAppliedEffects().add((Effect) effect.clone());
+            e.apply(c);
         }
     }
 

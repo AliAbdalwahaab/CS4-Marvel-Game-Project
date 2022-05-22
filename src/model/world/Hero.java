@@ -40,6 +40,7 @@ public class Hero extends Champion {
                 }
                 Embrace e = new Embrace(2);
                 e.apply(target);
+                target.getAppliedEffects().add((Effect) e);
 
                 for (Effect ef: toRemove) {
                     target.getAppliedEffects().remove(ef);
