@@ -1243,57 +1243,42 @@ public class Game {
     }
 
     public void endTurn() {
-        this.turnOrder.remove();
-        ArrayList<Effect> toRemove = new ArrayList<>();
-
-        for(Champion c: firstPlayer.getTeam()) {
-            for(Effect e : c.getAppliedEffects()) {
-                if (e.getDuration() >= 1)
-                    e.setDuration(e.getDuration() - 1);
-                toRemove.add(e);
-            }
-
-            for (Ability a: c.getAbilities()) {
-                a.setCurrentCooldown(a.getCurrentCooldown() - 1);
-            }
-
-            for (Effect e : toRemove) {
-                if (c.getAppliedEffects().contains(e) && e.getDuration() == 0)
-                    e.remove(c);
-            }
-        }
-
-        for(Champion c: secondPlayer.getTeam()) {
-            for(Effect e : c.getAppliedEffects()) {
-                if (e.getDuration() >= 1)
-                    e.setDuration(e.getDuration() - 1);
-                toRemove.add(e);
-            }
-
-            for (Ability a: c.getAbilities()) {
-                a.setCurrentCooldown(a.getCurrentCooldown() - 1);
-            }
-
-            for (Effect e : toRemove) {
-                if (c.getAppliedEffects().contains(e) && e.getDuration() == 0)
-                    e.remove(c);
-            }
-        }
-
-
-
-        while (!turnOrder.isEmpty() && ((Champion) turnOrder.peekMin()).getCondition() == Condition.INACTIVE) {
-            ((Champion) turnOrder.peekMin()).setCondition(Condition.ACTIVE);
+        turnOrder.remove();
+        if (turnOrder.isEmpty())
+            prepareChampionTurns();
+        while (!turnOrder.isEmpty() && hasEffect((Champion) turnOrder.peekMin(), "Stun")) {
+            Champion current = (Champion) turnOrder.peekMin();
+            updateTimers(current);
             turnOrder.remove();
         }
+        Champion current = (Champion) turnOrder.peekMin();
+        updateTimers(current);
+        current.setCurrentActionPoints(current.getMaxActionPointsPerTurn());
+    }
 
-        if (turnOrder.isEmpty()) {
-            prepareChampionTurns();
+    private void updateTimers(Champion current) {
+        int i = 0;
+        while (i < current.getAppliedEffects().size()) {
+            Effect e = current.getAppliedEffects().get(i);
+            e.setDuration(e.getDuration() - 1);
+            if (e.getDuration() == 0) {
+                current.getAppliedEffects().remove(e);
+                e.remove(current);
+
+            } else
+                i++;
         }
+        for (Ability a : current.getAbilities()) {
+            if (a.getCurrentCooldown() > 0)
+                a.setCurrentCooldown(a.getCurrentCooldown() - 1);
+        }
+    }
 
-        Champion c = (Champion) turnOrder.peekMin();
-        c.setCurrentActionPoints(c.getMaxActionPointsPerTurn());
-        c.setMana(c.getMana());
-
-   }
+    private boolean hasEffect(Champion currentChampion, String s) {
+        for (Effect e : currentChampion.getAppliedEffects()) {
+            if (e.getName().equals(s))
+                return true;
+        }
+        return false;
+    }
 }
