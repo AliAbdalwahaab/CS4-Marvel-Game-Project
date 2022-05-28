@@ -56,4 +56,4 @@ class ImagePanel extends JPanel {
 	    }
 	  }
 
-	}
+}
