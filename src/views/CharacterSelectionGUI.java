@@ -27,7 +27,7 @@ public class CharacterSelectionGUI extends JFrame implements ActionListener {
 	private String secondPlayerName = "";
 	
 	public CharacterSelectionGUI() {
-		this.setTitle("Gay Game");
+		this.setTitle("Game");
 		this.setBounds(0,0,1920,1080);
 		this.setLayout(null);
 
@@ -80,36 +80,7 @@ public class CharacterSelectionGUI extends JFrame implements ActionListener {
 			Player player2 = new Player(secondPlayerName);
 			newGame = new Game(player1,player2);
 
-			this.getContentPane().removeAll();
-			this.repaint();
-
-			//till here no problems
-
-			this.setLayout(new BorderLayout());
-
-			JPanel centerPanel = new JPanel();
-			centerPanel.setLayout(new GridLayout(0,5));
-			centerPanel.setVisible(true);
-
-			ArrayList<JButton> btns = new ArrayList<JButton>();
-
-			for (Champion c: newGame.getAvailableChampions()) {
-				btns.add(new JButton(c.getName()));
-			}
-
-			for (JButton b: btns) {
-				b.setPreferredSize(new Dimension(50,50));
-				b.addActionListener(this);
-				centerPanel.add(b);
-			}
-			
-			this.add(centerPanel,BorderLayout.CENTER);
-			this.revalidate();
-			this.repaint();
-
-
-
-
+			new LeaderSelectionGUI(newGame);
 		}
 
 		
