@@ -14,6 +14,7 @@ import model.world.Champion;
 import static java.awt.Font.BOLD;
 
 public class CharacterSelectionView extends JFrame implements ActionListener {
+	//TODO: Display champion info
 	
 	private Game currentGame;
 
@@ -24,8 +25,20 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 	private JLabel text2;
 
 	private JPanel centerPanel;
-	private JPanel topPanel;
 	private ArrayList<JButton> btns;
+	private JPanel topPanel;
+	private JPanel player1Panel;
+	private JPanel player2Panel;
+
+	private JTextArea player1Leader;
+	private JTextArea player1Champ1;
+	private JTextArea player1Champ2;
+
+	private JTextArea player2Leader;
+	private JTextArea player2Champ1;
+	private JTextArea player2Champ2;
+
+
 	
 	private String firstPlayerName = "";
 	private String secondPlayerName = "";
@@ -88,7 +101,71 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 			this.repaint();
 
 			updateTeams();
+		}
 
+		if (btns.contains(e.getSource())) {
+			for (JButton b: btns) {
+				if (e.getSource() == b && player1Leader.getText().equals(" Not yet selected")) {
+					player1Leader.setText(b.getText()+"*****");
+					for (Champion c: currentGame.getAvailableChampions()) {
+						if (c.getName().equals(b.getText())) {
+							currentGame.getFirstPlayer().setLeader(c);
+							currentGame.getFirstPlayer().getTeam().add(c);
+							break;
+						}
+					}
+				} else if (e.getSource() == b && player1Champ1.getText().equals(" Not yet selected")) {
+					player1Champ1.setText(b.getText());
+					for (Champion c: currentGame.getAvailableChampions()) {
+						if (c.getName().equals(b.getText())) {
+							currentGame.getFirstPlayer().getTeam().add(c);
+							break;
+						}
+					}
+				} else if (e.getSource() == b && player1Champ2.getText().equals(" Not yet selected")) {
+					player1Champ2.setText(b.getText());
+					for (Champion c: currentGame.getAvailableChampions()) {
+						if (c.getName().equals(b.getText())) {
+							currentGame.getFirstPlayer().getTeam().add(c);
+							break;
+						}
+					}
+
+					JOptionPane.showMessageDialog(null,"First Team Selected. " +
+							"Second Player should choose all their Champions. The first champion selected is the leader");
+
+				} else if (e.getSource() == b && player2Leader.getText().equals("Not yet selected")) {
+					player2Leader.setText(b.getText()+"*****");
+					for (Champion c: currentGame.getAvailableChampions()) {
+						if (c.getName().equals(b.getText())) {
+							currentGame.getSecondPlayer().setLeader(c);
+							currentGame.getSecondPlayer().getTeam().add(c);
+							break;
+						}
+					}
+				} else if (e.getSource() == b && player2Champ1.getText().equals("Not yet selected")) {
+					player2Champ1.setText(b.getText());
+					for (Champion c: currentGame.getAvailableChampions()) {
+						if (c.getName().equals(b.getText())) {
+							currentGame.getSecondPlayer().getTeam().add(c);
+							break;
+						}
+					}
+				} else if (e.getSource() == b && player2Champ2.getText().equals("Not yet selected")) {
+					player2Champ2.setText(b.getText());
+					for (Champion c: currentGame.getAvailableChampions()) {
+						if (c.getName().equals(b.getText())) {
+							currentGame.getSecondPlayer().getTeam().add(c);
+							break;
+						}
+					}
+
+					JOptionPane.showMessageDialog(null,"Second Team Selected. Game is about to start");
+
+				}
+			}
+			this.revalidate();
+			this.repaint();
 		}
 
 
@@ -134,30 +211,31 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 
 		JTextArea player1Name = new JTextArea();
 		player1Name.setText("  "+currentGame.getFirstPlayer().getName());
+		player1Name.setFont(new Font("Chiller",BOLD,40));
 		player1Name.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 
 		player1Name.setVisible(true);
 		player1Name.setEditable(false);
 
-		JTextArea player1Leader = new JTextArea();
-		player1Leader.setText("   lol");
+		player1Leader = new JTextArea();
+		player1Leader.setText(" Not yet selected");
 		player1Leader.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		player1Leader.setVisible(true);
 		player1Leader.setEditable(false);
 
-		JTextArea player1Champ1 = new JTextArea();
-		player1Champ1.setText("    currentGame.getFirstPlayer().getTeam().get(1).getName()");
+		player1Champ1 = new JTextArea();
+		player1Champ1.setText(" Not yet selected");
 		player1Champ1.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		player1Champ1.setVisible(true);
 		player1Champ1.setEditable(false);
 
-		JTextArea player1Champ2 = new JTextArea();
-		player1Champ2.setText("    currentGame.getFirstPlayer().getTeam().get(2).getName()");
+		player1Champ2 = new JTextArea();
+		player1Champ2.setText(" Not yet selected");
 		player1Champ2.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		player1Champ2.setVisible(true);
 		player1Champ2.setEditable(false);
 
-		JPanel player1Panel = new JPanel();
+		player1Panel = new JPanel();
 		player1Panel.setLayout(new GridLayout(4,0));
 		player1Panel.setVisible(true);
 		player1Panel.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),topPanel.getHeight()));
@@ -172,37 +250,35 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 		this.revalidate();
 		this.repaint();
 
-
-
-
-		JPanel player2Panel = new JPanel();
+		player2Panel = new JPanel();
 		player2Panel.setLayout(new GridLayout(4,0));
 		player2Panel.setVisible(true);
 
 		player2Panel.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),topPanel.getHeight()));
 
 		JTextArea player2Name = new JTextArea();
+		player2Name.setFont(new Font("Chiller",BOLD,40));
 		player2Name.setText(currentGame.getSecondPlayer().getName());
 		player2Name.setEditable(false);
 		player2Name.setVisible(true);
 		player2Name.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 
 
-		JTextArea player2Leader = new JTextArea();
-		player2Leader.setText("currentGame.getSecondPlayer().getLeader().getName()");
+		player2Leader = new JTextArea();
+		player2Leader.setText("Not yet selected");
 		player2Leader.setEditable(false);
 		player2Leader.setVisible(true);
 		player2Leader.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 
 
-		JTextArea player2Champ1 = new JTextArea();
-		player2Champ1.setText("currentGame.getSecondPlayer().getTeam().get(1).getName()");
+		player2Champ1 = new JTextArea();
+		player2Champ1.setText("Not yet selected");
 		player2Champ1.setEditable(false);
 		player2Champ1.setVisible(true);
 		player2Champ1.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 
-		JTextArea player2Champ2 = new JTextArea();
-		player2Champ2.setText("currentGame.getSecondPlayer().getTeam().get(2).getName()");
+		player2Champ2 = new JTextArea();
+		player2Champ2.setText("Not yet selected");
 		player2Champ2.setEditable(false);
 		player2Champ2.setVisible(true);
 		player2Champ2.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
@@ -221,6 +297,8 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 		this.add(topPanel,BorderLayout.NORTH);
 		this.revalidate();
 		this.repaint();
+		JOptionPane.showMessageDialog(null,"First Player should choose all " +
+				"their Champions first, the first champion selected is the leader");
 	}
 
 }
