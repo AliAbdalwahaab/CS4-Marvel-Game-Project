@@ -14,7 +14,7 @@ public class LeaderSelectionGUI extends JFrame implements ActionListener {
     JPanel centerPanel;
     ArrayList<JButton> btns;
 
-    public LeaderSelectionGUI(Game thisGame) {
+    public LeaderSelectionGUI(Game CurrentGame) {
 
         this.setTitle("Selector");
         this.setBounds(0,0,1920,1080);
@@ -26,7 +26,7 @@ public class LeaderSelectionGUI extends JFrame implements ActionListener {
 
         btns = new ArrayList<JButton>();
 
-        for (Champion c: thisGame.getAvailableChampions()) {
+        for (Champion c: CurrentGame.getAvailableChampions()) {
             JButton b = new JButton();
             b.setText(c.getName());
             b.addActionListener(this);
@@ -52,5 +52,6 @@ public class LeaderSelectionGUI extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         //new LeaderSelectionGUI(thisGame);
+
     }
 }

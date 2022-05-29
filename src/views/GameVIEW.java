@@ -1,3 +1,5 @@
+package views;
+
 import engine.Game;
 
 import java.awt.*;
@@ -17,19 +19,21 @@ public class GameVIEW extends JFrame {
     public GameVIEW(){
         setTitle("GAME STARTED!");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBounds(50, 50, 1920, 1080);
+        setBounds(0, 0, 1920, 1080);
         GameBoard = new JPanel();
         GameBoard.setLayout(new GridLayout(5, 5));
         add(GameBoard, BorderLayout.CENTER);
         Abilities = new JPanel();
         Abilities.setLayout(new GridLayout(4,0));
-        Abilities.add(CCAbility, 1);
-        Abilities.add(DAbility, 2);
-        Abilities.add(HAbility, 3);
-        Abilities.add(LAbility, 4);
+        CCAbility = new JButton("Crowd control");
+        DAbility = new JButton("Damage");
+        HAbility = new JButton("Healing");
+        LAbility = new JButton("Leader");
+        Abilities.add(CCAbility);
+        Abilities.add(DAbility);
+        Abilities.add(HAbility);
+        Abilities.add(LAbility);
         add(Abilities,BorderLayout.EAST);
-
-
     }
 
 }
