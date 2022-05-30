@@ -195,7 +195,8 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 					b.setEnabled(false);
 
 					JOptionPane.showMessageDialog(null,"Second Team Selected. Game is about to start");
-
+					this.dispose();
+					new GameVIEW();
 				}
 			}
 			this.revalidate();
@@ -333,6 +334,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 		this.repaint();
 		JOptionPane.showMessageDialog(null,"First Player should choose all " +
 				"their Champions first, the first champion selected is the leader");
+
 	}
 
 }
