@@ -47,7 +47,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		this.setTitle("Game");
 		this.setBounds(0,0,1920,1080);
-		this.setLayout(null);
+		this.setLayout(new BorderLayout());
 
 		text1 = new JLabel();
 		text1.setText("Player 1 Name");
@@ -69,11 +69,16 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 		submit.setBounds(530+90,300+100+100,100,30);
 		submit.addActionListener(this);
 
-		this.add(text1);
-		this.add(text2);
-		this.add(textField1);
-		this.add(textField2);
-		this.add(submit);
+
+		JPanel centeralign = new JPanel();
+		centeralign.setLayout(new GridLayout(5,0));
+		centeralign.setPreferredSize(new Dimension(200,300));
+		this.add(centeralign, BorderLayout.CENTER);
+		centeralign.add(text1);
+		centeralign.add(textField1);
+		centeralign.add(text2);
+		centeralign.add(textField2);
+		this.add(submit, BorderLayout.SOUTH);
 
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
