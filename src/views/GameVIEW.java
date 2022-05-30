@@ -19,6 +19,28 @@ public class GameVIEW extends JFrame{
     private JButton HAbility;
     private JButton LAbility;
 
+    private JPanel CurrentChampInfo;
+    private JLabel CurrentPlayerName;
+    private JLabel ChampName;
+    private JLabel ChampType;
+    private JLabel ChampHP;
+    private JLabel ChampMana;
+    private JLabel ChampActionPoints;
+    private JLabel ChampAttackDmg;
+    private JComboBox ChampAbilities;
+    private JComboBox ChampAppliedEffects;
+    private JButton endTurn;
+
+    private JPanel HoverChampInfo;
+    private JLabel HoverChampName;
+    private JLabel HoverChampType;
+    private JLabel HoverChampHP;
+    private JLabel HoverChampMana;
+    private JLabel HoverChampActionPoints;
+    private JLabel HoverChampAttackDmg;
+    private JComboBox HoverChampAbilities;
+    private JComboBox HoverChampAppliedEffects;
+
     public GameVIEW(GameController controller){
         setTitle("GAME STARTED!");
         addMouseListener(controller);
@@ -35,14 +57,14 @@ public class GameVIEW extends JFrame{
         // TurnOrder + Movement &  Attack right (2 grids)
 
         // Hover Info (Page Start)
-        JPanel HoverChampInfo =  new JPanel(new GridLayout(2, 4));
+        HoverChampInfo =  new JPanel(new GridLayout(2, 4));
         HoverChampInfo.setBackground(Color.decode("#e8f743") );
-        JLabel HoverChampName = new JLabel("Karinge");
-        JLabel HoverChampType = new JLabel("Karinge");
-        JLabel HoverChampHP = new JLabel("Karinge");
-        JLabel HoverChampMana = new JLabel("Karinge");
-        JLabel HoverChampActionPoints = new JLabel("Karinge");
-        JLabel HoverChampAttackDmg = new JLabel("Karinge");
+        HoverChampName = new JLabel("Karinge");
+        HoverChampType = new JLabel("Karinge");
+        HoverChampHP = new JLabel("Karinge");
+        HoverChampMana = new JLabel("Karinge");
+        HoverChampActionPoints = new JLabel("Karinge");
+        HoverChampAttackDmg = new JLabel("Karinge");
         JComboBox HoverChampAbilities = new JComboBox();
         JComboBox HoverChampAppliedEffects = new JComboBox();
         HoverChampInfo.add(HoverChampName);
@@ -57,18 +79,18 @@ public class GameVIEW extends JFrame{
         this.add(HoverChampInfo, BorderLayout.NORTH);
 
         // Current Champ info (Page End)
-        JPanel CurrentChampInfo =  new JPanel(new GridLayout(2, 5));
+        CurrentChampInfo =  new JPanel(new GridLayout(2, 5));
         CurrentChampInfo.setBackground(Color.decode("#4d8de8") );
-        JLabel CurrentPlayerName = new JLabel("Karinge");
-        JLabel ChampName = new JLabel("Karinge");
-        JLabel ChampType = new JLabel("Karinge");
-        JLabel ChampHP = new JLabel("Karinge");
-        JLabel ChampMana = new JLabel("Karinge");
-        JLabel ChampActionPoints = new JLabel("Karinge");
-        JLabel ChampAttackDmg = new JLabel("Karinge");
-        JComboBox ChampAbilities = new JComboBox();
-        JComboBox ChampAppliedEffects = new JComboBox();
-        JButton endTurn = new JButton("END THIS SHIT");
+        CurrentPlayerName = new JLabel("Karinge");
+        ChampName = new JLabel("Karinge");
+        ChampType = new JLabel("Karinge");
+        ChampHP = new JLabel("Karinge");
+        ChampMana = new JLabel("Karinge");
+        ChampActionPoints = new JLabel("Karinge");
+        ChampAttackDmg = new JLabel("Karinge");
+        ChampAbilities = new JComboBox();
+        ChampAppliedEffects = new JComboBox();
+        endTurn = new JButton("END THIS SHIT");
         CurrentChampInfo.add(CurrentPlayerName);
         CurrentChampInfo.add(ChampName);
         CurrentChampInfo.add(ChampType);
