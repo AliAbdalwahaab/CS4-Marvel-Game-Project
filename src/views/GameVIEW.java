@@ -41,6 +41,9 @@ public class GameVIEW extends JFrame{
     private JComboBox HoverChampAbilities;
     private JComboBox HoverChampAppliedEffects;
 
+    private JPanel AbilitiesPanel;
+    private JPanel RightPanel;
+
     public GameVIEW(GameController controller){
         setTitle("GAME STARTED!");
         addMouseListener(controller);
@@ -53,8 +56,12 @@ public class GameVIEW extends JFrame{
         //Board (CENTER)
 
         // Abilities left (2 grids)
+        JPanel AbilitiesPanel = new JPanel(new GridLayout(2,1));
+        this.add(AbilitiesPanel, BorderLayout.WEST);
 
         // TurnOrder + Movement &  Attack right (2 grids)
+        JPanel RightPanel = new JPanel(new GridLayout(2,1));
+        this.add(AbilitiesPanel, BorderLayout.EAST);
 
         // Hover Info (Page Start)
         HoverChampInfo =  new JPanel(new GridLayout(2, 4));
