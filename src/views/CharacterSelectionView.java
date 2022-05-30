@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import controller.GameController;
 import engine.Game;
 import engine.Player;
 import model.world.Champion;
@@ -196,6 +197,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 
 					JOptionPane.showMessageDialog(null,"Second Team Selected. Game is about to start");
 					this.dispose();
+					new GameController(currentGame);
 					new GameVIEW();
 				}
 			}
