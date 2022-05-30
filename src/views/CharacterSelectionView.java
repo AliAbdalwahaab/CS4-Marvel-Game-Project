@@ -14,8 +14,8 @@ import model.world.Champion;
 import static java.awt.Font.BOLD;
 
 public class CharacterSelectionView extends JFrame implements ActionListener {
-	//TODO: Display champion info
-	//TOD0:  Grey Out chosen Champions
+	//TODO: Display champion info, change chosen champion fonts
+
 	private Game currentGame;
 
 	private JTextField textField1;
@@ -51,7 +51,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 
 		text1 = new JLabel();
 		text1.setText("Player 1 Name");
-		text1.setFont(new Font("Times New Roman",BOLD,25));
+		text1.setFont(new Font("Chiller",BOLD,35));
 		text1.setBounds(590,170,200,200);
 
 		textField1 = new JTextField();
@@ -59,26 +59,48 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 
 		text2 = new JLabel();
 		text2.setText("Player 2 Name");
-		text2.setFont(new Font("Times New Roman",BOLD,25));
+		text2.setFont(new Font("Chiller",BOLD,35));
 		text2.setBounds(590,280,200,200);
 
 		textField2 = new JTextField();
 		textField2.setBounds(530,300+100,300,50);
 
 		submit = new JButton("Start");
-		submit.setBounds(530+90,300+100+100,100,30);
+		submit.setFont(new Font("Chiller",BOLD,80));
+		submit.setBounds(530+90,300+100+100,100,5);
 		submit.addActionListener(this);
 
 
+		JPanel empty = new JPanel();
+		empty.setVisible(true);
+		empty.setPreferredSize(new Dimension(200,this.getHeight()));
+		this.add(empty,BorderLayout.EAST);
+
+		JPanel empty2 = new JPanel();
+		empty2.setVisible(true);
+		empty2.setPreferredSize(new Dimension(200,this.getHeight()));
+		this.add(empty2,BorderLayout.WEST);
+
+		JPanel empty3 = new JPanel();
+		empty3.setVisible(true);
+		empty3.setPreferredSize(new Dimension(this.getWidth(),110));
+		this.add(empty3,BorderLayout.NORTH);
+
+		JLabel empty4 = new JLabel();
+		empty4.setVisible(true);
+		empty4.setPreferredSize(new Dimension(this.getWidth(),110));
+
+
 		JPanel centeralign = new JPanel();
-		centeralign.setLayout(new GridLayout(5,0));
+		centeralign.setLayout(new GridLayout(8,0));
 		centeralign.setPreferredSize(new Dimension(200,300));
 		this.add(centeralign, BorderLayout.CENTER);
 		centeralign.add(text1);
 		centeralign.add(textField1);
 		centeralign.add(text2);
 		centeralign.add(textField2);
-		this.add(submit, BorderLayout.SOUTH);
+		centeralign.add(empty4);
+		centeralign.add(submit);
 
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -112,7 +134,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 		if (btns.contains(e.getSource())) {
 			for (JButton b: btns) {
 				if (e.getSource() == b && player1Leader.getText().equals(" Not yet selected")) {
-					player1Leader.setText(b.getText()+"*****");
+					player1Leader.setText(b.getText()+" (Leader)");
 					for (Champion c: currentGame.getAvailableChampions()) {
 						if (c.getName().equals(b.getText())) {
 							currentGame.getFirstPlayer().setLeader(c);
@@ -144,7 +166,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 							"Second Player should choose all their Champions. The first champion selected is the leader");
 
 				} else if (e.getSource() == b && player2Leader.getText().equals("Not yet selected")) {
-					player2Leader.setText(b.getText()+"*****");
+					player2Leader.setText(b.getText()+" (Leader)");
 					for (Champion c: currentGame.getAvailableChampions()) {
 						if (c.getName().equals(b.getText())) {
 							currentGame.getSecondPlayer().setLeader(c);
