@@ -11,7 +11,7 @@ import javax.swing.*;
 
 import views.CharacterSelectionView.*;
 
-public class StartScreenGUI extends JComponent implements ActionListener {
+public class StartScreenGUI extends JComponent {
     JPanel contentPane;
     JLabel imageLabel = new JLabel();
     JLabel headerLabel = new JLabel();
@@ -22,12 +22,13 @@ public class StartScreenGUI extends JComponent implements ActionListener {
     public static void main(String[] args) throws MalformedURLException, InterruptedException {
         new StartScreenGUI();
     }
+
     public StartScreenGUI() throws MalformedURLException, InterruptedException {
         JFrame f = new JFrame();
 
         f.setLayout(new BorderLayout());
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        Icon icon = new ImageIcon("THH-LOGO.gif");
+        Icon icon = new ImageIcon("THH-LOGO_F2.gif");
         JLabel label = new JLabel();
         label.setIcon(icon);
         f.setContentPane(label);
@@ -36,25 +37,10 @@ public class StartScreenGUI extends JComponent implements ActionListener {
         f.setVisible(true);
         TimeUnit.SECONDS.sleep(20);
 
-        f.setVisible(false);
-        JFrame playPhase = new JFrame();
-        playPhase.setLayout(new BorderLayout());
-        playPhase.setVisible(true);
-        play = new JButton("Play");
-        play.addActionListener(this);
-
-        playPhase.add(play, BorderLayout.PAGE_END);
-        playPhase.setExtendedState(JFrame.MAXIMIZED_BOTH);
         f.dispose();
+        new CharacterSelectionView();
 
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == play) {
-            playPhase.dispose();
-            new CharacterSelectionView();
-        }
     }
 }
+
 
