@@ -53,16 +53,20 @@ public class GameVIEW extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(0, 0, 1920, 1080);
 
-
         //Board (CENTER)
         gameBoard = new JPanel();
         gameBoard.setLayout(new GridLayout(5, 5));
         add(gameBoard, BorderLayout.CENTER);
+//        for (int i = 0; i < 25; i++) {
+//            JButton b = new JButton();
+//            gameBoard.add(b);
+//        }
 
-        ArrayList<JButton> grid = new ArrayList<JButton>();
-        for (int i = 0; i < 25; i++) {
-            JButton b = new JButton();
-            gameBoard.add(b);
+        Object[][] Board = controller.getBoard();
+        for (int row = 4; row >= 0; row--) {
+            for (int col = 0; col < 5; col++) {
+                gameBoard.add(new JButton((Board[row][col] == null) ? "Empty" : Board[row][col].toString()));
+            }
         }
         this.revalidate();
         this.repaint();

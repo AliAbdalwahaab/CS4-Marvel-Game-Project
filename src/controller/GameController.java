@@ -10,6 +10,7 @@ public class GameController implements ActionListener, MouseListener, WindowList
 
     public GameController(Game game) {
         //TODO
+        this.game = game;
     }
 
     @Override

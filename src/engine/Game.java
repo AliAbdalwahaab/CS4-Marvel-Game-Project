@@ -80,7 +80,7 @@ public class Game {
         prepareChampionTurns();
     }
 
-    private void placeChampions() {
+    public void placeChampions() {
         ArrayList<Champion> team1 = firstPlayer.getTeam();
         ArrayList<Champion> team2 = secondPlayer.getTeam();
         if (team1.size() == 0 || team2.size() == 0) return;

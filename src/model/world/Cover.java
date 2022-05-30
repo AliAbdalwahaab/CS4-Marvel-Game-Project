@@ -26,4 +26,8 @@ public class Cover implements Damageable {
             this.currentHP = currentHP;
         else this.currentHP = 0;
     }
+
+    public String toString() {
+        return "Cover";
+    }
 }
