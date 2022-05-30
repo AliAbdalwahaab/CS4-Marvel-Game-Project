@@ -197,8 +197,8 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 
 					JOptionPane.showMessageDialog(null,"Second Team Selected. Game is about to start");
 					this.dispose();
-					new GameController(currentGame);
-					new GameVIEW();
+
+					new GameVIEW(new GameController(currentGame));
 				}
 			}
 			this.revalidate();
