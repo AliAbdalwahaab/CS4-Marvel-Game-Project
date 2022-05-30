@@ -19,6 +19,7 @@ public class GameVIEW extends JFrame {
     public GameVIEW(){
         setTitle("GAME STARTED!");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setBounds(0, 0, 1920, 1080);
         GameBoard = new JPanel();
         GameBoard.setLayout(new GridLayout(5, 5));
