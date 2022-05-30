@@ -31,10 +31,10 @@ public class StartScreenGUI extends JComponent implements ActionListener {
         JLabel label = new JLabel();
         label.setIcon(icon);
         f.setContentPane(label);
-        //f.add(label, BorderLayout.CENTER);
-        f.setBackground(Color.BLACK);
+
+        //f.add(label, SwingConstants.CENTER);
         f.setVisible(true);
-        TimeUnit.SECONDS.sleep(22);
+        TimeUnit.SECONDS.sleep(20);
 
         f.setVisible(false);
         JFrame playPhase = new JFrame();
