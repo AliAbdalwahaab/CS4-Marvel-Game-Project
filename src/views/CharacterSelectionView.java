@@ -115,6 +115,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 							break;
 						}
 					}
+					b.setEnabled(false);
 				} else if (e.getSource() == b && player1Champ1.getText().equals(" Not yet selected")) {
 					player1Champ1.setText(b.getText());
 					for (Champion c: currentGame.getAvailableChampions()) {
@@ -123,6 +124,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 							break;
 						}
 					}
+					b.setEnabled(false);
 				} else if (e.getSource() == b && player1Champ2.getText().equals(" Not yet selected")) {
 					player1Champ2.setText(b.getText());
 					for (Champion c: currentGame.getAvailableChampions()) {
@@ -131,6 +133,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 							break;
 						}
 					}
+					b.setEnabled(false);
 
 					JOptionPane.showMessageDialog(null,"First Team Selected. " +
 							"Second Player should choose all their Champions. The first champion selected is the leader");
@@ -144,6 +147,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 							break;
 						}
 					}
+					b.setEnabled(false);
 				} else if (e.getSource() == b && player2Champ1.getText().equals("Not yet selected")) {
 					player2Champ1.setText(b.getText());
 					for (Champion c: currentGame.getAvailableChampions()) {
@@ -152,6 +156,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 							break;
 						}
 					}
+					b.setEnabled(false);
 				} else if (e.getSource() == b && player2Champ2.getText().equals("Not yet selected")) {
 					player2Champ2.setText(b.getText());
 					for (Champion c: currentGame.getAvailableChampions()) {
@@ -160,6 +165,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 							break;
 						}
 					}
+					b.setEnabled(false);
 
 					JOptionPane.showMessageDialog(null,"Second Team Selected. Game is about to start");
 
