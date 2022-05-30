@@ -3,11 +3,12 @@ package controller;
 import engine.Game;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class GameController implements ActionListener, MouseListener, WindowListener {
     private Game game;
 
-    public GameController(Game g) {
+    public GameController(Game game) {
         //TODO
     }
 
@@ -74,5 +75,9 @@ public class GameController implements ActionListener, MouseListener, WindowList
     @Override
     public void windowDeactivated(WindowEvent e) {
 
+    }
+
+    public Object[][] getBoard() {
+        return this.game.getBoard();
     }
 }

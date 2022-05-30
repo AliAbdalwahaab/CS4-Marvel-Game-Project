@@ -6,18 +6,19 @@ import engine.Game;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.colorchooser.ColorChooserComponentFactory;
 
 import engine.Player;
 
 public class GameVIEW extends JFrame{
-    private JPanel GameBoard;
-    private JPanel Abilities;
-    private JButton CCAbility;
-    private JButton DAbility;
-    private JButton HAbility;
-    private JButton LAbility;
+    private JPanel gameBoard;
+//    private JPanel Abilities;
+//    private JButton CCAbility;
+//    private JButton DAbility;
+//    private JButton HAbility;
+//    private JButton LAbility;
 
     private JPanel CurrentChampInfo;
     private JLabel CurrentPlayerName;
@@ -41,8 +42,8 @@ public class GameVIEW extends JFrame{
     private JComboBox HoverChampAbilities;
     private JComboBox HoverChampAppliedEffects;
 
-    private JPanel AbilitiesPanel;
-    private JPanel RightPanel;
+    private JPanel abilitiesPanel;
+    private JPanel rightPanel;
 
     public GameVIEW(GameController controller){
         setTitle("GAME STARTED!");
@@ -54,14 +55,35 @@ public class GameVIEW extends JFrame{
 
 
         //Board (CENTER)
+        gameBoard = new JPanel();
+        gameBoard.setLayout(new GridLayout(5, 5));
+        add(gameBoard, BorderLayout.CENTER);
+
+        ArrayList<JButton> grid = new ArrayList<JButton>();
+        for (int i = 0; i < 25; i++) {
+            JButton b = new JButton();
+            gameBoard.add(b);
+        }
+        this.revalidate();
+        this.repaint();
+        //for (Object o: )
 
         // Abilities left (2 grids)
-        JPanel AbilitiesPanel = new JPanel(new GridLayout(2,1));
-        this.add(AbilitiesPanel, BorderLayout.WEST);
+        abilitiesPanel = new JPanel(new GridLayout(2,1));
+        JLabel empty = new JLabel();
+        empty.setPreferredSize(new Dimension(200,this.getHeight()));
+        abilitiesPanel.add(empty);
+        this.add(abilitiesPanel, BorderLayout.WEST);
+        this.revalidate();
+        this.repaint();
+
 
         // TurnOrder + Movement &  Attack right (2 grids)
-        JPanel RightPanel = new JPanel(new GridLayout(2,1));
-        this.add(AbilitiesPanel, BorderLayout.EAST);
+        rightPanel = new JPanel(new GridLayout(2,1));
+        JLabel empty2 = new JLabel();
+        empty2.setPreferredSize(new Dimension(200,this.getHeight()));
+        rightPanel.add(empty2);
+        this.add(rightPanel, BorderLayout.EAST);
 
         // Hover Info (Page Start)
         HoverChampInfo =  new JPanel(new GridLayout(2, 4));
@@ -72,8 +94,8 @@ public class GameVIEW extends JFrame{
         HoverChampMana = new JLabel("Karinge");
         HoverChampActionPoints = new JLabel("Karinge");
         HoverChampAttackDmg = new JLabel("Karinge");
-        JComboBox HoverChampAbilities = new JComboBox();
-        JComboBox HoverChampAppliedEffects = new JComboBox();
+        HoverChampAbilities = new JComboBox();
+        HoverChampAppliedEffects = new JComboBox();
         HoverChampInfo.add(HoverChampName);
         HoverChampInfo.add(HoverChampType);
         HoverChampInfo.add(HoverChampHP);
@@ -112,20 +134,20 @@ public class GameVIEW extends JFrame{
         this.add(CurrentChampInfo, BorderLayout.SOUTH);
 
 
-        GameBoard = new JPanel();
-        GameBoard.setLayout(new GridLayout(5, 5));
-        add(GameBoard, BorderLayout.CENTER);
-        Abilities = new JPanel();
-        Abilities.setLayout(new GridLayout(4,0));
-        CCAbility = new JButton("Crowd control");
-        DAbility = new JButton("Damage");
-        HAbility = new JButton("Healing");
-        LAbility = new JButton("Leader");
-        Abilities.add(CCAbility);
-        Abilities.add(DAbility);
-        Abilities.add(HAbility);
-        Abilities.add(LAbility);
-        add(Abilities,BorderLayout.EAST);
+
+
+
+//        Abilities = new JPanel();
+//        Abilities.setLayout(new GridLayout(4,0));
+//        CCAbility = new JButton("Crowd control");
+//        DAbility = new JButton("Damage");
+//        HAbility = new JButton("Healing");
+//        LAbility = new JButton("Leader");
+//        Abilities.add(CCAbility);
+//        Abilities.add(DAbility);
+//        Abilities.add(HAbility);
+//        Abilities.add(LAbility);
+//        add(Abilities,BorderLayout.EAST);
 
         this.revalidate();
         this.repaint();
