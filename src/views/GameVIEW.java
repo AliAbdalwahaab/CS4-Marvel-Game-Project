@@ -1,5 +1,6 @@
 package views;
 
+import controller.GameController;
 import engine.Game;
 
 import java.awt.*;
@@ -16,7 +17,7 @@ public class GameVIEW extends JFrame {
     private JButton HAbility;
     private JButton LAbility;
 
-    public GameVIEW(){
+    public GameVIEW(GameController controller){
         setTitle("GAME STARTED!");
         setVisible(true);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
