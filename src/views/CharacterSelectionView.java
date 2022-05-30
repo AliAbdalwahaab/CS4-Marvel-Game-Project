@@ -15,7 +15,7 @@ import static java.awt.Font.BOLD;
 
 public class CharacterSelectionView extends JFrame implements ActionListener {
 	//TODO: Display champion info
-	
+	//TOD0:  Grey Out chosen Champions
 	private Game currentGame;
 
 	private JTextField textField1;
@@ -44,6 +44,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 	private String secondPlayerName = "";
 	
 	public CharacterSelectionView() {
+		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		this.setTitle("Game");
 		this.setBounds(0,0,1920,1080);
 		this.setLayout(null);

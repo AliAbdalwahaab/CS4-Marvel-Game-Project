@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import views.CharacterSelectionView.*;
 
 public class StartScreenGUI extends JFrame {
     JPanel contentPane;
@@ -23,37 +24,20 @@ public class StartScreenGUI extends JFrame {
     JLabel headerLabel = new JLabel();
 
 
-    public static void main(String[] args) throws MalformedURLException {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame frame = new JFrame();
-                frame.add(new ImagePanel());
+    public static void main(String[] args) throws MalformedURLException, InterruptedException {
+        JFrame f = new JFrame();
+        f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        Icon icon = new ImageIcon("THH-LOGO_F2.gif");
+        JLabel label = new JLabel();
 
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(400, 400);
-                frame.setVisible(true);
-            }
-        });
+        label.setIcon(icon);
+        f.add(label);
+        f.setVisible(true);
+        TimeUnit.SECONDS.sleep(22);
+        f.dispose();
+        new CharacterSelectionView();
 
     }
 
 }
 
-class ImagePanel extends JPanel {
-
-    Image image;
-
-    public ImagePanel() {
-        image = Toolkit.getDefaultToolkit().createImage("C:/Users/omar.nour/Downloads/8f5.gif"); //
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (image != null) {
-            g.drawImage(image, 0, 0, this);
-        }
-    }
-
-}
