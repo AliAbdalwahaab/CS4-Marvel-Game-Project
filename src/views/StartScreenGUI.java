@@ -24,10 +24,10 @@ public class StartScreenGUI extends JComponent {
         JLabel label = new JLabel();
         label.setIcon(icon);
         f.setContentPane(label);
-
-        //f.add(label, SwingConstants.CENTER);
+        //f.add(label, BorderLayout.CENTER);
+        f.setBackground(Color.BLACK);
         f.setVisible(true);
-        TimeUnit.SECONDS.sleep(20);
+        TimeUnit.SECONDS.sleep(22);
 
         new CharacterSelectionView();
         f.dispose();
