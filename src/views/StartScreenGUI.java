@@ -26,16 +26,19 @@ public class StartScreenGUI extends JFrame {
 
     public static void main(String[] args) throws MalformedURLException, InterruptedException {
         JFrame f = new JFrame();
-        f.setExtendedState(f.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        //f.setLayout(new BorderLayout());
+        f.setExtendedState(JFrame.MAXIMIZED_BOTH);
         Icon icon = new ImageIcon("THH-LOGO_F2.gif");
         JLabel label = new JLabel();
 
         label.setIcon(icon);
-        f.add(label);
+
+        f.add(label, BorderLayout.CENTER);
         f.setVisible(true);
-        TimeUnit.SECONDS.sleep(22);
-        f.dispose();
+        TimeUnit.SECONDS.sleep(20);
+
         new CharacterSelectionView();
+        f.dispose();
 
     }
 
