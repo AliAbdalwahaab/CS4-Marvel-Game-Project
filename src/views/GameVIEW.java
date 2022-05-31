@@ -265,7 +265,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             }
             attackFlag = false;
-        } else if (e.getSource() instanceof JButton && map){
+        } else if (e.getSource() instanceof JButton && map) {
             if (((JButton) e.getSource()).getText().equals("")) { // Empty
                 return;
             } else if (((JButton) e.getSource()).getText().equals("=============")) { // Cover
@@ -331,8 +331,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 this.revalidate();
                 this.repaint();
             }
-        }
-        else {
+        } else {
 
             //move
             if (e.getSource() == upDirection) {
