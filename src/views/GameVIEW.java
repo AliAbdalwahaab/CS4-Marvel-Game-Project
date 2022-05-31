@@ -538,7 +538,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     public void updateSouth() {
 
-        CurrentPlayerName = new JLabel("Player Name: "+(controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())? controller.getPlayer1().getName():controller.getPlayer2().getName()));
+        CurrentPlayerName.setText("Player Name: "+(controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())? controller.getPlayer1().getName():controller.getPlayer2().getName()));
         ChampName.setText("Champion Name: "+controller.getCurrentChampion().getName());
         ChampType.setText("Class: "+controller.getCurrentChampion().getHeroClass());
         ChampHP.setText("HP: "+controller.getCurrentChampion().getCurrentHP()+"/"+controller.getCurrentChampion().getMaxHP());
