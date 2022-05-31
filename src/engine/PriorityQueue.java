@@ -42,4 +42,11 @@ public class PriorityQueue {
    public int size() {
       return nItems;
    }
+
+   public Object[] getQueue(){
+      return this.elements;
+   }
+
 }
+
+

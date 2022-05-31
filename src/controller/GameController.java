@@ -1,7 +1,6 @@
 package controller;
 
-import engine.Game;
-import engine.Player;
+import engine.*;
 import exceptions.NotEnoughResourcesException;
 import exceptions.UnallowedMovementException;
 import model.world.Champion;
@@ -86,6 +85,10 @@ public class GameController {
         }
 
         return null;
+    }
+
+    public Game getGame(){
+        return this.game;
     }
 
 

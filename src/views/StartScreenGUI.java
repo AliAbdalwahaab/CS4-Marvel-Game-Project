@@ -31,9 +31,10 @@ public class StartScreenGUI extends JComponent {
         Icon icon = new ImageIcon("THH-LOGO_F2.gif");
         JLabel label = new JLabel();
         label.setIcon(icon);
-        f.setContentPane(label);
-        //f.add(label, BorderLayout.CENTER);
         f.setBackground(Color.BLACK);
+        f.setContentPane(label);
+
+        //f.add(label, SwingConstants.CENTER);
         f.setVisible(true);
         TimeUnit.SECONDS.sleep(21);
 

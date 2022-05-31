@@ -3,6 +3,7 @@ package views;
 import controller.GameController;
 import engine.Game;
 
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.colorchooser.ColorChooserComponentFactory;
+import javax.swing.plaf.metal.MetalIconFactory;
 
 import engine.Player;
 import model.abilities.Ability;
@@ -19,6 +21,7 @@ import model.abilities.HealingAbility;
 import model.effects.Effect;
 import model.abilities.*;
 import model.world.Champion;
+import model.world.Condition;
 import model.world.Cover;
 
 public class GameVIEW extends JFrame implements ActionListener, MouseListener {
@@ -53,7 +56,15 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     private JComboBox HoverChampAbilities;
     private JComboBox HoverChampAppliedEffects;
 
+    private JPanel turnOrderPanel;
+
     private JPanel abilitiesPanel;
+    private JPanel selectAbilities;
+    private JComboBox selfTargetBox;
+    private JComboBox teamTargetBox;
+    private JComboBox singleTargetBox;
+    private JComboBox directionalTargetBox;
+    private JComboBox surroundTargetBox;
     private JPanel rightPanel;
     private JButton upDirection;
     private JButton leftDirection;
@@ -100,6 +111,17 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
         // Abilities left (2 grids)
         abilitiesPanel = new JPanel(new GridLayout(2,1));
+        selectAbilities = new JPanel(new GridLayout(10,1));
+        JLabel singleTarget = new JLabel("Single Target");
+         singleTargetBox = new JComboBox<>();
+        JLabel selfTarget = new JLabel("Self Target");
+         selfTargetBox = new JComboBox<>();
+        JLabel teamTarget = new JLabel("Team Target");
+         teamTargetBox = new JComboBox<>();
+        JLabel directionalTarget = new JLabel("Directional Target");
+         directionalTargetBox = new JComboBox<>();
+        JLabel surroundTarget = new JLabel("Surround Target");
+         surroundTargetBox = new JComboBox<>();
         JLabel empty = new JLabel("Karinge");
         empty.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
         abilitiesPanel.add(empty);
@@ -109,9 +131,23 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
         // TurnOrder + Movement &  Attack right (2 grids)
         rightPanel = new JPanel(new GridLayout(2,1));
+        turnOrderPanel = new JPanel(new GridLayout(7,1));
+        JTextArea Title = new JTextArea("TURN ORDER");
+        Title.setEditable(false);
+        Title.setFont(new Font("Chiller", Font.BOLD, 20));
+        turnOrderPanel.add(Title);
+        turnOrderPanel.setBackground(Color.decode("#f0b089"));
+        for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
+            Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
+            JLabel championAndStat = new JLabel(""+ c.getName() +" ("+c.getCondition()+")");
+            turnOrderPanel.add(championAndStat);
+        }
+
+        rightPanel.add(turnOrderPanel);
+
         JLabel empty2 = new JLabel("Karinge");
         //empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
-        rightPanel.add(empty2);
+        //rightPanel.add(empty2);
         JPanel directionPad = new JPanel(new GridLayout(3,3));
         directionPad.setBackground(Color.decode("#34d942"));
         JLabel upperLeftEmpty = new JLabel("");
@@ -143,12 +179,12 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         // Hover Info (Page Start)
         HoverChampInfo =  new JPanel(new GridLayout(2, 4));
         HoverChampInfo.setBackground(Color.decode("#e8f743") );
-        HoverChampName = new JLabel("Karinge");
-        HoverChampType = new JLabel("Karinge");
-        HoverChampHP = new JLabel("Karinge");
-        HoverChampMana = new JLabel("Karinge");
-        HoverChampActionPoints = new JLabel("Karinge");
-        HoverChampAttackDmg = new JLabel("Karinge");
+        HoverChampName = new JLabel("Empty");
+        HoverChampType = new JLabel("-");
+        HoverChampHP = new JLabel("-");
+        HoverChampMana = new JLabel("-");
+        HoverChampActionPoints = new JLabel("-");
+        HoverChampAttackDmg = new JLabel("-");
         HoverChampAbilities = new JComboBox();
         HoverChampAppliedEffects = new JComboBox();
         HoverChampInfo.add(HoverChampName);
@@ -170,12 +206,12 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         } else currentColor = controller.getPlayer2().getColor();
         CurrentChampInfo.setBackground(Color.decode(currentColor));
         CurrentPlayerName = new JLabel("Player Name: "+(controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())? controller.getPlayer1().getName():controller.getPlayer2().getName()));
-        ChampName = new JLabel("Champion Name: "+controller.getCurrentChampion().getName());
+        ChampName = new JLabel("Champion: "+controller.getCurrentChampion().getName() + "  Status: " + controller.getCurrentChampion().getCondition());
         ChampType = new JLabel("Class: "+controller.getCurrentChampion().getHeroClass());
         ChampHP = new JLabel("HP: "+controller.getCurrentChampion().getCurrentHP()+"/"+controller.getCurrentChampion().getMaxHP());
         ChampMana = new JLabel("Mana: "+controller.getCurrentChampion().getMana());
         ChampActionPoints = new JLabel("Action Pts: "+controller.getCurrentChampion().getCurrentActionPoints()+"/"+controller.getCurrentChampion().getMaxActionPointsPerTurn());
-        ChampAttackDmg = new JLabel("Attack Damage: "+controller.getCurrentChampion().getAttackDamage());
+        ChampAttackDmg = new JLabel("Attack Damage: "+controller.getCurrentChampion().getAttackDamage() + "  Range: " + controller.getCurrentChampion().getAttackRange());
         ChampAbilities = new JComboBox();
         ChampAppliedEffects = new JComboBox();
 
@@ -207,7 +243,6 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         CurrentChampInfo.add(endTurn);
         CurrentChampInfo.setVisible(true);
         this.add(CurrentChampInfo, BorderLayout.SOUTH);
-
 
 //        Abilities = new JPanel();
 //        Abilities.setLayout(new GridLayout(4,0));
@@ -265,10 +300,22 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             }
             attackFlag = false;
-        } else if (e.getSource() instanceof JButton && map) {
-            if (((JButton) e.getSource()).getText().equals("")) { // Empty
-                return;
-            } else if (((JButton) e.getSource()).getText().equals("=============")) { // Cover
+        } else if (e.getSource() instanceof JButton && map){
+
+            if (((JButton) e.getSource()).getText().equals("")) {
+                // Empty
+                HoverChampName.setText("Empty");
+                HoverChampType.setText("-");
+                HoverChampHP.setText("-");
+                HoverChampMana.setText("-");
+                HoverChampActionPoints.setText("-");
+                HoverChampAttackDmg.setText("-");
+                HoverChampAbilities.removeAllItems();
+                HoverChampAppliedEffects.removeAllItems();
+               return;
+            }
+
+            else if (((JButton) e.getSource()).getText().equals("=============")) { // Cover
                 Cover cvr = null;
                 Boolean allBreak = false;
                 for (int i = 0; i < buttonBoard.length; i++) {
@@ -305,12 +352,12 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                     if (allBreak) break;
                 }
 
-                HoverChampName.setText("Champion Name: " + c.getName());
+                HoverChampName.setText("Champion Name: " + c.getName() +"  Status: "+ c.getCondition());
                 HoverChampType.setText("Class: " + c.getHeroClass());
                 HoverChampHP.setText("HP: " + c.getCurrentHP() + "/" + c.getMaxHP());
                 HoverChampMana.setText("Mana: " + c.getMana());
                 HoverChampActionPoints.setText("Action Pts: " + c.getCurrentActionPoints() + "/" + c.getMaxActionPointsPerTurn());
-                HoverChampAttackDmg.setText("Attack Damage: " + c.getAttackDamage());
+                HoverChampAttackDmg.setText("Attack Damage: " + c.getAttackDamage() + "  Range: " + c.getAttackRange());
 
                 HoverChampAbilities.removeAllItems();
                 HoverChampAppliedEffects.removeAllItems();
@@ -539,12 +586,12 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     public void updateSouth() {
 
         CurrentPlayerName.setText("Player Name: "+(controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())? controller.getPlayer1().getName():controller.getPlayer2().getName()));
-        ChampName.setText("Champion Name: "+controller.getCurrentChampion().getName());
+        ChampName.setText("Champion: "+controller.getCurrentChampion().getName() + "  Status: " + controller.getCurrentChampion().getCondition());
         ChampType.setText("Class: "+controller.getCurrentChampion().getHeroClass());
         ChampHP.setText("HP: "+controller.getCurrentChampion().getCurrentHP()+"/"+controller.getCurrentChampion().getMaxHP());
         ChampMana.setText("Mana: "+controller.getCurrentChampion().getMana());
         ChampActionPoints.setText("Action Pts: "+controller.getCurrentChampion().getCurrentActionPoints()+"/"+controller.getCurrentChampion().getMaxActionPointsPerTurn());
-        ChampAttackDmg.setText("Attack Damage: "+controller.getCurrentChampion().getAttackDamage());
+        ChampAttackDmg.setText("Attack Damage: "+controller.getCurrentChampion().getAttackDamage() + "  Range: " + controller.getCurrentChampion().getAttackRange());
 
         ChampAbilities.removeAllItems();
         ChampAppliedEffects.removeAllItems();
