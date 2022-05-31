@@ -45,6 +45,9 @@ public class GameVIEW extends JFrame{
     private JPanel abilitiesPanel;
     private JPanel rightPanel;
 
+    private Object[][] Board;
+    private Object[][] buttonBoard;
+
     public GameVIEW(GameController controller){
         setTitle("GAME STARTED!");
         addMouseListener(controller);
@@ -57,11 +60,17 @@ public class GameVIEW extends JFrame{
         gameBoard = new JPanel();
         gameBoard.setLayout(new GridLayout(5, 5));
         add(gameBoard, BorderLayout.CENTER);
+        Board = controller.getBoard();
+        buttonBoard = new Object[5][5];
+        for (int i = 0; i < 5; i++) { // Blind copy
+            for (int j = 0; j < 5; j++) {
+                buttonBoard[i][j] = new JButton((Board[i][j] == null) ? "" : Board[i][j].toString());
+            }
+        }
 
-        Object[][] Board = controller.getBoard();
         for (int row = 4; row >= 0; row--) {
             for (int col = 0; col < 5; col++) {
-                gameBoard.add(new JButton((Board[row][col] == null) ? "" : Board[row][col].toString()));
+                gameBoard.add((JButton) buttonBoard[row][col]);
             }
         }
 
@@ -78,8 +87,34 @@ public class GameVIEW extends JFrame{
         // TurnOrder + Movement &  Attack right (2 grids)
         rightPanel = new JPanel(new GridLayout(2,1));
         JLabel empty2 = new JLabel("Karinge");
-        empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
+        //empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
         rightPanel.add(empty2);
+        JPanel directionPad = new JPanel(new GridLayout(3,3));
+        directionPad.setBackground(Color.decode("#34d942"));
+        JLabel upperLeftEmpty = new JLabel("");
+        JLabel upperRightEmpty = new JLabel("");
+        JLabel lowerLeftEmpty = new JLabel("");
+        JLabel lowerRightEmpty = new JLabel("");
+        JButton upDirection = new JButton("UP");
+        JButton leftDirection = new JButton("LEFT");
+        JButton rightDirection = new JButton("RIGHT");
+        JButton downDirection = new JButton("DOWN");
+        JButton attack = new JButton("ATTACK");
+        upDirection.addActionListener(controller);
+        leftDirection.addActionListener(controller);
+        rightDirection.addActionListener(controller);
+        downDirection.addActionListener(controller);
+        attack.addActionListener(controller);
+        directionPad.add(upperLeftEmpty);
+        directionPad.add(upDirection);
+        directionPad.add(upperRightEmpty);
+        directionPad.add(leftDirection);
+        directionPad.add(attack);
+        directionPad.add(rightDirection);
+        directionPad.add(lowerLeftEmpty);
+        directionPad.add(downDirection);
+        directionPad.add(lowerRightEmpty);
+        rightPanel.add(directionPad);
         this.add(rightPanel, BorderLayout.EAST);
 
         // Hover Info (Page Start)
@@ -106,7 +141,11 @@ public class GameVIEW extends JFrame{
 
         // Current Champ info (Page End)
         CurrentChampInfo =  new JPanel(new GridLayout(2, 5));
-        CurrentChampInfo.setBackground(Color.decode("#4d8de8") );
+        String currentColor = "";
+        if (controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())){
+            currentColor = controller.getPlayer1().getColor();
+        } else currentColor = controller.getPlayer2().getColor();
+        CurrentChampInfo.setBackground(Color.decode(currentColor));
         CurrentPlayerName = new JLabel("Karinge");
         ChampName = new JLabel("Karinge");
         ChampType = new JLabel("Karinge");
@@ -117,6 +156,7 @@ public class GameVIEW extends JFrame{
         ChampAbilities = new JComboBox();
         ChampAppliedEffects = new JComboBox();
         endTurn = new JButton("END THIS SHIT");
+        endTurn.addActionListener(controller);
         CurrentChampInfo.add(CurrentPlayerName);
         CurrentChampInfo.add(ChampName);
         CurrentChampInfo.add(ChampType);

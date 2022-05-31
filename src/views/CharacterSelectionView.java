@@ -124,6 +124,8 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 
 			Player player1 = new Player(firstPlayerName);
 			Player player2 = new Player(secondPlayerName);
+			player1.setColor("#4d8de8");
+			player2.setColor("#de4335");
 			currentGame = new Game(player1, player2);
 
 			this.getContentPane().removeAll();
@@ -199,6 +201,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 					this.dispose();
 
 					currentGame.placeChampions();
+					currentGame.prepareChampionTurns();
 
 					new GameVIEW(new GameController(currentGame));
 				}

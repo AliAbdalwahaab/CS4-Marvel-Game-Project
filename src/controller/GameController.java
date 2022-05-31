@@ -1,6 +1,8 @@
 package controller;
 
 import engine.Game;
+import engine.Player;
+import model.world.Champion;
 
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -81,4 +83,19 @@ public class GameController implements ActionListener, MouseListener, WindowList
     public Object[][] getBoard() {
         return this.game.getBoard();
     }
+
+    public Champion getCurrentChampion() {
+        return game.getCurrentChampion();
+    }
+
+    public Player getPlayer1() {
+        return game.getFirstPlayer();
+    }
+
+    public Player getPlayer2() {
+        return game.getSecondPlayer();
+    }
+
+
+
 }
