@@ -6,13 +6,22 @@ import engine.Game;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.colorchooser.ColorChooserComponentFactory;
 
 import engine.Player;
+import model.abilities.Ability;
+import model.abilities.DamagingAbility;
+import model.abilities.HealingAbility;
+import model.effects.Effect;
+import model.abilities.*;
 
-public class GameVIEW extends JFrame{
+public class GameVIEW extends JFrame implements ActionListener, MouseListener {
+
+    private GameController controller;
     private JPanel gameBoard;
 //    private JPanel Abilities;
 //    private JButton CCAbility;
@@ -44,10 +53,22 @@ public class GameVIEW extends JFrame{
 
     private JPanel abilitiesPanel;
     private JPanel rightPanel;
+    private JButton upDirection;
+    private JButton leftDirection;
+    private JButton rightDirection;
+    private JButton downDirection;
+    private JButton attack;
+    private boolean castAbilityFlag = false;
+    private boolean attackFlag = false;
 
-    public GameVIEW(GameController controller){
+    private Object[][] Board;
+    private Object[][] buttonBoard;
+
+    public GameVIEW(GameController controller) {
+
+        this.controller = controller;
         setTitle("GAME STARTED!");
-        addMouseListener(controller);
+        addMouseListener(this);
         setVisible(true);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -57,11 +78,19 @@ public class GameVIEW extends JFrame{
         gameBoard = new JPanel();
         gameBoard.setLayout(new GridLayout(5, 5));
         add(gameBoard, BorderLayout.CENTER);
+        Board = controller.getBoard();
+        buttonBoard = new Object[5][5];
+        for (int i = 0; i < 5; i++) { // Blind copy
+            for (int j = 0; j < 5; j++) {
+                JButton b = new JButton((Board[i][j] == null) ? "" : Board[i][j].toString());
+                b.addActionListener(this);
+                buttonBoard[i][j] = b;
+            }
+        }
 
-        Object[][] Board = controller.getBoard();
         for (int row = 4; row >= 0; row--) {
             for (int col = 0; col < 5; col++) {
-                gameBoard.add(new JButton((Board[row][col] == null) ? "" : Board[row][col].toString()));
+                gameBoard.add((JButton) buttonBoard[row][col]);
             }
         }
 
@@ -78,8 +107,34 @@ public class GameVIEW extends JFrame{
         // TurnOrder + Movement &  Attack right (2 grids)
         rightPanel = new JPanel(new GridLayout(2,1));
         JLabel empty2 = new JLabel("Karinge");
-        empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
+        //empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
         rightPanel.add(empty2);
+        JPanel directionPad = new JPanel(new GridLayout(3,3));
+        directionPad.setBackground(Color.decode("#34d942"));
+        JLabel upperLeftEmpty = new JLabel("");
+        JLabel upperRightEmpty = new JLabel("");
+        JLabel lowerLeftEmpty = new JLabel("");
+        JLabel lowerRightEmpty = new JLabel("");
+        upDirection = new JButton("UP");
+        leftDirection = new JButton("LEFT");
+        rightDirection = new JButton("RIGHT");
+        downDirection = new JButton("DOWN");
+        attack = new JButton("ATTACK");
+        upDirection.addActionListener(this);
+        leftDirection.addActionListener(this);
+        rightDirection.addActionListener(this);
+        downDirection.addActionListener(this);
+        attack.addActionListener(this);
+        directionPad.add(upperLeftEmpty);
+        directionPad.add(upDirection);
+        directionPad.add(upperRightEmpty);
+        directionPad.add(leftDirection);
+        directionPad.add(attack);
+        directionPad.add(rightDirection);
+        directionPad.add(lowerLeftEmpty);
+        directionPad.add(downDirection);
+        directionPad.add(lowerRightEmpty);
+        rightPanel.add(directionPad);
         this.add(rightPanel, BorderLayout.EAST);
 
         // Hover Info (Page Start)
@@ -106,17 +161,37 @@ public class GameVIEW extends JFrame{
 
         // Current Champ info (Page End)
         CurrentChampInfo =  new JPanel(new GridLayout(2, 5));
-        CurrentChampInfo.setBackground(Color.decode("#4d8de8") );
-        CurrentPlayerName = new JLabel("Karinge");
-        ChampName = new JLabel("Karinge");
-        ChampType = new JLabel("Karinge");
-        ChampHP = new JLabel("Karinge");
-        ChampMana = new JLabel("Karinge");
-        ChampActionPoints = new JLabel("Karinge");
-        ChampAttackDmg = new JLabel("Karinge");
+        String currentColor = "";
+        if (controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())){
+            currentColor = controller.getPlayer1().getColor();
+        } else currentColor = controller.getPlayer2().getColor();
+        CurrentChampInfo.setBackground(Color.decode(currentColor));
+        CurrentPlayerName = new JLabel("Player Name: "+(controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())? controller.getPlayer1().getName():controller.getPlayer2().getName()));
+        ChampName = new JLabel("Champion Name: "+controller.getCurrentChampion().getName());
+        ChampType = new JLabel("Class: "+controller.getCurrentChampion().getHeroClass());
+        ChampHP = new JLabel("HP: "+controller.getCurrentChampion().getCurrentHP()+"/"+controller.getCurrentChampion().getMaxHP());
+        ChampMana = new JLabel("Mana: "+controller.getCurrentChampion().getMana());
+        ChampActionPoints = new JLabel("Action Pts: "+controller.getCurrentChampion().getCurrentActionPoints()+"/"+controller.getCurrentChampion().getMaxActionPointsPerTurn());
+        ChampAttackDmg = new JLabel("Attack Damage: "+controller.getCurrentChampion().getAttackDamage());
         ChampAbilities = new JComboBox();
         ChampAppliedEffects = new JComboBox();
-        endTurn = new JButton("END THIS SHIT");
+
+        for (Effect e: controller.getCurrentChampion().getAppliedEffects()) {
+            ChampAppliedEffects.addItem(e.getName()+" - "+e.getDuration()+" turn(s)");
+        }
+
+        for (Ability a: controller.getCurrentChampion().getAbilities()) {
+            if (a instanceof DamagingAbility) {
+                ChampAbilities.addItem(a.getName()+" - Damage: "+((DamagingAbility) a).getDamageAmount()+" HP");
+            } else if (a instanceof HealingAbility) {
+                ChampAbilities.addItem(a.getName()+" - Heal: "+((DamagingAbility) a).getDamageAmount()+" HP");
+            } else if (a instanceof CrowdControlAbility) {
+                ChampAbilities.addItem(a.getName() + " - Effect: "+((CrowdControlAbility) a).getEffect().getName()+ " - Duration: "+((CrowdControlAbility) a).getEffect().getDuration());
+            }
+        }
+
+        endTurn = new JButton("End Turn");
+        endTurn.addActionListener(this);
         CurrentChampInfo.add(CurrentPlayerName);
         CurrentChampInfo.add(ChampName);
         CurrentChampInfo.add(ChampType);
@@ -147,4 +222,138 @@ public class GameVIEW extends JFrame{
         this.repaint();
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (castAbilityFlag) {
+
+            //cast directional ability
+            if (e.getSource() == upDirection) {
+
+            } else if (e.getSource() == downDirection) {
+
+            } else if (e.getSource() == leftDirection) {
+
+            } else if (e.getSource() == rightDirection) {
+
+            }
+            castAbilityFlag = false;
+        } else if (attackFlag){
+
+            //attack
+            if (e.getSource() == upDirection) {
+
+            } else if (e.getSource() == downDirection) {
+
+            } else if (e.getSource() == leftDirection) {
+
+            } else if (e.getSource() == rightDirection) {
+
+            }
+            attackFlag = false;
+        } else {
+
+            //move
+            if (e.getSource() == upDirection) {
+                controller.onMoveClicked(upDirection.getText());
+
+            } else if (e.getSource() == downDirection) {
+                controller.onMoveClicked(downDirection.getText());
+            } else if (e.getSource() == leftDirection) {
+                controller.onMoveClicked(leftDirection.getText());
+            } else if (e.getSource() == rightDirection) {
+                controller.onMoveClicked(rightDirection.getText());
+            }
+            updateCenter();
+            updateSouth();
+
+        }
+
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+        for (int i = 0; i < buttonBoard.length;i++) {
+            for (int j = 0; j < buttonBoard[i].length;j++) {
+                if (buttonBoard[i][j] == (Object) mouseEvent.getSource()) {
+
+                }
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
+    }
+
+    public void updateCenter() {
+        this.revalidate();
+        this.repaint();
+
+        for (int i = 0; i < 5; i++) { // Blind copy
+            for (int j = 0; j < 5; j++) {
+                JButton b = new JButton((Board[i][j] == null) ? "" : Board[i][j].toString());
+                b.addActionListener(this);
+                buttonBoard[i][j] = b;
+            }
+        }
+
+        gameBoard.removeAll();
+
+        for (int row = 4; row >= 0; row--) {
+            for (int col = 0; col < 5; col++) {
+                gameBoard.add((JButton) buttonBoard[row][col]);
+            }
+        }
+        gameBoard.repaint();
+
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void updateSouth() {
+
+        CurrentPlayerName = new JLabel("Player Name: "+(controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())? controller.getPlayer1().getName():controller.getPlayer2().getName()));
+        ChampName.setText("Champion Name: "+controller.getCurrentChampion().getName());
+        ChampType.setText("Class: "+controller.getCurrentChampion().getHeroClass());
+        ChampHP.setText("HP: "+controller.getCurrentChampion().getCurrentHP()+"/"+controller.getCurrentChampion().getMaxHP());
+        ChampMana.setText("Mana: "+controller.getCurrentChampion().getMana());
+        ChampActionPoints.setText("Action Pts: "+controller.getCurrentChampion().getCurrentActionPoints()+"/"+controller.getCurrentChampion().getMaxActionPointsPerTurn());
+        ChampAttackDmg.setText("Attack Damage: "+controller.getCurrentChampion().getAttackDamage());
+
+        ChampAbilities.removeAllItems();
+        ChampAppliedEffects.removeAllItems();
+        for (Effect e: controller.getCurrentChampion().getAppliedEffects()) {
+            ChampAppliedEffects.addItem(e.getName()+" - "+e.getDuration()+" turn(s)");
+        }
+
+        for (Ability a: controller.getCurrentChampion().getAbilities()) {
+            if (a instanceof DamagingAbility) {
+                ChampAbilities.addItem(a.getName()+" - Damage: "+((DamagingAbility) a).getDamageAmount()+" HP");
+            } else if (a instanceof HealingAbility) {
+                ChampAbilities.addItem(a.getName()+" - Heal: "+((DamagingAbility) a).getDamageAmount()+" HP");
+            } else if (a instanceof CrowdControlAbility) {
+                ChampAbilities.addItem(a.getName() + " - Effect: "+((CrowdControlAbility) a).getEffect().getName()+ " - Duration: "+((CrowdControlAbility) a).getEffect().getDuration());
+            }
+        }
+
+        this.revalidate();
+        this.repaint();
+    }
 }

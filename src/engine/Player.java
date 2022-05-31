@@ -9,6 +9,7 @@ public class Player {
     private String name; //READ ONLY
     private Champion leader; //READ and WRITE
     private ArrayList<Champion> team; //READ ONLY
+    private String color;
 
     //Constructor
     public Player(String name) {
@@ -33,4 +34,14 @@ public class Player {
     public void setLeader(Champion leader) {
         this.leader = leader;
     }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getColor() {
+        return this.color;
+    }
+
+
 }
