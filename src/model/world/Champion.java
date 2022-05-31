@@ -164,6 +164,10 @@ public abstract class Champion implements Comparable, Damageable {
         this.location = location;
     }
 
+    public HeroClass getHeroClass() {
+        return null;
+    }
+
     public String toString() {
         return this.name;
     }

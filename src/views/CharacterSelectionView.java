@@ -226,8 +226,8 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 		btns = new ArrayList<JButton>();
 
 		try {
-			currentGame.loadChampions("Champions.csv");
 			currentGame.loadAbilities("Abilities.csv");
+			currentGame.loadChampions("Champions.csv");
 		} catch (Exception exception) {
 			System.out.println("Error");
 		}

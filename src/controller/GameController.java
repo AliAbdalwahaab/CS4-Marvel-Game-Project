@@ -2,12 +2,16 @@ package controller;
 
 import engine.Game;
 import engine.Player;
+import exceptions.NotEnoughResourcesException;
+import exceptions.UnallowedMovementException;
 import model.world.Champion;
+import model.world.Direction;
 
+import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class GameController implements ActionListener, MouseListener, WindowListener {
+public class GameController {
     private Game game;
 
     public GameController(Game game) {
@@ -15,71 +19,43 @@ public class GameController implements ActionListener, MouseListener, WindowList
         this.game = game;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    public void onMoveClicked(String direction) {
+
+        if (direction.equals("UP")) {
+            try {
+                game.move(Direction.UP);
+            } catch (UnallowedMovementException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            } catch (NotEnoughResourcesException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            }
+        } else if (direction.equals("DOWN")) {
+            try {
+                game.move(Direction.DOWN);
+            } catch (UnallowedMovementException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            } catch (NotEnoughResourcesException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            }
+        } else if (direction.equals("RIGHT")) {
+            try {
+                game.move(Direction.RIGHT);
+            } catch (UnallowedMovementException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            } catch (NotEnoughResourcesException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            }
+        } else if (direction.equals("LEFT")) {
+            try {
+                game.move(Direction.LEFT);
+            } catch (UnallowedMovementException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            } catch (NotEnoughResourcesException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            }
+        }
 
     }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        //USELESS
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }
-
     public Object[][] getBoard() {
         return this.game.getBoard();
     }
