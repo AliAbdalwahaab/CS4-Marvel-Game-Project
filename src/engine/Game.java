@@ -426,7 +426,7 @@ public class Game {
         int range = a.getCastRange();
         // fetching first target in the specific direction
         switch (d) {
-            case DOWN :
+            case UP :
                 for (int y = c.getLocation().x + 1; y < BOARDHEIGHT && range > 0; y++, range--) {
                     if (board[y][c.getLocation().y] != null) {
                         targets.add((Damageable) board[y][c.getLocation().y]);
@@ -434,7 +434,7 @@ public class Game {
                     }
                 }
                 break;
-            case UP:
+            case DOWN:
                 for (int y = c.getLocation().x - 1; y >= 0 && range > 0; y--, range--) {
                     if (board[y][c.getLocation().y] != null) {
                         targets.add((Damageable) board[y][c.getLocation().y]);
@@ -1015,8 +1015,8 @@ public class Game {
         switch (d) {
             case LEFT: x--; break;
             case RIGHT: x++; break;
-            case UP: y--; break;
-            case DOWN: y++; break;
+            case DOWN: y--; break;
+            case UP: y++; break;
         }
 
         if (!validIndices(y, x)) {
@@ -1078,7 +1078,7 @@ public class Game {
         // fetching first target in the specific direction
         // TODO: WHAT HAPPENS IF THE FIRST CHAMP IN THE DIRECTION IS A FRIENDLY?
         switch (d) {
-            case UP :
+            case UP:
                 for (int y = c.getLocation().x + 1; y < BOARDHEIGHT && range > 0; y++, range--) {
                     if (board[y][c.getLocation().y] != null) {
                         target = (Damageable) board[y][c.getLocation().y];
