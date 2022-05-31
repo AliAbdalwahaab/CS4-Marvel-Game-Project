@@ -124,7 +124,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 
 			Player player1 = new Player(firstPlayerName);
 			Player player2 = new Player(secondPlayerName);
-			currentGame = new Game(player1,player2);
+			currentGame = new Game(player1, player2);
 
 			this.getContentPane().removeAll();
 			this.repaint();
@@ -197,6 +197,8 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 
 					JOptionPane.showMessageDialog(null,"Second Team Selected. Game is about to start");
 					this.dispose();
+
+					currentGame.placeChampions();
 
 					new GameVIEW(new GameController(currentGame));
 				}

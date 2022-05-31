@@ -164,6 +164,10 @@ public abstract class Champion implements Comparable, Damageable {
         this.location = location;
     }
 
+    public String toString() {
+        return this.name;
+    }
+
     //Additional methods for Milestone 2
     public abstract void useLeaderAbility(ArrayList<Champion> targets) throws AbilityUseException, CloneNotSupportedException;
 }
