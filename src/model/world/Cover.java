@@ -28,6 +28,6 @@ public class Cover implements Damageable {
     }
 
     public String toString() {
-        return "Cover";
+        return "=============";
     }
 }

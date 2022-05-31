@@ -57,10 +57,6 @@ public class GameVIEW extends JFrame{
         gameBoard = new JPanel();
         gameBoard.setLayout(new GridLayout(5, 5));
         add(gameBoard, BorderLayout.CENTER);
-//        for (int i = 0; i < 25; i++) {
-//            JButton b = new JButton();
-//            gameBoard.add(b);
-//        }
 
         Object[][] Board = controller.getBoard();
         for (int row = 4; row >= 0; row--) {
@@ -68,24 +64,21 @@ public class GameVIEW extends JFrame{
                 gameBoard.add(new JButton((Board[row][col] == null) ? "Empty" : Board[row][col].toString()));
             }
         }
-        this.revalidate();
-        this.repaint();
-        //for (Object o: )
+
 
         // Abilities left (2 grids)
         abilitiesPanel = new JPanel(new GridLayout(2,1));
-        JLabel empty = new JLabel();
-        empty.setPreferredSize(new Dimension(200,this.getHeight()));
+        JLabel empty = new JLabel("Karinge");
+        empty.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
         abilitiesPanel.add(empty);
         this.add(abilitiesPanel, BorderLayout.WEST);
-        this.revalidate();
-        this.repaint();
+
 
 
         // TurnOrder + Movement &  Attack right (2 grids)
         rightPanel = new JPanel(new GridLayout(2,1));
-        JLabel empty2 = new JLabel();
-        empty2.setPreferredSize(new Dimension(200,this.getHeight()));
+        JLabel empty2 = new JLabel("Karinge");
+        empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
         rightPanel.add(empty2);
         this.add(rightPanel, BorderLayout.EAST);
 
@@ -136,9 +129,6 @@ public class GameVIEW extends JFrame{
         CurrentChampInfo.add(endTurn);
         CurrentChampInfo.setVisible(true);
         this.add(CurrentChampInfo, BorderLayout.SOUTH);
-
-
-
 
 
 //        Abilities = new JPanel();
