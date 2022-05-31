@@ -24,6 +24,8 @@ import model.world.Champion;
 import model.world.Condition;
 import model.world.Cover;
 
+import static model.abilities.AreaOfEffect.*;
+
 public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     private GameController controller;
@@ -60,6 +62,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     private JPanel abilitiesPanel;
     private JPanel selectAbilities;
+    private JButton useLeaderAbility;
     private JComboBox selfTargetBox;
     private JComboBox teamTargetBox;
     private JComboBox singleTargetBox;
@@ -111,20 +114,80 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
         // Abilities left (2 grids)
         abilitiesPanel = new JPanel(new GridLayout(2,1));
-        selectAbilities = new JPanel(new GridLayout(10,1));
+        selectAbilities = new JPanel(new GridLayout(12,1));
+        JLabel leaderAbility = new JLabel("Leader Ability");
+        useLeaderAbility = new JButton("Use Leader Ability");
         JLabel singleTarget = new JLabel("Single Target");
-         singleTargetBox = new JComboBox<>();
+         singleTargetBox = new JComboBox();
         JLabel selfTarget = new JLabel("Self Target");
-         selfTargetBox = new JComboBox<>();
+         selfTargetBox = new JComboBox();
         JLabel teamTarget = new JLabel("Team Target");
-         teamTargetBox = new JComboBox<>();
+         teamTargetBox = new JComboBox();
         JLabel directionalTarget = new JLabel("Directional Target");
-         directionalTargetBox = new JComboBox<>();
+         directionalTargetBox = new JComboBox();
         JLabel surroundTarget = new JLabel("Surround Target");
-         surroundTargetBox = new JComboBox<>();
-        JLabel empty = new JLabel("Karinge");
-        empty.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
-        abilitiesPanel.add(empty);
+         surroundTargetBox = new JComboBox();
+
+        for (Ability a: controller.getCurrentChampion().getAbilities()) {
+
+            if (a.getCastArea() == SELFTARGET) {
+                if (a instanceof DamagingAbility) {
+                    selfTargetBox.addItem(a.getName()+" - Damage: "+((DamagingAbility) a).getDamageAmount()+" HP");
+                } else if (a instanceof HealingAbility) {
+                    selfTargetBox.addItem(a.getName()+" - Heal: "+((HealingAbility) a).getHealAmount()+" HP");
+                } else if (a instanceof CrowdControlAbility) {
+                    selfTargetBox.addItem(a.getName() + " - Effect: "+((CrowdControlAbility) a).getEffect().getName()+ " - Duration: "+((CrowdControlAbility) a).getEffect().getDuration());
+                }
+            } else if (a.getCastArea() == SINGLETARGET) {
+                if (a instanceof DamagingAbility) {
+                    singleTargetBox.addItem(a.getName()+" - Damage: "+((DamagingAbility) a).getDamageAmount()+" HP");
+                } else if (a instanceof HealingAbility) {
+                    singleTargetBox.addItem(a.getName()+" - Heal: "+((HealingAbility) a).getHealAmount()+" HP");
+                } else if (a instanceof CrowdControlAbility) {
+                    singleTargetBox.addItem(a.getName() + " - Effect: "+((CrowdControlAbility) a).getEffect().getName()+ " - Duration: "+((CrowdControlAbility) a).getEffect().getDuration());
+                }
+            } else if (a.getCastArea() == TEAMTARGET) {
+                if (a instanceof DamagingAbility) {
+                    teamTargetBox.addItem(a.getName()+" - Damage: "+((DamagingAbility) a).getDamageAmount()+" HP");
+                } else if (a instanceof HealingAbility) {
+                    teamTargetBox.addItem(a.getName()+" - Heal: "+((HealingAbility) a).getHealAmount()+" HP");
+                } else if (a instanceof CrowdControlAbility) {
+                    teamTargetBox.addItem(a.getName() + " - Effect: "+((CrowdControlAbility) a).getEffect().getName()+ " - Duration: "+((CrowdControlAbility) a).getEffect().getDuration());
+                }
+            } else if (a.getCastArea() == SURROUND) {
+                if (a instanceof DamagingAbility) {
+                    surroundTargetBox.addItem(a.getName()+" - Damage: "+((DamagingAbility) a).getDamageAmount()+" HP");
+                } else if (a instanceof HealingAbility) {
+                    surroundTargetBox.addItem(a.getName()+" - Heal: "+((HealingAbility) a).getHealAmount()+" HP");
+                } else if (a instanceof CrowdControlAbility) {
+                    surroundTargetBox.addItem(a.getName() + " - Effect: "+((CrowdControlAbility) a).getEffect().getName()+ " - Duration: "+((CrowdControlAbility) a).getEffect().getDuration());
+                }
+            } else if (a.getCastArea() == DIRECTIONAL) {
+                if (a instanceof DamagingAbility) {
+                    directionalTargetBox.addItem(a.getName()+" - Damage: "+((DamagingAbility) a).getDamageAmount()+" HP");
+                } else if (a instanceof HealingAbility) {
+                    directionalTargetBox.addItem(a.getName()+" - Heal: "+((HealingAbility) a).getHealAmount()+" HP");
+                } else if (a instanceof CrowdControlAbility) {
+                    directionalTargetBox.addItem(a.getName() + " - Effect: "+((CrowdControlAbility) a).getEffect().getName()+ " - Duration: "+((CrowdControlAbility) a).getEffect().getDuration());
+                }
+            }
+
+        }
+        selectAbilities.add(leaderAbility);
+        selectAbilities.add(useLeaderAbility);
+        selectAbilities.add(singleTarget);
+        selectAbilities.add(singleTargetBox);
+        selectAbilities.add(selfTarget);
+        selectAbilities.add(selfTargetBox);
+        selectAbilities.add(teamTarget);
+        selectAbilities.add(teamTargetBox);
+        selectAbilities.add(surroundTarget);
+        selectAbilities.add(surroundTargetBox);
+        selectAbilities.add(directionalTarget);
+        selectAbilities.add(directionalTargetBox);
+
+        abilitiesPanel.add(selectAbilities);
+
         this.add(abilitiesPanel, BorderLayout.WEST);
 
 
