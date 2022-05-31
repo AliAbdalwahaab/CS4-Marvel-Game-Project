@@ -61,7 +61,7 @@ public class GameVIEW extends JFrame{
         Object[][] Board = controller.getBoard();
         for (int row = 4; row >= 0; row--) {
             for (int col = 0; col < 5; col++) {
-                gameBoard.add(new JButton((Board[row][col] == null) ? "Empty" : Board[row][col].toString()));
+                gameBoard.add(new JButton((Board[row][col] == null) ? "" : Board[row][col].toString()));
             }
         }
 
