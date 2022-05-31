@@ -72,6 +72,22 @@ public class GameController {
         return game.getSecondPlayer();
     }
 
+    public Champion getChamp(String name) {
+        for (Champion c: game.getFirstPlayer().getTeam()) {
+            if (c.getName().equals(name)) {
+                return c;
+            }
+        }
+
+        for (Champion c: game.getSecondPlayer().getTeam()) {
+            if (c.getName().equals(name)) {
+                return c;
+            }
+        }
+
+        return null;
+    }
+
 
 
 }

@@ -18,6 +18,8 @@ import model.abilities.DamagingAbility;
 import model.abilities.HealingAbility;
 import model.effects.Effect;
 import model.abilities.*;
+import model.world.Champion;
+import model.world.Cover;
 
 public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
@@ -84,6 +86,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             for (int j = 0; j < 5; j++) {
                 JButton b = new JButton((Board[i][j] == null) ? "" : Board[i][j].toString());
                 b.addActionListener(this);
+                b.addMouseListener(this);
                 buttonBoard[i][j] = b;
             }
         }
@@ -184,7 +187,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             if (a instanceof DamagingAbility) {
                 ChampAbilities.addItem(a.getName()+" - Damage: "+((DamagingAbility) a).getDamageAmount()+" HP");
             } else if (a instanceof HealingAbility) {
-                ChampAbilities.addItem(a.getName()+" - Heal: "+((DamagingAbility) a).getDamageAmount()+" HP");
+                ChampAbilities.addItem(a.getName()+" - Heal: "+((HealingAbility) a).getHealAmount()+" HP");
             } else if (a instanceof CrowdControlAbility) {
                 ChampAbilities.addItem(a.getName() + " - Effect: "+((CrowdControlAbility) a).getEffect().getName()+ " - Duration: "+((CrowdControlAbility) a).getEffect().getDuration());
             }
@@ -224,6 +227,18 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        boolean map = false;
+        boolean alBreak = false;
+        for (int i = 0; i < buttonBoard.length; i++) {
+            for (int j = 0; j < buttonBoard[i].length; j++) {
+                if (buttonBoard[i][j] == (Object) e.getSource()) {
+                    map = true;
+                    alBreak = true;
+                    break;
+                }
+            }
+            if (alBreak) break;
+        }
         if (castAbilityFlag) {
 
             //cast directional ability
@@ -250,7 +265,74 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             }
             attackFlag = false;
-        } else {
+        } else if (e.getSource() instanceof JButton && map){
+            if (((JButton) e.getSource()).getText().equals("")) { // Empty
+                return;
+            } else if (((JButton) e.getSource()).getText().equals("=============")) { // Cover
+                Cover cvr = null;
+                Boolean allBreak = false;
+                for (int i = 0; i < buttonBoard.length; i++) {
+                    for (int j = 0; j < buttonBoard[i].length; j++) {
+                        if (buttonBoard[i][j] == (Object) e.getSource()) {
+                            cvr = (Cover) Board[i][j];
+                            allBreak = true;
+                            break;
+                        }
+                    }
+                    if (allBreak) break;
+                }
+                HoverChampName.setText("Cover");
+                HoverChampType.setText("-");
+                HoverChampHP.setText("HP: " + cvr.getCurrentHP());
+                HoverChampMana.setText("-");
+                HoverChampActionPoints.setText("-");
+                HoverChampAttackDmg.setText("-");
+
+                HoverChampAbilities.removeAllItems();
+                HoverChampAppliedEffects.removeAllItems();
+            } else { // Champ
+                Boolean allBreak = false;
+                Champion c = null;
+                for (int i = 0; i < buttonBoard.length; i++) {
+                    for (int j = 0; j < buttonBoard[i].length; j++) {
+                        if (buttonBoard[i][j] == (Object) e.getSource()) {
+                            //System.out.println("Karingeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                            c = controller.getChamp(((JButton) buttonBoard[i][j]).getText());
+                            allBreak = true;
+                            break;
+                        }
+                    }
+                    if (allBreak) break;
+                }
+
+                HoverChampName.setText("Champion Name: " + c.getName());
+                HoverChampType.setText("Class: " + c.getHeroClass());
+                HoverChampHP.setText("HP: " + c.getCurrentHP() + "/" + c.getMaxHP());
+                HoverChampMana.setText("Mana: " + c.getMana());
+                HoverChampActionPoints.setText("Action Pts: " + c.getCurrentActionPoints() + "/" + c.getMaxActionPointsPerTurn());
+                HoverChampAttackDmg.setText("Attack Damage: " + c.getAttackDamage());
+
+                HoverChampAbilities.removeAllItems();
+                HoverChampAppliedEffects.removeAllItems();
+                for (Effect ef : c.getAppliedEffects()) {
+                    HoverChampAppliedEffects.addItem(ef.getName() + " - " + ef.getDuration() + " turn(s)");
+                }
+
+                for (Ability a : c.getAbilities()) {
+                    if (a instanceof DamagingAbility) {
+                        HoverChampAbilities.addItem(a.getName() + " - Damage: " + ((DamagingAbility) a).getDamageAmount() + " HP");
+                    } else if (a instanceof HealingAbility) {
+                        HoverChampAbilities.addItem(a.getName() + " - Heal: " + ((HealingAbility) a).getHealAmount() + " HP");
+                    } else if (a instanceof CrowdControlAbility) {
+                        HoverChampAbilities.addItem(a.getName() + " - Effect: " + ((CrowdControlAbility) a).getEffect().getName() + " - Duration: " + ((CrowdControlAbility) a).getEffect().getDuration());
+                    }
+                }
+
+                this.revalidate();
+                this.repaint();
+            }
+        }
+        else {
 
             //move
             if (e.getSource() == upDirection) {
@@ -273,13 +355,74 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        for (int i = 0; i < buttonBoard.length;i++) {
-            for (int j = 0; j < buttonBoard[i].length;j++) {
-                if (buttonBoard[i][j] == (Object) mouseEvent.getSource()) {
+//        if (mouseEvent.getSource() instanceof JButton) {
+//            if (((JButton) mouseEvent.getSource()).getText().equals("")) { // Empty
+//                return;
+//            } else if (((JButton) mouseEvent.getSource()).getText().equals("=============")) { // Cover
+//                Cover cvr = null;
+//                Boolean allBreak = false;
+//                for (int i = 0; i < buttonBoard.length; i++) {
+//                    for (int j = 0; j < buttonBoard[i].length; j++) {
+//                        if (buttonBoard[i][j] == (Object) mouseEvent.getSource()) {
+//                            cvr = (Cover) Board[i][j];
+//                            allBreak = true;
+//                            break;
+//                        }
+//                    }
+//                    if (allBreak) break;
+//                }
+//                HoverChampName.setText("Cover");
+//                HoverChampType.setText("-");
+//                HoverChampHP.setText("HP: " + cvr.getCurrentHP());
+//                HoverChampMana.setText("-");
+//                HoverChampActionPoints.setText("-");
+//                HoverChampAttackDmg.setText("-");
+//
+//                HoverChampAbilities.removeAllItems();
+//                HoverChampAppliedEffects.removeAllItems();
+//            } else { // Champ
+//                Boolean allBreak = false;
+//                Champion c = null;
+//                for (int i = 0; i < buttonBoard.length; i++) {
+//                    for (int j = 0; j < buttonBoard[i].length; j++) {
+//                        if (buttonBoard[i][j] == (Object) mouseEvent.getSource()) {
+//                            //System.out.println("Karingeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+//                            c = controller.getChamp(((JButton) buttonBoard[i][j]).getText());
+//                            allBreak = true;
+//                            break;
+//                        }
+//                    }
+//                    if (allBreak) break;
+//                }
+//
+//                HoverChampName.setText("Champion Name: " + c.getName());
+//                HoverChampType.setText("Class: " + c.getHeroClass());
+//                HoverChampHP.setText("HP: " + c.getCurrentHP() + "/" + c.getMaxHP());
+//                HoverChampMana.setText("Mana: " + c.getMana());
+//                HoverChampActionPoints.setText("Action Pts: " + c.getCurrentActionPoints() + "/" + c.getMaxActionPointsPerTurn());
+//                HoverChampAttackDmg.setText("Attack Damage: " + c.getAttackDamage());
+//
+//                HoverChampAbilities.removeAllItems();
+//                HoverChampAppliedEffects.removeAllItems();
+//                for (Effect e : c.getAppliedEffects()) {
+//                    HoverChampAppliedEffects.addItem(e.getName() + " - " + e.getDuration() + " turn(s)");
+//                }
+//
+//                for (Ability a : c.getAbilities()) {
+//                    if (a instanceof DamagingAbility) {
+//                        HoverChampAbilities.addItem(a.getName() + " - Damage: " + ((DamagingAbility) a).getDamageAmount() + " HP");
+//                    } else if (a instanceof HealingAbility) {
+//                        HoverChampAbilities.addItem(a.getName() + " - Heal: " + ((HealingAbility) a).getHealAmount() + " HP");
+//                    } else if (a instanceof CrowdControlAbility) {
+//                        HoverChampAbilities.addItem(a.getName() + " - Effect: " + ((CrowdControlAbility) a).getEffect().getName() + " - Duration: " + ((CrowdControlAbility) a).getEffect().getDuration());
+//                    }
+//                }
+//
+//                this.revalidate();
+//                this.repaint();
+//            }
+//        }
 
-                }
-            }
-        }
     }
 
     @Override
@@ -294,6 +437,73 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
+//        if (mouseEvent.getSource() instanceof JButton) {
+//            if (((JButton) mouseEvent.getSource()).getText().equals("")) { // Empty
+//                return;
+//            } else if (((JButton) mouseEvent.getSource()).getText().equals("=============")) { // Cover
+//                Cover cvr = null;
+//                Boolean allBreak = false;
+//                for (int i = 0; i < buttonBoard.length; i++) {
+//                    for (int j = 0; j < buttonBoard[i].length; j++) {
+//                        if (buttonBoard[i][j] == (Object) mouseEvent.getSource()) {
+//                            cvr = (Cover) Board[i][j];
+//                            allBreak = true;
+//                            break;
+//                        }
+//                    }
+//                    if (allBreak) break;
+//                }
+//                HoverChampName.setText("Cover");
+//                HoverChampType.setText("-");
+//                HoverChampHP.setText("HP: " + cvr.getCurrentHP());
+//                HoverChampMana.setText("-");
+//                HoverChampActionPoints.setText("-");
+//                HoverChampAttackDmg.setText("-");
+//
+//                HoverChampAbilities.removeAllItems();
+//                HoverChampAppliedEffects.removeAllItems();
+//            } else { // Champ
+//                Boolean allBreak = false;
+//                Champion c = null;
+//                for (int i = 0; i < buttonBoard.length; i++) {
+//                    for (int j = 0; j < buttonBoard[i].length; j++) {
+//                        if (buttonBoard[i][j] == (Object) mouseEvent.getSource()) {
+//                            System.out.println("Karingeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+//                            c = controller.getChamp(((JButton) buttonBoard[i][j]).getText());
+//                            allBreak = true;
+//                            break;
+//                        }
+//                    }
+//                    if (allBreak) break;
+//                }
+//
+//                HoverChampName.setText("Champion Name: " + c.getName());
+//                HoverChampType.setText("Class: " + c.getHeroClass());
+//                HoverChampHP.setText("HP: " + c.getCurrentHP() + "/" + c.getMaxHP());
+//                HoverChampMana.setText("Mana: " + c.getMana());
+//                HoverChampActionPoints.setText("Action Pts: " + c.getCurrentActionPoints() + "/" + c.getMaxActionPointsPerTurn());
+//                HoverChampAttackDmg.setText("Attack Damage: " + c.getAttackDamage());
+//
+//                HoverChampAbilities.removeAllItems();
+//                HoverChampAppliedEffects.removeAllItems();
+//                for (Effect e : c.getAppliedEffects()) {
+//                    HoverChampAppliedEffects.addItem(e.getName() + " - " + e.getDuration() + " turn(s)");
+//                }
+//
+//                for (Ability a : c.getAbilities()) {
+//                    if (a instanceof DamagingAbility) {
+//                        HoverChampAbilities.addItem(a.getName() + " - Damage: " + ((DamagingAbility) a).getDamageAmount() + " HP");
+//                    } else if (a instanceof HealingAbility) {
+//                        HoverChampAbilities.addItem(a.getName() + " - Heal: " + ((HealingAbility) a).getHealAmount() + " HP");
+//                    } else if (a instanceof CrowdControlAbility) {
+//                        HoverChampAbilities.addItem(a.getName() + " - Effect: " + ((CrowdControlAbility) a).getEffect().getName() + " - Duration: " + ((CrowdControlAbility) a).getEffect().getDuration());
+//                    }
+//                }
+//
+//                this.revalidate();
+//                this.repaint();
+//            }
+//        }
 
     }
 
@@ -347,7 +557,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             if (a instanceof DamagingAbility) {
                 ChampAbilities.addItem(a.getName()+" - Damage: "+((DamagingAbility) a).getDamageAmount()+" HP");
             } else if (a instanceof HealingAbility) {
-                ChampAbilities.addItem(a.getName()+" - Heal: "+((DamagingAbility) a).getDamageAmount()+" HP");
+                ChampAbilities.addItem(a.getName()+" - Heal: "+((HealingAbility) a).getHealAmount()+" HP");
             } else if (a instanceof CrowdControlAbility) {
                 ChampAbilities.addItem(a.getName() + " - Effect: "+((CrowdControlAbility) a).getEffect().getName()+ " - Duration: "+((CrowdControlAbility) a).getEffect().getDuration());
             }
