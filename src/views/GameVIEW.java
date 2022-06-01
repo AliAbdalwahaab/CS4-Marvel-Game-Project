@@ -117,6 +117,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         selectAbilities = new JPanel(new GridLayout(12,1));
         JLabel leaderAbility = new JLabel("Leader Ability");
         useLeaderAbility = new JButton("Use Leader Ability");
+        boolean bool = (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() || controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion())?
+        		(controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?
+        				!(controller.getGame().isFirstLeaderAbilityUsed()):(controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?!(controller.getGame().isSecondLeaderAbilityUsed()):false)):false;
+        useLeaderAbility.setEnabled(bool);
         JLabel singleTarget = new JLabel("Single Target");
          singleTargetBox = new JComboBox();
         JLabel selfTarget = new JLabel("Self Target");
