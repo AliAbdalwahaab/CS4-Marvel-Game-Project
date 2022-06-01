@@ -32,8 +32,8 @@ public class StartScreenGUI extends JComponent {
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
         JLabel label = new JLabel();
         ImageIcon image = new ImageIcon("THH-LOGO.gif");
-        int width = 1920;
-        int height = 1080;
+        int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         image.setImage(image.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         label.setIcon(image);
         f.setBackground(Color.BLACK);
