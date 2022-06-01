@@ -3,6 +3,8 @@ package views;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -14,7 +16,7 @@ import model.world.Champion;
 
 import static java.awt.Font.BOLD;
 
-public class CharacterSelectionView extends JFrame implements ActionListener {
+public class CharacterSelectionView extends JFrame implements ActionListener, MouseListener {
 	//TODO: Display champion info, change chosen champion fonts
 
 	private Game currentGame;
@@ -24,6 +26,9 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 	private JButton submit;
 	private JLabel text1;
 	private JLabel text2;
+
+	JPanel infoPanel;
+	JTextArea championInfo;
 
 	private JPanel centerPanel;
 	private ArrayList<JButton> btns;
@@ -45,6 +50,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 	private String secondPlayerName = "";
 	
 	public CharacterSelectionView() {
+		addMouseListener(this);
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		this.setTitle("Game");
 		this.setBounds(0,0,1920,1080);
@@ -236,12 +242,22 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 			JButton b = new JButton();
 			b.setText(c.getName());
 			b.addActionListener(this);
+			b.addMouseListener(this);
 			centerPanel.add(b);
 			btns.add(b);
 		}
 
 		this.add(centerPanel,BorderLayout.CENTER);
 		centerPanel.setVisible(true);
+		this.revalidate();
+		this.repaint();
+
+		infoPanel = new JPanel();
+		infoPanel.setLayout(new GridLayout(1,1));
+		championInfo = new JTextArea("Karinge");
+		championInfo.setEditable(false);
+		infoPanel.add(championInfo);
+		this.add(infoPanel,BorderLayout.EAST);
 		this.revalidate();
 		this.repaint();
 
@@ -344,4 +360,42 @@ public class CharacterSelectionView extends JFrame implements ActionListener {
 
 	}
 
+	@Override
+	public void mouseClicked(MouseEvent mouseEvent) {
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent mouseEvent) {
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent mouseEvent) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent mouseEvent) {
+		if (mouseEvent.getSource() instanceof JButton) {
+			for (Champion c: currentGame.getAvailableChampions()) {
+				if (((JButton) mouseEvent.getSource()).getText().equals(c.getName())) {
+					championInfo.setText("Name: "+c.getName()+" "+"\n"
+							+"Class: "+c.getHeroClass()+" "+"\n"
+							+"Abilities: "+"\n"
+							+"Leader Ability: ");
+
+					this.revalidate();
+					this.repaint();
+				}
+
+			}
+
+		}
+	}
+
+	@Override
+	public void mouseExited(MouseEvent mouseEvent) {
+
+	}
 }
