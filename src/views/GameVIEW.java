@@ -215,8 +215,13 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         JLabel empty2 = new JLabel("Karinge");
         //empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
         //rightPanel.add(empty2);
+        JPanel wholeMove = new JPanel(new GridLayout(2,1));
+        JTextArea directionPadMode = new JTextArea("MOVE");
+        directionPadMode.setEditable(false);
+        directionPadMode.setFont(new Font("Arial", Font.BOLD, 30));
+        wholeMove.add(directionPadMode);
         JPanel directionPad = new JPanel(new GridLayout(3,3));
-        directionPad.setBackground(Color.decode("#34d942"));
+        directionPad.setBackground(Color.decode("#3e423f"));
         JLabel upperLeftEmpty = new JLabel("");
         JLabel upperRightEmpty = new JLabel("");
         JLabel lowerLeftEmpty = new JLabel("");
@@ -240,7 +245,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         directionPad.add(lowerLeftEmpty);
         directionPad.add(downDirection);
         directionPad.add(lowerRightEmpty);
-        rightPanel.add(directionPad);
+        wholeMove.add(directionPad);
+        rightPanel.add(wholeMove);
         this.add(rightPanel, BorderLayout.EAST);
 
         // Hover Info (Page Start)
