@@ -254,7 +254,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 
 		infoPanel = new JPanel();
 		infoPanel.setLayout(new GridLayout(1,1));
-		championInfo = new JTextArea("Karinge");
+		championInfo = new JTextArea("Hover over Champion to display data");
 		championInfo.setEditable(false);
 		infoPanel.add(championInfo);
 		this.add(infoPanel,BorderLayout.EAST);
