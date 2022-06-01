@@ -3,10 +3,12 @@ package views;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import views.CharacterSelectionView.*;
@@ -28,9 +30,12 @@ public class StartScreenGUI extends JComponent {
 
         f.setLayout(new BorderLayout());
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        Icon icon = new ImageIcon("THH-LOGO_F2.gif");
         JLabel label = new JLabel();
-        label.setIcon(icon);
+        ImageIcon image = new ImageIcon("THH-LOGO.gif");
+        int width = 1920;
+        int height = 1080;
+        image.setImage(image.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        label.setIcon(image);
         f.setBackground(Color.BLACK);
         f.setContentPane(label);
 
