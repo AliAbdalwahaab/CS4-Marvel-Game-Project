@@ -396,7 +396,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                     if (allBreak) break;
                 }
                 HoverChampName.setText("Cover");
-                HoverChampType.setText("-");
+                HoverChampType.setText("Distance :  " + (Math.abs(cvr.getLocation().x - controller.getGame().getCurrentChampion().getLocation().x) + Math.abs(cvr.getLocation().y - controller.getGame().getCurrentChampion().getLocation().y)));
                 HoverChampHP.setText("HP: " + cvr.getCurrentHP());
                 HoverChampMana.setText("-");
                 HoverChampActionPoints.setText("-");
@@ -418,9 +418,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                     }
                     if (allBreak) break;
                 }
+                
 
                 HoverChampName.setText("Champion Name: " + c.getName() +"  Status: "+ c.getCondition());
-                HoverChampType.setText("Class: " + c.getHeroClass());
+                HoverChampType.setText("Class: " + c.getHeroClass() + "           Distance: " + (Math.abs(c.getLocation().x - controller.getGame().getCurrentChampion().getLocation().x) + Math.abs(c.getLocation().y - controller.getGame().getCurrentChampion().getLocation().y)));
                 HoverChampHP.setText("HP: " + c.getCurrentHP() + "/" + c.getMaxHP());
                 HoverChampMana.setText("Mana: " + c.getMana());
                 HoverChampActionPoints.setText("Action Pts: " + c.getCurrentActionPoints() + "/" + c.getMaxActionPointsPerTurn());
