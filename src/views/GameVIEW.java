@@ -61,13 +61,21 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     private JPanel turnOrderPanel;
 
     private JPanel abilitiesPanel;
+    private JPanel abiltiesInfoPanel;
+    private JTextArea abilitiesInfoText;
     private JPanel selectAbilities;
     private JButton useLeaderAbility;
     private JComboBox selfTargetBox;
+    private JButton selfTargetButton;
     private JComboBox teamTargetBox;
+    private JButton teamTargetButton;
     private JComboBox singleTargetBox;
+    private JButton singleTargetButton;
     private JComboBox directionalTargetBox;
+    private JButton directionalTargetButton;
     private JComboBox surroundTargetBox;
+    private JButton surroundTargetButton;
+    private Ability abilityToBeCast;
     private JPanel rightPanel;
     private JButton upDirection;
     private JButton leftDirection;
@@ -114,23 +122,44 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
         // Abilities left (2 grids)
         abilitiesPanel = new JPanel(new GridLayout(2,1));
-        selectAbilities = new JPanel(new GridLayout(12,1));
+        selectAbilities = new JPanel(new GridLayout(17,1));
+        abiltiesInfoPanel = new JPanel(new GridLayout(1,1));
+        abilitiesInfoText = new JTextArea("Hover over cast ability buttons see info");
+        abilitiesInfoText.setEditable(false);
+
+        abilitiesInfoText.setEditable(false);
         JLabel leaderAbility = new JLabel("Leader Ability");
         useLeaderAbility = new JButton("Use Leader Ability");
         boolean bool = (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() || controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion())?
         		(controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?
         				!(controller.getGame().isFirstLeaderAbilityUsed()):(controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?!(controller.getGame().isSecondLeaderAbilityUsed()):false)):false;
         useLeaderAbility.setEnabled(bool);
+        //TODO: CHeck if champion has such abilities
         JLabel singleTarget = new JLabel("Single Target");
          singleTargetBox = new JComboBox();
+         singleTargetButton = new JButton("Cast Single Target Ability");
+         singleTargetButton.addActionListener(this);
+         singleTargetButton.addMouseListener(this);
         JLabel selfTarget = new JLabel("Self Target");
          selfTargetBox = new JComboBox();
+        selfTargetButton = new JButton("Cast Self Target Ability");
+        selfTargetButton.addActionListener(this);
+        selfTargetButton.addMouseListener(this);
         JLabel teamTarget = new JLabel("Team Target");
          teamTargetBox = new JComboBox();
+        teamTargetButton = new JButton("Cast Team Target Ability");
+        teamTargetButton.addActionListener(this);
+        teamTargetButton.addMouseListener(this);
         JLabel directionalTarget = new JLabel("Directional Target");
          directionalTargetBox = new JComboBox();
+        directionalTargetButton = new JButton("Cast Directional Ability");
+        directionalTargetButton.addActionListener(this);
+        directionalTargetButton.addMouseListener(this);
         JLabel surroundTarget = new JLabel("Surround Target");
          surroundTargetBox = new JComboBox();
+        surroundTargetButton = new JButton("Cast Surround Ability");
+        surroundTargetButton.addActionListener(this);
+        surroundTargetButton.addMouseListener(this);
 
         for (Ability a: controller.getCurrentChampion().getAbilities()) {
 
@@ -181,16 +210,23 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         selectAbilities.add(useLeaderAbility);
         selectAbilities.add(singleTarget);
         selectAbilities.add(singleTargetBox);
+        selectAbilities.add(singleTargetButton);
         selectAbilities.add(selfTarget);
         selectAbilities.add(selfTargetBox);
+        selectAbilities.add(selfTargetButton);
         selectAbilities.add(teamTarget);
         selectAbilities.add(teamTargetBox);
+        selectAbilities.add(teamTargetButton);
         selectAbilities.add(surroundTarget);
         selectAbilities.add(surroundTargetBox);
+        selectAbilities.add(surroundTargetButton);
         selectAbilities.add(directionalTarget);
         selectAbilities.add(directionalTargetBox);
+        selectAbilities.add(directionalTargetButton);
 
         abilitiesPanel.add(selectAbilities);
+        abiltiesInfoPanel.add(abilitiesInfoText);
+        abilitiesPanel.add(abiltiesInfoPanel);
 
         this.add(abilitiesPanel, BorderLayout.WEST);
 
@@ -347,19 +383,75 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             }
             if (alBreak) break;
         }
-        if (castAbilityFlag) {
+        if (e.getSource() == selfTargetButton) {
 
+        } else if (e.getSource() == singleTargetButton) {
+
+        } else if (e.getSource() == teamTargetButton) {
+
+        } else if (e.getSource() == directionalTargetButton) {
+            castAbilityFlag = true;
+            JOptionPane.showMessageDialog(null,"Please input direction of ability using DPAD");
+
+
+        } else if (e.getSource() == surroundTargetButton) {
+
+        }
+
+        else if (castAbilityFlag) {
+            boolean found = false;
             //cast directional ability
             if (e.getSource() == upDirection) {
+                System.out.println("Entered");
+                for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                    if (a.getCastArea() == DIRECTIONAL) {
+                        abilityToBeCast = a;
+                        controller.onCastAbilityClicked(abilityToBeCast,"UP");
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) controller.onCastAbilityClicked(abilityToBeCast,"UP");
+
+
 
             } else if (e.getSource() == downDirection) {
+                for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                    if (a.getCastArea() == DIRECTIONAL) {
+                        abilityToBeCast = a;
+                        controller.onCastAbilityClicked(abilityToBeCast,"DOWN");
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) controller.onCastAbilityClicked(abilityToBeCast,"DOWN");
 
             } else if (e.getSource() == leftDirection) {
+                for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                    if (a.getCastArea() == DIRECTIONAL) {
+                        abilityToBeCast = a;
+                        controller.onCastAbilityClicked(abilityToBeCast,"LEFT");
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) controller.onCastAbilityClicked(abilityToBeCast,"LEFT");
 
             } else if (e.getSource() == rightDirection) {
+                for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                    if (a.getCastArea() == DIRECTIONAL) {
+                        abilityToBeCast = a;
+                        controller.onCastAbilityClicked(abilityToBeCast,"RIGHT");
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) controller.onCastAbilityClicked(abilityToBeCast,"RIGHT");
 
             }
             castAbilityFlag = false;
+            updateSouth();
+            updateCenter();
         } else if (attackFlag){
 
             //attack
@@ -373,7 +465,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             }
             attackFlag = false;
-        } else if (e.getSource() instanceof JButton && map){
+        } else if (e.getSource() instanceof JButton && map) {
 
             if (((JButton) e.getSource()).getText().equals("")) {
                 // Empty
@@ -452,7 +544,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 this.revalidate();
                 this.repaint();
             }
-        } else {
+        } else if (!(castAbilityFlag) && !(attackFlag)){
 
             //move
             if (e.getSource() == upDirection) {

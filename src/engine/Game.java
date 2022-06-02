@@ -417,10 +417,10 @@ public class Game {
         } else if (!c.getAppliedEffects().isEmpty()) {
             for (int i = 0; i < c.getAppliedEffects().size(); i++) {
                 if (c.getAppliedEffects().get(i) instanceof Silence)
-                    throw new AbilityUseException("The current champion cannot use this ability at this moment");
+                    throw new AbilityUseException("The current champion is silenced, cannot use ability");
             }
         } else if (a.getCurrentCooldown() > 0 )
-            throw new AbilityUseException("The current champion cannot use this ability at this moment");
+            throw new AbilityUseException("Current cooldown period is not over");
 
         ArrayList<Damageable> targets = new ArrayList<>(); // target to be damaged
         int range = a.getCastRange();

@@ -1,8 +1,12 @@
 package controller;
 
 import engine.*;
+import exceptions.AbilityUseException;
+import exceptions.InvalidTargetException;
 import exceptions.NotEnoughResourcesException;
 import exceptions.UnallowedMovementException;
+import model.abilities.Ability;
+import model.abilities.AreaOfEffect;
 import model.world.Champion;
 import model.world.Direction;
 
@@ -54,6 +58,33 @@ public class GameController {
             }
         }
 
+    }
+    public void onCastAbilityClicked(Ability a, String direction) {
+        if (a == null) {
+            JOptionPane.showMessageDialog(null,"No ability selected.");
+        } else {
+            if (a.getCastArea() == AreaOfEffect.DIRECTIONAL) {
+                Direction d;
+                switch(direction) {
+                    case "UP": d = Direction.UP; break;
+                    case "DOWN": d = Direction.DOWN; break;
+                    case "LEFT": d = Direction.LEFT; break;
+                    case "RIGHT": d = Direction.RIGHT; break;
+                    default: d = Direction.UP;
+                }
+                try {
+                    game.castAbility(a,d);
+                } catch (NotEnoughResourcesException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                } catch (AbilityUseException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                } catch (InvalidTargetException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                } catch (CloneNotSupportedException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                }
+            }
+        }
     }
     public Object[][] getBoard() {
         return this.game.getBoard();
