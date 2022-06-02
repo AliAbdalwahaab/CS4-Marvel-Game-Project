@@ -14,9 +14,7 @@ public class Disarm extends Effect {
     }
 
     public void apply(Champion c) {
-        // ---------------------------------------------------------------------
-        // TODO : Target cannot use normal attacks (ChampionDisarmedException) |
-        // --------------------------------------------------------------------
+
         DamagingAbility punch = new DamagingAbility("Punch", 0, 1, 1,
                 AreaOfEffect.SINGLETARGET, 1, 50);
         c.getAbilities().add(punch);

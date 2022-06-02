@@ -1075,7 +1075,6 @@ public class Game {
         Damageable target = null; // target to be damaged
         int range = c.getAttackRange();
         // fetching first target in the specific direction
-        // TODO: WHAT HAPPENS IF THE FIRST CHAMP IN THE DIRECTION IS A FRIENDLY?
         switch (d) {
             case UP:
                 for (int y = c.getLocation().x + 1; y < BOARDHEIGHT && range > 0; y++, range--) {

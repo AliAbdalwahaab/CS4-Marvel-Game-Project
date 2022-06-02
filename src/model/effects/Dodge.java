@@ -11,7 +11,7 @@ public class Dodge extends Effect {
     }
 
     public void apply(Champion c) {
-        //TODO: Target has a 50% chance of dodging normal attacks.
+
         c.setSpeed((int) (c.getSpeed() * 1.05)); //increase by 5%
         //c.getAppliedEffects().add(this);
     }
