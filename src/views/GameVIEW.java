@@ -106,7 +106,16 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         buttonBoard = new Object[5][5];
         for (int i = 0; i < 5; i++) { // Blind copy
             for (int j = 0; j < 5; j++) {
-                JButton b = new JButton((Board[i][j] == null) ? "" : Board[i][j].toString());
+                //"<html>fnord<br />foo</html>"
+                JButton b = new JButton((Board[i][j] == null) ? "" : "<html>" + Board[i][j].toString() + "<br>" + "HP : " +  ((Board[i][j] instanceof Champion) ? ((Champion)Board[i][j]).getCurrentHP() : ((Cover)Board[i][j]).getCurrentHP()) + "</html>");
+                if (controller.getPlayer1().getTeam().contains(Board[i][j])) {
+                    b.setBackground(Color.decode(controller.getPlayer1().getColor()));
+                } else if (controller.getPlayer2().getTeam().contains(Board[i][j])) {
+                    b.setBackground(Color.decode(controller.getPlayer2().getColor()));
+                } else{
+                    b.setBackground(Color.DARK_GRAY);
+                }
+                b.setForeground(Color.white);
                 b.addActionListener(this);
                 b.addMouseListener(this);
                 buttonBoard[i][j] = b;
@@ -122,6 +131,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
         // Abilities left (2 grids)
         abilitiesPanel = new JPanel(new GridLayout(2,1));
+        abilitiesPanel.setPreferredSize(new Dimension(250,400));
         selectAbilities = new JPanel(new GridLayout(17,1));
         abiltiesInfoPanel = new JPanel(new GridLayout(1,1));
         abilitiesInfoText = new JTextArea("Hover over cast ability buttons see info");
@@ -236,7 +246,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         turnOrderPanel = new JPanel(new GridLayout(7,1));
         JTextArea Title = new JTextArea("TURN ORDER");
         Title.setEditable(false);
-        Title.setFont(new Font("Chiller", Font.BOLD, 20));
+        Title.setFont(new Font("Arial", Font.BOLD, 20));
         turnOrderPanel.add(Title);
         turnOrderPanel.setBackground(Color.decode("#f0b089"));
         for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
@@ -382,7 +392,34 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             }
             if (alBreak) break;
         }
-        if (e.getSource() == selfTargetButton) {
+        if (e.getSource() == endTurn) {
+            System.out.println("Yeppp");
+            controller.onEndTurnClicked();
+            turnOrderPanel.removeAll();
+            JTextArea Title = new JTextArea("TURN ORDER");
+            Title.setEditable(false);
+            Title.setFont(new Font("Arial", Font.BOLD, 20));
+            turnOrderPanel.add(Title);
+            //System.out.println("===================================================================");
+            for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
+                if (controller.getGame().getTurnOrder().getQueue()[i] != null) {
+                    Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
+                    System.out.println("" + c.getName() + " (" + c.getCondition() + ")");
+                    JLabel championAndStat = new JLabel("" + c.getName() + " (" + c.getCondition() + ")");
+                    turnOrderPanel.add(championAndStat);
+                }
+            }
+            //System.out.println("===================================================================");
+            turnOrderPanel.repaint();
+            turnOrderPanel.revalidate();
+            updateLeftPanel();
+            updateCenter();
+            updateSouth();
+        }
+        else if (e.getSource() == attack) {
+            attackFlag = true;
+            JOptionPane.showMessageDialog(null,"Please input direction of attack using DPAD");
+        } else if (e.getSource() == selfTargetButton) {
             boolean found = false;
             for (Ability a: controller.getCurrentChampion().getAbilities()) {
                 if (a.getCastArea() == SELFTARGET) {
@@ -514,15 +551,17 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             //attack
             if (e.getSource() == upDirection) {
-
+                controller.onAttackClicked("UP");
             } else if (e.getSource() == downDirection) {
-
+                controller.onAttackClicked("DOWN");
             } else if (e.getSource() == leftDirection) {
-
+                controller.onAttackClicked("LEFT");
             } else if (e.getSource() == rightDirection) {
-
+                controller.onAttackClicked("RIGHT");
             }
             attackFlag = false;
+            updateCenter();
+            updateSouth();
         } else if (e.getSource() instanceof JButton && map) {
 
             if (((JButton) e.getSource()).getText().equals("")) {
@@ -538,7 +577,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                return;
             }
 
-            else if (((JButton) e.getSource()).getText().equals("=============")) { // Cover
+            else if (fetchText(((JButton) e.getSource()).getText()).equals("COVER")) { // Cover
                 Cover cvr = null;
                 Boolean allBreak = false;
                 for (int i = 0; i < buttonBoard.length; i++) {
@@ -560,14 +599,15 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                 HoverChampAbilities.removeAllItems();
                 HoverChampAppliedEffects.removeAllItems();
-            } else { // Champ
+            } else { // Champ info
                 Boolean allBreak = false;
                 Champion c = null;
                 for (int i = 0; i < buttonBoard.length; i++) {
                     for (int j = 0; j < buttonBoard[i].length; j++) {
                         if (buttonBoard[i][j] == (Object) e.getSource()) {
                             //System.out.println("Karingeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                            c = controller.getChamp(((JButton) buttonBoard[i][j]).getText());
+                            c = (Champion) Board[i][j];
+
                             allBreak = true;
                             break;
                         }
@@ -602,7 +642,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 this.revalidate();
                 this.repaint();
             }
-        } else if (!(castAbilityFlag) && !(attackFlag)){
+        } else if (!(castAbilityFlag) && !(attackFlag)){ // move
 
             //move
             if (e.getSource() == upDirection) {
@@ -717,14 +757,88 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     }
 
+    public void updateLeftPanel() {
+        boolean bool = (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() || controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion()) ?
+                (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() ?
+                        !(controller.getGame().isFirstLeaderAbilityUsed()) : (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() ? !(controller.getGame().isSecondLeaderAbilityUsed()) : false)) : false;
+        useLeaderAbility.setEnabled(bool);
+
+        singleTargetBox.removeAllItems();
+
+        selfTargetBox.removeAllItems();
+
+        teamTargetBox.removeAllItems();
+
+        directionalTargetBox.removeAllItems();
+
+        surroundTargetBox.removeAllItems();
+
+
+        for (Ability a : controller.getCurrentChampion().getAbilities()) {
+
+            if (a.getCastArea() == SELFTARGET) {
+                if (a instanceof DamagingAbility) {
+                    selfTargetBox.addItem(a.getName() + " - Damage: " + ((DamagingAbility) a).getDamageAmount() + " HP");
+                } else if (a instanceof HealingAbility) {
+                    selfTargetBox.addItem(a.getName() + " - Heal: " + ((HealingAbility) a).getHealAmount() + " HP");
+                } else if (a instanceof CrowdControlAbility) {
+                    selfTargetBox.addItem(a.getName() + " - Effect: " + ((CrowdControlAbility) a).getEffect().getName() + " - Duration: " + ((CrowdControlAbility) a).getEffect().getDuration());
+                }
+            } else if (a.getCastArea() == SINGLETARGET) {
+                if (a instanceof DamagingAbility) {
+                    singleTargetBox.addItem(a.getName() + " - Damage: " + ((DamagingAbility) a).getDamageAmount() + " HP");
+                } else if (a instanceof HealingAbility) {
+                    singleTargetBox.addItem(a.getName() + " - Heal: " + ((HealingAbility) a).getHealAmount() + " HP");
+                } else if (a instanceof CrowdControlAbility) {
+                    singleTargetBox.addItem(a.getName() + " - Effect: " + ((CrowdControlAbility) a).getEffect().getName() + " - Duration: " + ((CrowdControlAbility) a).getEffect().getDuration());
+                }
+            } else if (a.getCastArea() == TEAMTARGET) {
+                if (a instanceof DamagingAbility) {
+                    teamTargetBox.addItem(a.getName() + " - Damage: " + ((DamagingAbility) a).getDamageAmount() + " HP");
+                } else if (a instanceof HealingAbility) {
+                    teamTargetBox.addItem(a.getName() + " - Heal: " + ((HealingAbility) a).getHealAmount() + " HP");
+                } else if (a instanceof CrowdControlAbility) {
+                    teamTargetBox.addItem(a.getName() + " - Effect: " + ((CrowdControlAbility) a).getEffect().getName() + " - Duration: " + ((CrowdControlAbility) a).getEffect().getDuration());
+                }
+            } else if (a.getCastArea() == SURROUND) {
+                if (a instanceof DamagingAbility) {
+                    surroundTargetBox.addItem(a.getName() + " - Damage: " + ((DamagingAbility) a).getDamageAmount() + " HP");
+                } else if (a instanceof HealingAbility) {
+                    surroundTargetBox.addItem(a.getName() + " - Heal: " + ((HealingAbility) a).getHealAmount() + " HP");
+                } else if (a instanceof CrowdControlAbility) {
+                    surroundTargetBox.addItem(a.getName() + " - Effect: " + ((CrowdControlAbility) a).getEffect().getName() + " - Duration: " + ((CrowdControlAbility) a).getEffect().getDuration());
+                }
+            } else if (a.getCastArea() == DIRECTIONAL) {
+                if (a instanceof DamagingAbility) {
+                    directionalTargetBox.addItem(a.getName() + " - Damage: " + ((DamagingAbility) a).getDamageAmount() + " HP");
+                } else if (a instanceof HealingAbility) {
+                    directionalTargetBox.addItem(a.getName() + " - Heal: " + ((HealingAbility) a).getHealAmount() + " HP");
+                } else if (a instanceof CrowdControlAbility) {
+                    directionalTargetBox.addItem(a.getName() + " - Effect: " + ((CrowdControlAbility) a).getEffect().getName() + " - Duration: " + ((CrowdControlAbility) a).getEffect().getDuration());
+                }
+            }
+            this.repaint();
+            this.revalidate();
+        }
+    }
+
     public void updateCenter() {
         this.revalidate();
         this.repaint();
 
         for (int i = 0; i < 5; i++) { // Blind copy
             for (int j = 0; j < 5; j++) {
-                JButton b = new JButton((Board[i][j] == null) ? "" : Board[i][j].toString());
+                JButton b = new JButton((Board[i][j] == null) ? "" : "<html>" + Board[i][j].toString() + "<br>" + "HP : " +  ((Board[i][j] instanceof Champion) ? ((Champion)Board[i][j]).getCurrentHP() : ((Cover)Board[i][j]).getCurrentHP()) + "</html>");
+                if (controller.getPlayer1().getTeam().contains(Board[i][j])) {
+                    b.setBackground(Color.decode(controller.getPlayer1().getColor()));
+                } else if (controller.getPlayer2().getTeam().contains(Board[i][j])) {
+                    b.setBackground(Color.decode(controller.getPlayer2().getColor()));
+                } else{
+                    b.setBackground(Color.DARK_GRAY);
+                }
+                b.setForeground(Color.white);
                 b.addActionListener(this);
+                b.addMouseListener(this);
                 buttonBoard[i][j] = b;
             }
         }
@@ -742,8 +856,16 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         this.repaint();
     }
 
-    public void updateSouth() {
+    public void updateNorth() {
 
+    }
+
+    public void updateSouth() {
+        String currentColor = "";
+        if (controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())){
+            currentColor = controller.getPlayer1().getColor();
+        } else currentColor = controller.getPlayer2().getColor();
+        CurrentChampInfo.setBackground(Color.decode(currentColor));
         CurrentPlayerName.setText("Player Name: "+(controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())? controller.getPlayer1().getName():controller.getPlayer2().getName()));
         ChampName.setText("Champion: "+controller.getCurrentChampion().getName() + "  Status: " + controller.getCurrentChampion().getCondition());
         ChampType.setText("Class: "+controller.getCurrentChampion().getHeroClass());
@@ -770,5 +892,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
         this.revalidate();
         this.repaint();
+    }
+
+    public static String fetchText(String txt) {
+        return txt.substring(6).split("<br>")[0];
     }
 }

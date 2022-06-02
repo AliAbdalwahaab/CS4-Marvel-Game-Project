@@ -1,10 +1,7 @@
 package controller;
 
 import engine.*;
-import exceptions.AbilityUseException;
-import exceptions.InvalidTargetException;
-import exceptions.NotEnoughResourcesException;
-import exceptions.UnallowedMovementException;
+import exceptions.*;
 import model.abilities.Ability;
 import model.abilities.AreaOfEffect;
 import model.world.Champion;
@@ -61,6 +58,29 @@ public class GameController {
         }
 
     }
+
+    public void onAttackClicked(String direction) {
+        Direction d;
+        switch(direction) {
+            case "UP": d = Direction.UP; break;
+            case "DOWN": d = Direction.DOWN; break;
+            case "LEFT": d = Direction.LEFT; break;
+            case "RIGHT": d = Direction.RIGHT; break;
+            default: d = Direction.UP;
+        }
+        try {
+            game.attack(d);
+        } catch (ChampionDisarmedException e) {
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        } catch (NotEnoughResourcesException e) {
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+    }
+
+    public void onEndTurnClicked() {
+        game.endTurn();
+    }
+
     public void onCastAbilityClicked(Ability a, String direction) {
         if (a == null) {
             JOptionPane.showMessageDialog(null,"No ability selected.");
