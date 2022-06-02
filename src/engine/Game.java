@@ -461,7 +461,6 @@ public class Game {
         }
         
         for (Damageable target: targets) {
-	        // TODO :  Implement Logic on the given target
 	        if (a instanceof DamagingAbility) {
 	            // check if cover or champ
 	            if (target instanceof Cover) {
