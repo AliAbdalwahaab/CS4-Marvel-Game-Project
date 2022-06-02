@@ -14,6 +14,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import static model.abilities.AreaOfEffect.SINGLETARGET;
+
 public class GameController {
     private Game game;
 
@@ -81,6 +83,28 @@ public class GameController {
                 } catch (InvalidTargetException e) {
                     JOptionPane.showMessageDialog(null,e.getMessage());
                 } catch (CloneNotSupportedException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                }
+
+            } else if (a.getCastArea() == AreaOfEffect.SURROUND) {
+                try {
+                    game.castAbility(a);
+                } catch (CloneNotSupportedException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                } catch (NotEnoughResourcesException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                } catch (AbilityUseException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                }
+
+            } else if (a.getCastArea() == AreaOfEffect.TEAMTARGET) {
+                try {
+                    game.castAbility(a);
+                } catch (CloneNotSupportedException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                } catch (NotEnoughResourcesException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                } catch (AbilityUseException e) {
                     JOptionPane.showMessageDialog(null,e.getMessage());
                 }
             }

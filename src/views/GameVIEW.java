@@ -388,6 +388,16 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         } else if (e.getSource() == singleTargetButton) {
 
         } else if (e.getSource() == teamTargetButton) {
+            boolean found = false;
+            for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                if (a.getCastArea() == TEAMTARGET) {
+                    abilityToBeCast = a;
+                    controller.onCastAbilityClicked(abilityToBeCast,"");
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) controller.onCastAbilityClicked(abilityToBeCast,"");
 
         } else if (e.getSource() == directionalTargetButton) {
             castAbilityFlag = true;
@@ -395,6 +405,17 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
 
         } else if (e.getSource() == surroundTargetButton) {
+            boolean found = false;
+            for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                if (a.getCastArea() == SURROUND) {
+                    abilityToBeCast = a;
+                    controller.onCastAbilityClicked(abilityToBeCast,"");
+                    found = true;
+                    break;
+                }
+
+            }
+            if (!found) controller.onCastAbilityClicked(abilityToBeCast,"");
 
         }
 
