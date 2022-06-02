@@ -383,7 +383,22 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             if (alBreak) break;
         }
         if (e.getSource() == selfTargetButton) {
+            boolean found = false;
+            for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                if (a.getCastArea() == SELFTARGET) {
+                    if (((String) selfTargetBox.getSelectedItem()).contains(a.getName())) {
+                        abilityToBeCast = a;
+                        controller.onCastAbilityClicked(abilityToBeCast,"");
+                        found = true;
+                        break;
+                    }
+                }
 
+            }
+            if (!found) controller.onCastAbilityClicked(abilityToBeCast,"");
+
+            updateSouth();
+            updateCenter();
         } else if (e.getSource() == singleTargetButton) {
 
         } else if (e.getSource() == teamTargetButton) {

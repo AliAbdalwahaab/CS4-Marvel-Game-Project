@@ -107,6 +107,16 @@ public class GameController {
                 } catch (AbilityUseException e) {
                     JOptionPane.showMessageDialog(null,e.getMessage());
                 }
+            } else if (a.getCastArea() == AreaOfEffect.SELFTARGET) {
+                try {
+                    game.castAbility(a);
+                } catch (CloneNotSupportedException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                } catch (NotEnoughResourcesException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                } catch (AbilityUseException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
+                }
             }
         }
     }
