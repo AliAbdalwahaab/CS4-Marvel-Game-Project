@@ -140,6 +140,24 @@ public class GameController {
             }
         }
     }
+
+    public void onCastSingleTargetClicked(Ability a, int x, int y) {
+        if (a == null) {
+            JOptionPane.showMessageDialog(null,"No ability selected.");
+        } else {
+            try {
+                game.castAbility(a,x,y);
+            } catch (NotEnoughResourcesException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            } catch (AbilityUseException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            } catch (InvalidTargetException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            } catch (CloneNotSupportedException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            }
+        }
+    }
     public Object[][] getBoard() {
         return this.game.getBoard();
     }

@@ -85,6 +85,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     private JButton attack;
     private boolean castAbilityFlag = false;
     private boolean attackFlag = false;
+    private boolean castSingleTarget = false;
 
     private boolean attackLED = false;
 
@@ -267,21 +268,24 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         Title.setFont(new Font("Arial", Font.BOLD, 20));
         turnOrderPanel.add(Title);
         turnOrderPanel.setBackground(Color.decode("#f0b089"));
+
         for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
+            JLabel championAndStat = new JLabel();
             Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
-            JLabel championAndStat = new JLabel(""+ c.getName() +" ("+c.getCondition()+")");
-            //championAndStat.setPreferredSize(new Dimension(350, 20));
+            if(c == controller.getGame().getFirstPlayer().getLeader() || c ==controller.getGame().getSecondPlayer().getLeader())
+                 championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+") (Leader)");
+            else
+                championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+")");
             turnOrderPanel.add(championAndStat);
         }
 
         rightPanel.add(turnOrderPanel);
 
         //JLabel empty2 = new JLabel("Karinge");
-        rightPanel.setPreferredSize(new Dimension(350,this.getHeight()-40));
+        //empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
         //rightPanel.add(empty2);
         JPanel wholeMove = new JPanel(new GridLayout(2,1));
         DpadMode = new JPanel(new GridLayout(1,3));
-        //DpadMode.setPreferredSize(new Dimension(350,50));
         labelmoveLED = new JLabel("MOVE MODE");
         labelmoveLED.setOpaque(true);
         labelattackLED = new JLabel("ATTACK MODE");
@@ -428,9 +432,28 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         boolean alBreak = false;
         for (int i = 0; i < buttonBoard.length; i++) {
             for (int j = 0; j < buttonBoard[i].length; j++) {
-                if (buttonBoard[i][j] == (Object) e.getSource()) {
+                if (buttonBoard[i][j] == (Object) e.getSource() && !castSingleTarget) {
                     map = true;
                     alBreak = true;
+                    break;
+                } else if (buttonBoard[i][j] == (Object) e.getSource() && castSingleTarget) {
+                    boolean found = false;
+                    for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                        if (a.getCastArea() == SINGLETARGET) {
+                            if (((String) singleTargetBox.getSelectedItem()).contains(a.getName())) {
+                                abilityToBeCast = a;
+                                controller.onCastSingleTargetClicked(abilityToBeCast,i,j);
+                                found = true;
+                                break;
+                            }
+                        }
+
+                    }
+                    if (!found) controller.onCastSingleTargetClicked(abilityToBeCast,i,j);
+
+                    updateSouth();
+                    updateCenter();
+                    castSingleTarget = false;
                     break;
                 }
             }
@@ -456,10 +479,14 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             turnOrderPanel.add(Title);
             //System.out.println("===================================================================");
             for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
+                JLabel championAndStat = new JLabel();
                 if (controller.getGame().getTurnOrder().getQueue()[i] != null) {
                     Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
-                    System.out.println("" + c.getName() + " (" + c.getCondition() + ")");
-                    JLabel championAndStat = new JLabel("" + c.getName() + " (" + c.getCondition() + ")");
+                 //System.out.println("" + c.getName() + " (" + c.getCondition() + ")");
+                    if(c == controller.getGame().getFirstPlayer().getLeader() || c ==controller.getGame().getSecondPlayer().getLeader())
+                        championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+")  (Leader)");
+                    else
+                        championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+")");
                     turnOrderPanel.add(championAndStat);
                 }
             }
@@ -501,6 +528,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             updateSouth();
             updateCenter();
         } else if (e.getSource() == singleTargetButton) {
+
+            castSingleTarget = true;
+            JOptionPane.showMessageDialog(null,"Please click on the cell containing the element you want to cast the ability onto");
+
 
         } else if (e.getSource() == teamTargetButton) {
             boolean found = false;
