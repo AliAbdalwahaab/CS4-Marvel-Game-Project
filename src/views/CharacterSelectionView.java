@@ -242,9 +242,9 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		for (Champion c: currentGame.getAvailableChampions()) {
 			JButton b = new JButton();
 			b.setBackground(Color.DARK_GRAY);
+			b.setIcon(resizeIcon(new ImageIcon(c.getName() +".png"), 70, 110));
 			b.setForeground(Color.white);
 			b.setText(c.getName());
-			b.setIcon(resizeIcon(new ImageIcon(c.getName() +".png"), 80, 120));
 			b.addActionListener(this);
 			b.addMouseListener(this);
 			centerPanel.add(b);
