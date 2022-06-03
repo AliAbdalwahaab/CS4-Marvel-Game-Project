@@ -216,15 +216,15 @@ public class GameController {
     }
 
 
-    private void setGameOver(){
+    public void setGameOver(){
         if (this.game.getFirstPlayer().getTeam().size() == 0) {
             GameOver = true;
-            setWinner(this.game.getFirstPlayer());
+            setWinner(this.game.getSecondPlayer());
         }
 
         if (this.game.getSecondPlayer().getTeam().size() == 0){
             GameOver = true;
-            setWinner(this.game.getSecondPlayer());
+            setWinner(this.game.getFirstPlayer());
         }
     }
 

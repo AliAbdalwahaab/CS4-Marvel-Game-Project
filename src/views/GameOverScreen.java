@@ -32,28 +32,40 @@ public class GameOverScreen extends JFrame implements ActionListener{
     private GameController gameController;
     private JFrame Screen;
     private JLabel Info;
+    private JLabel BG;
     private JButton Exit;
     private ActionListener Exitlistener;
 
-    public GameOverScreen(GameController gameController){
+    public GameOverScreen(GameController gameController) {
         this.gameController = gameController;
+        this.setLayout(new BorderLayout());
         int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        Screen = new JFrame();
-        Screen.setPreferredSize(new Dimension(width,height));
-        Screen.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        Screen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        Screen.setVisible(true);
-        Info = new JLabel(""+gameController.getWinner()+" is the winner!");
+        this.setPreferredSize(new Dimension(width, height));
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setVisible(true);
+        Info = new JLabel("" + gameController.getWinner() + " is the winner!");
+        Info.setOpaque(false);
         Exit = new JButton("Exit Marvel: Ultimate War");
+        BG = new JLabel();
+        ImageIcon image = new ImageIcon("Marvel Ultimate War.jpg");
+        image.setImage(image.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        BG.setIcon(image);
         Exit.addActionListener(this);
+
+        //TODO: check out why the the image is not displayed in background.
+
+        this.add(Exit, BorderLayout.SOUTH);
+        this.add(BG, BorderLayout.CENTER);
+        this.add(Info, BorderLayout.CENTER);
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Exit){
-            Screen.dispose();
+            this.dispose();
         }
     }
 }

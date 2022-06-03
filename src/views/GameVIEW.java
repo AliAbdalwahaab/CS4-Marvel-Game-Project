@@ -1171,7 +1171,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     //TODO: **** and instantiate a new game over screen.
 
     public void checkForGameOver(boolean b){
-        if (b == true) {
+        controller.setGameOver();
+        if (controller.getGameOver() == true) {
+            JOptionPane.showMessageDialog(null,"Game Over! " + controller.getWinner() + " won!");
             this.dispose();
             new GameOverScreen(controller);
         }
