@@ -85,6 +85,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     private JButton attack;
     private boolean castAbilityFlag = false;
     private boolean attackFlag = false;
+    private boolean castSingleTarget = false;
 
     private boolean attackLED = false;
 
@@ -416,9 +417,28 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         boolean alBreak = false;
         for (int i = 0; i < buttonBoard.length; i++) {
             for (int j = 0; j < buttonBoard[i].length; j++) {
-                if (buttonBoard[i][j] == (Object) e.getSource()) {
+                if (buttonBoard[i][j] == (Object) e.getSource() && !castSingleTarget) {
                     map = true;
                     alBreak = true;
+                    break;
+                } else if (buttonBoard[i][j] == (Object) e.getSource() && castSingleTarget) {
+                    boolean found = false;
+                    for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                        if (a.getCastArea() == SINGLETARGET) {
+                            if (((String) singleTargetBox.getSelectedItem()).contains(a.getName())) {
+                                abilityToBeCast = a;
+                                controller.onCastSingleTargetClicked(abilityToBeCast,i,j);
+                                found = true;
+                                break;
+                            }
+                        }
+
+                    }
+                    if (!found) controller.onCastSingleTargetClicked(abilityToBeCast,i,j);
+
+                    updateSouth();
+                    updateCenter();
+                    castSingleTarget = false;
                     break;
                 }
             }
@@ -489,6 +509,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             updateSouth();
             updateCenter();
         } else if (e.getSource() == singleTargetButton) {
+
+            castSingleTarget = true;
+            JOptionPane.showMessageDialog(null,"Please click on the cell containing the element you want to cast the ability onto");
+
 
         } else if (e.getSource() == teamTargetButton) {
             boolean found = false;
