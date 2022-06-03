@@ -244,6 +244,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 			b.setBackground(Color.DARK_GRAY);
 			b.setForeground(Color.white);
 			b.setText(c.getName());
+			b.setIcon(resizeIcon(new ImageIcon(c.getName() +".png"), 80, 120));
 			b.addActionListener(this);
 			b.addMouseListener(this);
 			centerPanel.add(b);
@@ -421,5 +422,11 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 	@Override
 	public void mouseExited(MouseEvent mouseEvent) {
 
+	}
+
+	private static Icon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
+		Image img = icon.getImage();
+		Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight,  java.awt.Image.SCALE_SMOOTH);
+		return new ImageIcon(resizedImage);
 	}
 }

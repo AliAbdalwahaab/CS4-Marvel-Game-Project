@@ -126,7 +126,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 }
                 if (Board[i][j] instanceof Cover) {
                     b.setIcon(resizeIcon(new ImageIcon("COVER.png"), 70, 70));
+                } else if (Board[i][j] instanceof Champion) {
+                    b.setIcon(resizeIcon(new ImageIcon(((Champion)Board[i][j]).getName() +".png"), 70, 110));
                 }
+
                 b.setForeground(Color.white);
                 b.addActionListener(this);
                 b.addMouseListener(this);
@@ -970,6 +973,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 }
                 if (Board[i][j] instanceof Cover) {
                     b.setIcon(resizeIcon(new ImageIcon("COVER.png"), 70, 70));
+                } else if (Board[i][j] instanceof Champion) {
+                    b.setIcon(resizeIcon(new ImageIcon(((Champion)Board[i][j]).getName() +".png"), 70, 110));
                 }
                 b.setForeground(Color.white);
                 b.addActionListener(this);
