@@ -268,9 +268,14 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         Title.setFont(new Font("Arial", Font.BOLD, 20));
         turnOrderPanel.add(Title);
         turnOrderPanel.setBackground(Color.decode("#f0b089"));
+
         for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
+            JLabel championAndStat = new JLabel();
             Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
-            JLabel championAndStat = new JLabel(""+ c.getName() +" ("+c.getCondition()+")");
+            if(c == controller.getGame().getFirstPlayer().getLeader() || c ==controller.getGame().getSecondPlayer().getLeader())
+                 championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+") (Leader)");
+            else
+                championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+")");
             turnOrderPanel.add(championAndStat);
         }
 
@@ -464,10 +469,14 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             turnOrderPanel.add(Title);
             //System.out.println("===================================================================");
             for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
+                JLabel championAndStat = new JLabel();
                 if (controller.getGame().getTurnOrder().getQueue()[i] != null) {
                     Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
-                    System.out.println("" + c.getName() + " (" + c.getCondition() + ")");
-                    JLabel championAndStat = new JLabel("" + c.getName() + " (" + c.getCondition() + ")");
+                 //System.out.println("" + c.getName() + " (" + c.getCondition() + ")");
+                    if(c == controller.getGame().getFirstPlayer().getLeader() || c ==controller.getGame().getSecondPlayer().getLeader())
+                        championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+")  (Leader)");
+                    else
+                        championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+")");
                     turnOrderPanel.add(championAndStat);
                 }
             }
