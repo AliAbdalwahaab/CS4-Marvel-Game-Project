@@ -270,16 +270,18 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
             Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
             JLabel championAndStat = new JLabel(""+ c.getName() +" ("+c.getCondition()+")");
+            //championAndStat.setPreferredSize(new Dimension(350, 20));
             turnOrderPanel.add(championAndStat);
         }
 
         rightPanel.add(turnOrderPanel);
 
         //JLabel empty2 = new JLabel("Karinge");
-        //empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
+        rightPanel.setPreferredSize(new Dimension(350,this.getHeight()-40));
         //rightPanel.add(empty2);
         JPanel wholeMove = new JPanel(new GridLayout(2,1));
         DpadMode = new JPanel(new GridLayout(1,3));
+        //DpadMode.setPreferredSize(new Dimension(350,50));
         labelmoveLED = new JLabel("MOVE MODE");
         labelmoveLED.setOpaque(true);
         labelattackLED = new JLabel("ATTACK MODE");
@@ -304,10 +306,20 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         JLabel lowerLeftEmpty = new JLabel("");
         JLabel lowerRightEmpty = new JLabel("");
         upDirection = new JButton("UP");
+        upDirection.setBackground(Color.RED);
+        upDirection.setForeground(Color.white);
         leftDirection = new JButton("LEFT");
+        leftDirection.setBackground(Color.RED);
+        leftDirection.setForeground(Color.white);
         rightDirection = new JButton("RIGHT");
+        rightDirection.setBackground(Color.RED);
+        rightDirection.setForeground(Color.white);
         downDirection = new JButton("DOWN");
+        downDirection.setBackground(Color.RED);
+        downDirection.setForeground(Color.white);
         attack = new JButton("ATTACK");
+        attack.setBackground(Color.RED);
+        attack.setForeground(Color.white);
         upDirection.addActionListener(this);
         leftDirection.addActionListener(this);
         rightDirection.addActionListener(this);
