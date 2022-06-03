@@ -124,6 +124,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 } else{
                     b.setBackground(Color.DARK_GRAY);
                 }
+                if (Board[i][j] instanceof Cover) {
+                    b.setIcon(resizeIcon(new ImageIcon("COVER.png"), 70, 70));
+                }
                 b.setForeground(Color.white);
                 b.addActionListener(this);
                 b.addMouseListener(this);
@@ -965,6 +968,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 } else{
                     b.setBackground(Color.DARK_GRAY);
                 }
+                if (Board[i][j] instanceof Cover) {
+                    b.setIcon(resizeIcon(new ImageIcon("COVER.png"), 70, 70));
+                }
                 b.setForeground(Color.white);
                 b.addActionListener(this);
                 b.addMouseListener(this);
@@ -1046,5 +1052,11 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             labelcastAbilityLED.setBackground(Color.decode("#366938"));
 
 
+    }
+
+    private static Icon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
+        Image img = icon.getImage();
+        Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight,  java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(resizedImage);
     }
 }
