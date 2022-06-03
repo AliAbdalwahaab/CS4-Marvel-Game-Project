@@ -467,6 +467,9 @@ public class Game {
 	                int newHP = ((Cover) target).getCurrentHP() -
 	                        ((DamagingAbility) a).getDamageAmount();
 	                ((Cover) target).setCurrentHP(newHP);
+//	                if (newHP == 0) {
+//	                    board[((Cover) target).getLocation().x][((Cover) target).getLocation().y] = null;
+//                    }
 	            } else if (target instanceof Champion) {
 	                // check if enemy
 	                if ((team == 1 && secondPlayer.getTeam().contains((Champion) target)) ||
@@ -849,7 +852,7 @@ public class Game {
                 {
                     int coverY = targets.get(i).getLocation().x;
                     int coverX = targets.get(i).getLocation().y;
-                    this.board[coverX][coverY] = null;
+                    this.board[coverY][coverX] = null;
                 }
             }
             else
