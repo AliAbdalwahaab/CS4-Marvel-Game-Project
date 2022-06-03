@@ -802,7 +802,6 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
-        //TODO: hovering over a "Cast ... Ability" button gets u data of selected item in combo box
         if (mouseEvent.getSource() == singleTargetButton) {
             for (Ability a: controller.getCurrentChampion().getAbilities()) {
                 if (a.getCastArea() == SINGLETARGET) {
