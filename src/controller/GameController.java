@@ -15,10 +15,16 @@ import static model.abilities.AreaOfEffect.SINGLETARGET;
 
 public class GameController {
     private Game game;
+    private Player winner;
+    private boolean GameOver;
 
     public GameController(Game game) {
         //TODO
         this.game = game;
+    }
+
+    public boolean getGameOver(){
+        return GameOver;
     }
 
     public void onMoveClicked(String direction) {
@@ -207,6 +213,27 @@ public class GameController {
 
     public Game getGame(){
         return this.game;
+    }
+
+
+    private void setGameOver(){
+        if (this.game.getFirstPlayer().getTeam().size() == 0) {
+            GameOver = true;
+            setWinner(this.game.getFirstPlayer());
+        }
+
+        if (this.game.getSecondPlayer().getTeam().size() == 0){
+            GameOver = true;
+            setWinner(this.game.getSecondPlayer());
+        }
+    }
+
+   //TODO: implement the getWinner method to return the winner once one of the teams' sizes become null, aka: a player has lost all champions.
+    //TODO: update the boolean GameOver whenever there is a winner of the game.
+    public String getWinner() {return this.winner.getName();}
+
+    public void setWinner(Player p){
+        winner = p;
     }
 
 

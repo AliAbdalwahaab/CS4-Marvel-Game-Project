@@ -441,6 +441,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                     }
                     if (!found) controller.onCastSingleTargetClicked(abilityToBeCast,i,j);
 
+                    checkForGameOver(controller.getGameOver());
                     updateSouth();
                     updateCenter();
                     castSingleTarget = false;
@@ -453,6 +454,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         if (e.getSource() == useLeaderAbility){
                 controller.onUseLeaderAbilityClicked();
                 System.out.println("used leader ability");
+            checkForGameOver(controller.getGameOver());
             updateSouth();
             updateCenter();
             updateLeftPanel();
@@ -488,6 +490,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             castAbilityLED = false;
             setLEDActive();
 
+            checkForGameOver(controller.getGameOver());
             updateLeftPanel();
             updateCenter();
             updateSouth();
@@ -515,6 +518,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             }
             if (!found) controller.onCastAbilityClicked(abilityToBeCast,"");
 
+            checkForGameOver(controller.getGameOver());
             updateSouth();
             updateCenter();
         } else if (e.getSource() == singleTargetButton) {
@@ -538,6 +542,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 }
             if (!found) controller.onCastAbilityClicked(abilityToBeCast,"");
 
+            checkForGameOver(controller.getGameOver());
             updateSouth();
             updateCenter();
 
@@ -566,6 +571,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             }
             if (!found) controller.onCastAbilityClicked(abilityToBeCast,"");
 
+            checkForGameOver(controller.getGameOver());
             updateSouth();
             updateCenter();
 
@@ -637,6 +643,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             castAbilityFlag = false;
             castAbilityLED = false;
             setLEDActive();
+            checkForGameOver(controller.getGameOver());
             updateSouth();
             updateCenter();
         } else if (attackFlag){
@@ -654,6 +661,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             attackFlag = false;
             attackLED = false;
             setLEDActive();
+            checkForGameOver(controller.getGameOver());
             updateCenter();
             updateSouth();
         } else if (e.getSource() instanceof JButton && map) {
@@ -749,6 +757,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             } else if (e.getSource() == rightDirection) {
                 controller.onMoveClicked(rightDirection.getText());
             }
+            checkForGameOver(controller.getGameOver());
             updateCenter();
             updateSouth();
 
@@ -1156,5 +1165,15 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         Image img = icon.getImage();
         Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight,  java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImage);
+    }
+
+    //TODO: call this method checkForGameOver everywhere and on all updates to check if the game is over and dispose of the current screen ****
+    //TODO: **** and instantiate a new game over screen.
+
+    public void checkForGameOver(boolean b){
+        if (b == true) {
+            this.dispose();
+            new GameOverScreen(controller);
+        }
     }
 }
