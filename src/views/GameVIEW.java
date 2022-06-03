@@ -161,7 +161,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         useLeaderAbility.addMouseListener(this);
         boolean bool = (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() || controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion())?
         		(controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?
-        				!(controller.getGame().isFirstLeaderAbilityUsed()):(controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?!(controller.getGame().isSecondLeaderAbilityUsed()):false)):false;
+        				!(controller.getGame().isFirstLeaderAbilityUsed()):(controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion()?!(controller.getGame().isSecondLeaderAbilityUsed()):false)):false;
         useLeaderAbility.setEnabled(bool);
         JLabel singleTarget = new JLabel("Single Target");
          singleTargetBox = new JComboBox();
@@ -936,9 +936,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     }
 
     public void updateLeftPanel() {
-        boolean bool = (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() || controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion()) ?
-                (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() ?
-                        !(controller.getGame().isFirstLeaderAbilityUsed()) : (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() ? !(controller.getGame().isSecondLeaderAbilityUsed()) : false)) : false;
+        boolean bool = (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() || controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion())?
+                (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?
+                        !(controller.getGame().isFirstLeaderAbilityUsed()):(controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion()?!(controller.getGame().isSecondLeaderAbilityUsed()):false)):false;
         useLeaderAbility.setEnabled(bool);
 
         singleTargetBox.removeAllItems();
