@@ -145,6 +145,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         abiltiesInfoPanel = new JPanel(new GridLayout(1,1));
         abilitiesInfoText = new JTextArea("Hover over cast ability buttons see info");
         abilitiesInfoText.setEditable(false);
+        abilitiesInfoText.setPreferredSize(new Dimension(150,250));
 
         abilitiesInfoText.setEditable(false);
         JLabel leaderAbility = new JLabel("Leader Ability");
@@ -796,19 +797,94 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-        //line
+
     }
 
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
         //TODO: hovering over a "Cast ... Ability" button gets u data of selected item in combo box
+        if (mouseEvent.getSource() == singleTargetButton) {
+            for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                if (a.getCastArea() == SINGLETARGET) {
+                    if (singleTargetBox.getSelectedItem() != null && ((String) singleTargetBox.getSelectedItem()).contains(a.getName())) {
+                        abilitiesInfoText.setText("Name: "+a.getName()+"\n"
+                        +"Mana Cost: "+a.getManaCost()+"\n"
+                        +"Base Cooldown: "+a.getBaseCooldown()+"\n"
+                        +"Cast Range: "+a.getCastRange()+"\n"
+                        +"Area of Effect: "+a.getCastArea());
+                        break;
+                    }
+
+                }
+            }
+
+        } else if (mouseEvent.getSource() == selfTargetButton) {
+            for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                if (a.getCastArea() == SELFTARGET) {
+                    if (selfTargetBox.getSelectedItem() != null && ((String) selfTargetBox.getSelectedItem()).contains(a.getName())) {
+                        abilitiesInfoText.setText("Name: "+a.getName()+"\n"
+                                +"Mana Cost: "+a.getManaCost()+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+"\n"
+                                +"Cast Range: "+a.getCastRange()+"\n"
+                                +"Area of Effect: "+a.getCastArea());
+                        break;
+                    }
+
+                }
+            }
+
+        } else if (mouseEvent.getSource() == teamTargetButton) {
+            for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                if (a.getCastArea() == TEAMTARGET) {
+                    if (teamTargetBox.getSelectedItem() != null && ((String) teamTargetBox.getSelectedItem()).contains(a.getName())) {
+                        abilitiesInfoText.setText("Name: "+a.getName()+"\n"
+                                +"Mana Cost: "+a.getManaCost()+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+"\n"
+                                +"Cast Range: "+a.getCastRange()+"\n"
+                                +"Area of Effect: "+a.getCastArea());
+                        break;
+                    }
+
+                }
+            }
+
+        } else if (mouseEvent.getSource() == directionalTargetButton) {
+            for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                if (a.getCastArea() == DIRECTIONAL) {
+                    if (directionalTargetBox.getSelectedItem() != null && ((String) directionalTargetBox.getSelectedItem()).contains(a.getName())) {
+                        abilitiesInfoText.setText("Name: "+a.getName()+"\n"
+                                +"Mana Cost: "+a.getManaCost()+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+"\n"
+                                +"Cast Range: "+a.getCastRange()+"\n"
+                                +"Area of Effect: "+a.getCastArea());
+                        break;
+                    }
+
+                }
+            }
+
+        } else if (mouseEvent.getSource() == surroundTargetButton) {
+            for (Ability a: controller.getCurrentChampion().getAbilities()) {
+                if (a.getCastArea() == SURROUND) {
+                    if (surroundTargetBox.getSelectedItem() != null && ((String) surroundTargetBox.getSelectedItem()).contains(a.getName())) {
+                        abilitiesInfoText.setText("Name: "+a.getName()+"\n"
+                                +"Mana Cost: "+a.getManaCost()+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+"\n"
+                                +"Cast Range: "+a.getCastRange()+"\n"
+                                +"Area of Effect: "+a.getCastArea());
+                        break;
+                    }
+
+                }
+            }
+        }
 
 
     }
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-
+        abilitiesInfoText.setText("Hover over cast ability buttons see info");
     }
 
     public void updateLeftPanel() {

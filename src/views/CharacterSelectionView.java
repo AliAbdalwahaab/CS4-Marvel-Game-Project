@@ -18,7 +18,7 @@ import model.world.Champion;
 import static java.awt.Font.BOLD;
 
 public class CharacterSelectionView extends JFrame implements ActionListener, MouseListener {
-	//TODO: Display champion info, change chosen champion fonts
+	//TODO: change chosen champion fonts
 
 	private Game currentGame;
 
