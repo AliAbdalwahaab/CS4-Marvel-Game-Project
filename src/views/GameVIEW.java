@@ -845,11 +845,23 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             for (Ability a: controller.getCurrentChampion().getAbilities()) {
                 if (a.getCastArea() == SINGLETARGET) {
                     if (singleTargetBox.getSelectedItem() != null && ((String) singleTargetBox.getSelectedItem()).contains(a.getName())) {
+                        String toAdd = "";
+                        if (a instanceof DamagingAbility) {
+                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount();
+                        } else if (a instanceof HealingAbility) {
+                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount();
+                        } else if (a instanceof CrowdControlAbility) {
+                            toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
+                                    +"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
+                                    +"Effect duration: "+((CrowdControlAbility) a).getEffect().getDuration()+" turn(s)";
+                        }
+
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                         +"Mana Cost: "+a.getManaCost()+"\n"
-                        +"Base Cooldown: "+a.getBaseCooldown()+"\n"
+                        +"Base Cooldown: "+a.getBaseCooldown()+"turn(s)"+"\n"
                         +"Cast Range: "+a.getCastRange()+"\n"
-                        +"Area of Effect: "+a.getCastArea());
+                        +"Area of Effect: "+a.getCastArea()+"\n"
+                        +toAdd);
                         break;
                     }
 
@@ -860,11 +872,23 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             for (Ability a: controller.getCurrentChampion().getAbilities()) {
                 if (a.getCastArea() == SELFTARGET) {
                     if (selfTargetBox.getSelectedItem() != null && ((String) selfTargetBox.getSelectedItem()).contains(a.getName())) {
+                        String toAdd = "";
+                        if (a instanceof DamagingAbility) {
+                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount();
+                        } else if (a instanceof HealingAbility) {
+                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount();
+                        } else if (a instanceof CrowdControlAbility) {
+                            toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
+                                    +"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
+                                    +"Effect duration: "+((CrowdControlAbility) a).getEffect().getDuration()+" turn(s)";
+                        }
+
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
-                                +"Base Cooldown: "+a.getBaseCooldown()+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+"turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
-                                +"Area of Effect: "+a.getCastArea());
+                                +"Area of Effect: "+a.getCastArea()+"\n"
+                                +toAdd);
                         break;
                     }
 
@@ -875,11 +899,23 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             for (Ability a: controller.getCurrentChampion().getAbilities()) {
                 if (a.getCastArea() == TEAMTARGET) {
                     if (teamTargetBox.getSelectedItem() != null && ((String) teamTargetBox.getSelectedItem()).contains(a.getName())) {
+                        String toAdd = "";
+                        if (a instanceof DamagingAbility) {
+                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount();
+                        } else if (a instanceof HealingAbility) {
+                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount();
+                        } else if (a instanceof CrowdControlAbility) {
+                            toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
+                                    +"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
+                                    +"Effect duration: "+((CrowdControlAbility) a).getEffect().getDuration()+" turn(s)";
+                        }
+
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
-                                +"Base Cooldown: "+a.getBaseCooldown()+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+"turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
-                                +"Area of Effect: "+a.getCastArea());
+                                +"Area of Effect: "+a.getCastArea()+"\n"
+                                +toAdd);
                         break;
                     }
 
@@ -890,11 +926,23 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             for (Ability a: controller.getCurrentChampion().getAbilities()) {
                 if (a.getCastArea() == DIRECTIONAL) {
                     if (directionalTargetBox.getSelectedItem() != null && ((String) directionalTargetBox.getSelectedItem()).contains(a.getName())) {
+                        String toAdd = "";
+                        if (a instanceof DamagingAbility) {
+                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount();
+                        } else if (a instanceof HealingAbility) {
+                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount();
+                        } else if (a instanceof CrowdControlAbility) {
+                            toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
+                                    +"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
+                                    +"Effect duration: "+((CrowdControlAbility) a).getEffect().getDuration()+" turn(s)";
+                        }
+
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
-                                +"Base Cooldown: "+a.getBaseCooldown()+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+"turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
-                                +"Area of Effect: "+a.getCastArea());
+                                +"Area of Effect: "+a.getCastArea()+"\n"
+                                +toAdd);
                         break;
                     }
 
@@ -905,11 +953,23 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             for (Ability a: controller.getCurrentChampion().getAbilities()) {
                 if (a.getCastArea() == SURROUND) {
                     if (surroundTargetBox.getSelectedItem() != null && ((String) surroundTargetBox.getSelectedItem()).contains(a.getName())) {
+                        String toAdd = "";
+                        if (a instanceof DamagingAbility) {
+                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount();
+                        } else if (a instanceof HealingAbility) {
+                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount();
+                        } else if (a instanceof CrowdControlAbility) {
+                            toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
+                                    +"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
+                                    +"Effect duration: "+((CrowdControlAbility) a).getEffect().getDuration()+" turn(s)";
+                        }
+
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
-                                +"Base Cooldown: "+a.getBaseCooldown()+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+"turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
-                                +"Area of Effect: "+a.getCastArea());
+                                +"Area of Effect: "+a.getCastArea()+"\n"
+                                +toAdd);
                         break;
                     }
 
