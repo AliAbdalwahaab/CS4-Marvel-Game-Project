@@ -845,7 +845,7 @@ public class Game {
         for (int i = 0; i < targets.size(); i++) {
             if (targets.get(i) instanceof Cover) {
                 Cover co = (Cover) targets.get(i);
-                if (co.getCurrentHP() == 0)
+                if (co.getCurrentHP() <= 0)
                 {
                     int coverY = targets.get(i).getLocation().x;
                     int coverX = targets.get(i).getLocation().y;
