@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.colorchooser.ColorChooserComponentFactory;
 import javax.swing.plaf.metal.MetalIconFactory;
+import javax.swing.text.Document;
 
 import engine.Player;
 import model.abilities.Ability;
@@ -59,7 +60,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     private JComboBox HoverChampAppliedEffects;
 
     private JPanel turnOrderPanel;
-
+    private JPanel DpadMode;
     private JPanel abilitiesPanel;
     private JPanel abiltiesInfoPanel;
     private JTextArea abilitiesInfoText;
@@ -85,11 +86,19 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     private boolean castAbilityFlag = false;
     private boolean attackFlag = false;
 
+    private boolean attackLED = false;
+
+    private boolean castAbilityLED = false;
+
+    private JLabel labelmoveLED;
+    private JLabel labelattackLED;
+    private JLabel labelcastAbilityLED;
+
     private Object[][] Board;
     private Object[][] buttonBoard;
+    private boolean moveLED = true;
 
     public GameVIEW(GameController controller) {
-
         this.controller = controller;
         setTitle("GAME STARTED!");
         addMouseListener(this);
@@ -140,6 +149,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         abilitiesInfoText.setEditable(false);
         JLabel leaderAbility = new JLabel("Leader Ability");
         useLeaderAbility = new JButton("Use Leader Ability");
+        useLeaderAbility.addActionListener(this);
+        useLeaderAbility.addMouseListener(this);
         boolean bool = (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() || controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion())?
         		(controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?
         				!(controller.getGame().isFirstLeaderAbilityUsed()):(controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?!(controller.getGame().isSecondLeaderAbilityUsed()):false)):false;
@@ -257,14 +268,28 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
         rightPanel.add(turnOrderPanel);
 
-        JLabel empty2 = new JLabel("Karinge");
+        //JLabel empty2 = new JLabel("Karinge");
         //empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
         //rightPanel.add(empty2);
         JPanel wholeMove = new JPanel(new GridLayout(2,1));
-        JTextArea directionPadMode = new JTextArea("MOVE");
-        directionPadMode.setEditable(false);
-        directionPadMode.setFont(new Font("Arial", Font.BOLD, 30));
-        wholeMove.add(directionPadMode);
+        DpadMode = new JPanel(new GridLayout(1,3));
+        labelmoveLED = new JLabel("MOVE MODE");
+        labelmoveLED.setOpaque(true);
+        labelattackLED = new JLabel("ATTACK MODE");
+        labelattackLED.setOpaque(true);
+        labelcastAbilityLED = new JLabel("CAST ABILITY MODE");
+        labelcastAbilityLED.setOpaque(true);
+
+        labelmoveLED.setBackground(Color.decode("#366938"));
+        labelattackLED.setBackground(Color.decode("#366938"));
+        labelcastAbilityLED.setBackground(Color.decode("#366938"));
+
+        DpadMode.add(labelmoveLED);
+        DpadMode.add(labelattackLED);
+        DpadMode.add(labelcastAbilityLED);
+        DpadMode.setFont(new Font("Arial", Font.BOLD, 30));
+        wholeMove.add(DpadMode);
+        setLEDActive();
         JPanel directionPad = new JPanel(new GridLayout(3,3));
         directionPad.setBackground(Color.decode("#3e423f"));
         JLabel upperLeftEmpty = new JLabel("");
@@ -392,8 +417,18 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             }
             if (alBreak) break;
         }
-        if (e.getSource() == endTurn) {
-            System.out.println("Yeppp");
+
+        if (e.getSource() == useLeaderAbility){
+                controller.onUseLeaderAbilityClicked();
+                System.out.println("used leader ability");
+            updateSouth();
+            updateCenter();
+            updateLeftPanel();
+            updateNorth();
+        }
+
+        else if (e.getSource() == endTurn) {
+           // System.out.println("Yeppp");
             controller.onEndTurnClicked();
             turnOrderPanel.removeAll();
             JTextArea Title = new JTextArea("TURN ORDER");
@@ -412,13 +447,23 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             //System.out.println("===================================================================");
             turnOrderPanel.repaint();
             turnOrderPanel.revalidate();
+            moveLED =true;
+            attackLED =false;
+            castAbilityLED = false;
+            setLEDActive();
+
             updateLeftPanel();
             updateCenter();
             updateSouth();
         }
         else if (e.getSource() == attack) {
-            attackFlag = true;
-            JOptionPane.showMessageDialog(null,"Please input direction of attack using DPAD");
+            attackFlag = !attackLED;
+            attackLED = !attackLED;
+            castAbilityFlag = false;
+            moveLED = false;
+            castAbilityLED = false;
+            setLEDActive();
+           //JOptionPane.showMessageDialog(null,"Please input direction of attack using DPAD");
         } else if (e.getSource() == selfTargetButton) {
             boolean found = false;
             for (Ability a: controller.getCurrentChampion().getAbilities()) {
@@ -457,8 +502,13 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             updateCenter();
 
         } else if (e.getSource() == directionalTargetButton) {
-            castAbilityFlag = true;
-            JOptionPane.showMessageDialog(null,"Please input direction of ability using DPAD");
+            castAbilityFlag = !castAbilityLED;
+            castAbilityLED = !castAbilityLED;
+            attackFlag = false;
+            attackLED = false;
+            moveLED = false;
+            setLEDActive();
+           // JOptionPane.showMessageDialog(null,"Please input direction of ability using DPAD");
 
 
         } else if (e.getSource() == surroundTargetButton) {
@@ -545,6 +595,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             }
             castAbilityFlag = false;
+            castAbilityLED = false;
+            setLEDActive();
             updateSouth();
             updateCenter();
         } else if (attackFlag){
@@ -560,6 +612,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 controller.onAttackClicked("RIGHT");
             }
             attackFlag = false;
+            attackLED = false;
+            setLEDActive();
             updateCenter();
             updateSouth();
         } else if (e.getSource() instanceof JButton && map) {
@@ -642,8 +696,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 this.revalidate();
                 this.repaint();
             }
-        } else if (!(castAbilityFlag) && !(attackFlag)){ // move
-
+        } else if (!(castAbilityFlag) && !(attackFlag) && !(attackLED) && !(castAbilityLED)){ // move
+            setLEDActive();
             //move
             if (e.getSource() == upDirection) {
                 controller.onMoveClicked(upDirection.getText());
@@ -896,5 +950,26 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     public static String fetchText(String txt) {
         return txt.substring(6).split("<br>")[0];
+    }
+
+    private void setLEDActive (){
+        if (attackLED == false && castAbilityLED == false)
+            moveLED = true;
+        if(moveLED)
+            labelmoveLED.setBackground(Color.decode("#0dff15"));
+        else
+            labelmoveLED.setBackground(Color.decode("#366938"));
+
+        if (attackLED)
+            labelattackLED.setBackground(Color.decode("#0dff15"));
+        else
+            labelattackLED.setBackground(Color.decode("#366938"));
+
+        if (castAbilityLED)
+            labelcastAbilityLED.setBackground(Color.decode("#0dff15"));
+        else
+            labelcastAbilityLED.setBackground(Color.decode("#366938"));
+
+
     }
 }

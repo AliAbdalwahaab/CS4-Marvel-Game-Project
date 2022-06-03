@@ -172,6 +172,21 @@ public class GameController {
         return null;
     }
 
+    public void onUseLeaderAbilityClicked(){
+
+        try {
+            game.useLeaderAbility();
+        } catch (LeaderNotCurrentException e) {
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        } catch (LeaderAbilityAlreadyUsedException e) {
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        } catch (AbilityUseException e) {
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        } catch (CloneNotSupportedException e) {
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+    }
+
     public Game getGame(){
         return this.game;
     }
