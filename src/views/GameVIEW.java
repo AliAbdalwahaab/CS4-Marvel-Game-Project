@@ -259,11 +259,30 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
         for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
             JLabel championAndStat = new JLabel();
+            championAndStat.setOpaque(true);
             Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
-            if(c == controller.getGame().getFirstPlayer().getLeader() || c ==controller.getGame().getSecondPlayer().getLeader())
-                 championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+") (Leader)");
-            else
-                championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+")");
+
+            if(controller.getGame().getFirstPlayer().getLeader() == c  ||  controller.getGame().getSecondPlayer().getLeader() == c ){
+
+                championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+") (Leader)");
+
+                if(controller.getGame().getFirstPlayer().getTeam().contains(c))
+                    championAndStat.setBackground(Color.decode(controller.getPlayer1().getColor()));
+                else
+                    championAndStat.setBackground(Color.decode(controller.getPlayer2().getColor()));
+
+            }
+
+           else if(c != controller.getGame().getFirstPlayer().getLeader() || c != controller.getGame().getSecondPlayer().getLeader()){
+                championAndStat.setText("" + c.getName() + " (" + c.getCondition() + ")");
+
+                if (controller.getGame().getFirstPlayer().getTeam().contains(c))
+                    championAndStat.setBackground(Color.decode(controller.getPlayer1().getColor()));
+                else
+                    championAndStat.setBackground(Color.decode(controller.getPlayer2().getColor()));
+
+            }
+
             turnOrderPanel.add(championAndStat);
         }
 
@@ -450,13 +469,31 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             //System.out.println("===================================================================");
             for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
                 JLabel championAndStat = new JLabel();
+                championAndStat.setOpaque(true);
                 if (controller.getGame().getTurnOrder().getQueue()[i] != null) {
                     Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
-                 //System.out.println("" + c.getName() + " (" + c.getCondition() + ")");
-                    if(c == controller.getGame().getFirstPlayer().getLeader() || c ==controller.getGame().getSecondPlayer().getLeader())
-                        championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+")  (Leader)");
-                    else
-                        championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+")");
+
+                    if(controller.getGame().getFirstPlayer().getLeader() == c  ||  controller.getGame().getSecondPlayer().getLeader() == c ){
+
+                        championAndStat.setText(""+ c.getName() +" ("+c.getCondition()+") (Leader)");
+
+                        if(controller.getGame().getFirstPlayer().getTeam().contains(c))
+                            championAndStat.setBackground(Color.decode(controller.getPlayer1().getColor()));
+                        else
+                            championAndStat.setBackground(Color.decode(controller.getPlayer2().getColor()));
+
+                    }
+
+                    else if(c != controller.getGame().getFirstPlayer().getLeader() || c != controller.getGame().getSecondPlayer().getLeader()){
+                        championAndStat.setText("" + c.getName() + " (" + c.getCondition() + ")");
+
+                        if (controller.getGame().getFirstPlayer().getTeam().contains(c))
+                            championAndStat.setBackground(Color.decode(controller.getPlayer1().getColor()));
+                        else
+                            championAndStat.setBackground(Color.decode(controller.getPlayer2().getColor()));
+
+                    }
+
                     turnOrderPanel.add(championAndStat);
                 }
             }
