@@ -1,17 +1,9 @@
 package views;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import views.CharacterSelectionView.*;
+import java.awt.*;
+import java.net.MalformedURLException;
+import java.util.concurrent.TimeUnit;
 
 public class StartScreenGUI extends JComponent {
     JPanel contentPane;
@@ -29,6 +21,9 @@ public class StartScreenGUI extends JComponent {
         JFrame f = new JFrame();
 
         f.setLayout(new BorderLayout());
+
+
+
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
         JLabel label = new JLabel();
         ImageIcon image = new ImageIcon("THH-LOGO.gif");

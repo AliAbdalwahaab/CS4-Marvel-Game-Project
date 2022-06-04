@@ -1,29 +1,17 @@
 package views;
 
 import controller.GameController;
-import engine.Game;
+import model.abilities.*;
+import model.effects.Effect;
+import model.world.Champion;
+import model.world.Cover;
 
-
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import javax.swing.*;
-import javax.swing.colorchooser.ColorChooserComponentFactory;
-import javax.swing.plaf.metal.MetalIconFactory;
-import javax.swing.text.Document;
-
-import engine.Player;
-import model.abilities.Ability;
-import model.abilities.DamagingAbility;
-import model.abilities.HealingAbility;
-import model.effects.Effect;
-import model.abilities.*;
-import model.world.Champion;
-import model.world.Condition;
-import model.world.Cover;
 
 import static model.abilities.AreaOfEffect.*;
 
@@ -429,9 +417,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                     }
                     if (!found) controller.onCastSingleTargetClicked(abilityToBeCast,i,j);
 
-                    checkForGameOver(controller.getGameOver());
+
                     updateSouth();
                     updateCenter();
+                    checkForGameOver(controller.getGameOver());
                     castSingleTarget = false;
                     break;
                 }
@@ -442,11 +431,12 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         if (e.getSource() == useLeaderAbility){
                 controller.onUseLeaderAbilityClicked();
                 System.out.println("used leader ability");
-            checkForGameOver(controller.getGameOver());
+
             updateSouth();
             updateCenter();
             updateLeftPanel();
             updateNorth();
+            checkForGameOver(controller.getGameOver());
         }
 
         else if (e.getSource() == endTurn) {
@@ -478,10 +468,11 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             castAbilityLED = false;
             setLEDActive();
 
-            checkForGameOver(controller.getGameOver());
+
             updateLeftPanel();
             updateCenter();
             updateSouth();
+            checkForGameOver(controller.getGameOver());
         }
         else if (e.getSource() == attack) {
             attackFlag = !attackLED;
@@ -506,9 +497,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             }
             if (!found) controller.onCastAbilityClicked(abilityToBeCast,"");
 
-            checkForGameOver(controller.getGameOver());
+
             updateSouth();
             updateCenter();
+            checkForGameOver(controller.getGameOver());
         } else if (e.getSource() == singleTargetButton) {
 
             castSingleTarget = true;
@@ -530,9 +522,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                 }
             if (!found) controller.onCastAbilityClicked(abilityToBeCast,"");
 
-            checkForGameOver(controller.getGameOver());
+
             updateSouth();
             updateCenter();
+            checkForGameOver(controller.getGameOver());
 
         } else if (e.getSource() == directionalTargetButton) {
             castAbilityFlag = !castAbilityLED;
@@ -559,9 +552,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             }
             if (!found) controller.onCastAbilityClicked(abilityToBeCast,"");
 
-            checkForGameOver(controller.getGameOver());
+
             updateSouth();
             updateCenter();
+            checkForGameOver(controller.getGameOver());
 
         }
 
@@ -631,9 +625,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             castAbilityFlag = false;
             castAbilityLED = false;
             setLEDActive();
-            checkForGameOver(controller.getGameOver());
+
             updateSouth();
             updateCenter();
+            checkForGameOver(controller.getGameOver());
         } else if (attackFlag){
 
             //attack
@@ -649,9 +644,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             attackFlag = false;
             attackLED = false;
             setLEDActive();
-            checkForGameOver(controller.getGameOver());
+
             updateCenter();
             updateSouth();
+            checkForGameOver(controller.getGameOver());
         } else if (e.getSource() instanceof JButton && map) {
 
             if (((JButton) e.getSource()).getText().equals("")) {
@@ -745,9 +741,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             } else if (e.getSource() == rightDirection) {
                 controller.onMoveClicked(rightDirection.getText());
             }
-            checkForGameOver(controller.getGameOver());
+
             updateCenter();
             updateSouth();
+            checkForGameOver(controller.getGameOver());
 
         }
 
