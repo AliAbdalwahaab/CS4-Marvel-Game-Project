@@ -519,6 +519,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             updateLeftPanel();
             updateCenter();
             updateSouth();
+
             checkForGameOver(controller.getGameOver());
         }
         else if (e.getSource() == attack) {
@@ -547,6 +548,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             updateSouth();
             updateCenter();
+            updateLeftPanel();
             checkForGameOver(controller.getGameOver());
         } else if (e.getSource() == singleTargetButton) {
 
@@ -572,6 +574,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             updateSouth();
             updateCenter();
+            updateLeftPanel();
             checkForGameOver(controller.getGameOver());
 
         } else if (e.getSource() == directionalTargetButton) {
@@ -602,6 +605,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             updateSouth();
             updateCenter();
+            updateLeftPanel();
             checkForGameOver(controller.getGameOver());
 
         }
@@ -675,6 +679,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             updateSouth();
             updateCenter();
+            updateLeftPanel();
             checkForGameOver(controller.getGameOver());
         } else if (attackFlag){
 
@@ -694,6 +699,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             updateCenter();
             updateSouth();
+            updateLeftPanel();
             checkForGameOver(controller.getGameOver());
         } else if (e.getSource() instanceof JButton && map) {
 
@@ -791,6 +797,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             updateCenter();
             updateSouth();
+            updateLeftPanel();
             checkForGameOver(controller.getGameOver());
 
         }
@@ -832,7 +839,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                         +"Mana Cost: "+a.getManaCost()+"\n"
-                        +"Base Cooldown: "+a.getBaseCooldown()+"turn(s)"+"\n"
+                        +"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
+                                +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
                         +"Cast Range: "+a.getCastRange()+"\n"
                         +"Area of Effect: "+a.getCastArea()+"\n"
                         +toAdd);
@@ -859,7 +867,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
-                                +"Base Cooldown: "+a.getBaseCooldown()+"turn(s)"+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
+                                +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
                                 +"Area of Effect: "+a.getCastArea()+"\n"
                                 +toAdd);
@@ -886,7 +895,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
-                                +"Base Cooldown: "+a.getBaseCooldown()+"turn(s)"+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
+                                +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
                                 +"Area of Effect: "+a.getCastArea()+"\n"
                                 +toAdd);
@@ -913,7 +923,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
-                                +"Base Cooldown: "+a.getBaseCooldown()+"turn(s)"+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
+                                +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
                                 +"Area of Effect: "+a.getCastArea()+"\n"
                                 +toAdd);
@@ -940,7 +951,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
-                                +"Base Cooldown: "+a.getBaseCooldown()+"turn(s)"+"\n"
+                                +"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
+                                +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
                                 +"Area of Effect: "+a.getCastArea()+"\n"
                                 +toAdd);
