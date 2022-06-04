@@ -1,17 +1,14 @@
 package views;
 
+import javax.sound.sampled.*;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import views.CharacterSelectionView.*;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class StartScreenGUI extends JComponent {
     JPanel contentPane;
@@ -29,6 +26,32 @@ public class StartScreenGUI extends JComponent {
         JFrame f = new JFrame();
 
         f.setLayout(new BorderLayout());
+
+        File audioFile = new File("The Avengers Theme.wav").getAbsoluteFile();
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Clip clip = null;
+        try {
+            clip = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+        try {
+            clip.open(audioInputStream);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clip.start();
+
+
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
         JLabel label = new JLabel();
         ImageIcon image = new ImageIcon("THH-LOGO.gif");
@@ -38,6 +61,7 @@ public class StartScreenGUI extends JComponent {
         label.setIcon(image);
         f.setBackground(Color.BLACK);
         f.setContentPane(label);
+        f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         //f.add(label, SwingConstants.CENTER);
         f.setVisible(true);

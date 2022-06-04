@@ -260,10 +260,10 @@ public class Game {
         } else if (!c.getAppliedEffects().isEmpty()) {
             for (int i = 0; i < c.getAppliedEffects().size(); i++) {
                 if (c.getAppliedEffects().get(i) instanceof Silence)
-                    throw new AbilityUseException("The current champion cannot use this ability at this moment");
+                    throw new AbilityUseException("The current champion has Silence effect, cannot cast ability");
             }
         } else if (a.getCurrentCooldown() > 0 )
-            throw new AbilityUseException("The current champion cannot use this ability at this moment");
+            throw new AbilityUseException("Ability in cooldown, cannot cast ability at this moment");
 
 
         if (a.getCastArea() == AreaOfEffect.SURROUND) {
@@ -417,10 +417,10 @@ public class Game {
         } else if (!c.getAppliedEffects().isEmpty()) {
             for (int i = 0; i < c.getAppliedEffects().size(); i++) {
                 if (c.getAppliedEffects().get(i) instanceof Silence)
-                    throw new AbilityUseException("The current champion is silenced, cannot use ability");
+                    throw new AbilityUseException("The current champion has Silence effect, cannot cast ability");
             }
         } else if (a.getCurrentCooldown() > 0 )
-            throw new AbilityUseException("Current cooldown period is not over");
+            throw new AbilityUseException("Ability in cooldown, cannot cast ability at this moment");
 
         ArrayList<Damageable> targets = new ArrayList<>(); // target to be damaged
         int range = a.getCastRange();
@@ -586,10 +586,10 @@ public class Game {
         else if (!c.getAppliedEffects().isEmpty()) {
             for (int i = 0; i < c.getAppliedEffects().size(); i++) {
                 if (c.getAppliedEffects().get(i) instanceof Silence)
-                    throw new AbilityUseException("The current champion cannot use this ability at this moment");
+                    throw new AbilityUseException("The current champion has Silence effect, cannot cast ability");
             }
         } else if (a.getCurrentCooldown() > 0 )
-            throw new AbilityUseException("The current champion cannot use this ability at this moment");
+            throw new AbilityUseException("Ability in cooldown, cannot cast ability at this moment");
         else if (a.getCastArea() != AreaOfEffect.SINGLETARGET)
             return;
 	    if (board[x][y] == null) {
@@ -1066,12 +1066,12 @@ public class Game {
         boolean friendly = false; // true when target found is a friendly
 
         if (c.getCurrentActionPoints() < 2) {
-            throw new NotEnoughResourcesException("Not enough action points to do normal attack");
+            throw new NotEnoughResourcesException("Not enough action points to perform normal attack");
         }
 
         for (Effect e: c.getAppliedEffects()) {
             if (e instanceof Disarm && e.getDuration() != 0) {
-                throw new ChampionDisarmedException("Cannot attack normally while disarmed");
+                throw new ChampionDisarmedException("Cannot perform normal attack while disarmed");
             }
         }
 
