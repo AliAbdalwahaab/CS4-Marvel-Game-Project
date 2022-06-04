@@ -414,12 +414,12 @@ public class Game {
         if (a.getManaCost() > c.getMana() || c.getCurrentActionPoints() < a.getRequiredActionPoints()) {
             throw new NotEnoughResourcesException("The current champion does not have enough resources to cast this Ability");
 
-        } else if (!c.getAppliedEffects().isEmpty()) {
+        } if (!c.getAppliedEffects().isEmpty()) {
             for (int i = 0; i < c.getAppliedEffects().size(); i++) {
                 if (c.getAppliedEffects().get(i) instanceof Silence)
                     throw new AbilityUseException("The current champion has Silence effect, cannot cast ability");
             }
-        } else if (a.getCurrentCooldown() > 0 )
+        } if (a.getCurrentCooldown() > 0 )
             throw new AbilityUseException("Ability in cooldown, cannot cast ability at this moment");
 
         ArrayList<Damageable> targets = new ArrayList<>(); // target to be damaged
@@ -583,12 +583,12 @@ public class Game {
         if (a.getManaCost() > c.getMana() || c.getCurrentActionPoints() < a.getRequiredActionPoints())
             throw new NotEnoughResourcesException("The current champion does not have enough resources to cast this Ability");
 
-        else if (!c.getAppliedEffects().isEmpty()) {
+        if (!c.getAppliedEffects().isEmpty()) {
             for (int i = 0; i < c.getAppliedEffects().size(); i++) {
                 if (c.getAppliedEffects().get(i) instanceof Silence)
                     throw new AbilityUseException("The current champion has Silence effect, cannot cast ability");
             }
-        } else if (a.getCurrentCooldown() > 0 )
+        } if (a.getCurrentCooldown() > 0 )
             throw new AbilityUseException("Ability in cooldown, cannot cast ability at this moment");
         else if (a.getCastArea() != AreaOfEffect.SINGLETARGET)
             return;
