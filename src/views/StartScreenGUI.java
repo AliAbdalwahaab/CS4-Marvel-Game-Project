@@ -1,9 +1,14 @@
 package views;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
+
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class StartScreenGUI extends JComponent {
     JPanel contentPane;
@@ -22,6 +27,29 @@ public class StartScreenGUI extends JComponent {
 
         f.setLayout(new BorderLayout());
 
+        File audioFile = new File("The Avengers Theme.wav").getAbsoluteFile();
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Clip clip = null;
+        try {
+            clip = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+        try {
+            clip.open(audioInputStream);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clip.start();
 
 
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -33,6 +61,7 @@ public class StartScreenGUI extends JComponent {
         label.setIcon(image);
         f.setBackground(Color.BLACK);
         f.setContentPane(label);
+        f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         //f.add(label, SwingConstants.CENTER);
         f.setVisible(true);
