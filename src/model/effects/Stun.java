@@ -28,17 +28,25 @@ public class Stun extends Effect {
     }
 
     public void remove(Champion c) {
-        ArrayList<Effect> toRemove = new ArrayList<>();
-        for (Effect e: c.getAppliedEffects()) {
-            if (e instanceof Stun && e.getDuration() == 0) {
-                toRemove.add(e);
-            }
-        }
-
-        for (Effect e: toRemove) {
-            c.getAppliedEffects().remove(e);
-        }
-        if (disabilities_free(c)) c.setCondition(Condition.ACTIVE);
+        boolean isStunned=false;
+		boolean isRooted=false;
+		for(Effect e: c.getAppliedEffects())
+		{
+			if(e instanceof Stun)
+			{
+				isStunned=true;
+				break;
+			}
+		
+			else if(e instanceof Root)
+				isRooted=true;
+		}
+		if(isStunned)
+			c.setCondition(Condition.INACTIVE);
+		else if(isRooted)
+			c.setCondition(Condition.ROOTED);
+		else
+		c.setCondition(Condition.ACTIVE);
 
     }
 }
