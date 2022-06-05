@@ -22,15 +22,14 @@ public class Root extends Effect {
     }
 
     public void remove(Champion c) {
-        ArrayList<Effect> toRemove = new ArrayList<>();
-        for (Effect e: c.getAppliedEffects()) {
-            if (e instanceof Root && e.getDuration() == 0) {
-                toRemove.add(e);
-            }
-        }
-
-        for (Effect e: toRemove) {
-            c.getAppliedEffects().remove(e);
-        }
+        boolean found= false;
+		for(Effect e:c.getAppliedEffects() )
+		{
+			if(e instanceof Root)
+				found=true;
+		}
+		
+		if(c.getCondition() != Condition.INACTIVE && !found)
+			c.setCondition(Condition.ACTIVE);
     }
 }
