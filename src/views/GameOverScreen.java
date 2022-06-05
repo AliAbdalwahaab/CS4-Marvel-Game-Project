@@ -13,6 +13,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.concurrent.TimeUnit;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.colorchooser.ColorChooserComponentFactory;
@@ -44,6 +52,29 @@ public class GameOverScreen extends JFrame implements ActionListener{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	File audioFile = new File("The Avengers Theme Win Screen.wav").getAbsoluteFile();
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Clip clip = null;
+        try {
+            clip = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+        try {
+            clip.open(audioInputStream);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clip.start();
     	
     	this.gameController = gameController;
         this.setLayout(new BorderLayout());
