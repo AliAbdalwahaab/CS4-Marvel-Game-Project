@@ -23,9 +23,9 @@ public class PriorityQueue {
    }
 
    public Comparable remove() {
-	  Comparable item = elements[nItems - 1];
-     elements[--nItems] = null;
-     return item;
+      Comparable item = elements[nItems - 1];
+      elements[--nItems] = null;
+      return item;
    }
 
    public boolean isEmpty() {
