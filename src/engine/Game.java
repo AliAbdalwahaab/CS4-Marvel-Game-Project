@@ -1230,16 +1230,16 @@ public class Game {
 
     public void endTurn() {
         turnOrder.remove();
-        if (turnOrder.isEmpty())
-            prepareChampionTurns();
-        while (!turnOrder.isEmpty() && hasEffect((Champion) turnOrder.peekMin(), "Stun")) {
-            Champion current = (Champion) turnOrder.peekMin();
-            updateTimers(current);
-            turnOrder.remove();
-        }
-        Champion current = (Champion) turnOrder.peekMin();
-        updateTimers(current);
-        current.setCurrentActionPoints(current.getMaxActionPointsPerTurn());
+	if (turnOrder.isEmpty())
+	prepareChampionTurns();
+	while (!turnOrder.isEmpty() && hasEffect((Champion) turnOrder.peekMin(), "Stun")) {
+		Champion current = (Champion) turnOrder.peekMin();
+		updateTimers(current);
+		turnOrder.remove();
+	}
+	Champion current = (Champion) turnOrder.peekMin();
+	updateTimers(current);
+	current.setCurrentActionPoints(current.getMaxActionPointsPerTurn());
     }
 
     private void updateTimers(Champion current) {
