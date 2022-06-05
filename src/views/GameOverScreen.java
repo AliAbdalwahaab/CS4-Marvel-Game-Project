@@ -90,8 +90,11 @@ public class GameOverScreen extends JFrame implements ActionListener{
         Info.setFont(new Font("Chiller",Font.BOLD,200));
         Info.setForeground(Color.WHITE);
         Exit = new JButton("Exit Marvel: Ultimate War");
+        Exit.setFont(new Font("Chiller", Font.ITALIC,40));
         Exit.addActionListener(this);
         Exit.setPreferredSize(new Dimension (100,50));
+        Exit.setForeground(Color.WHITE);
+        Exit.setBackground(Color.DARK_GRAY);
 
 
         this.add(Exit, BorderLayout.SOUTH);

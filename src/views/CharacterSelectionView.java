@@ -5,8 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import controller.GameController;
@@ -56,53 +59,65 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		this.setTitle("Game");
 		this.setBounds(0,0,1920,1080);
 		this.setLayout(new BorderLayout());
+		this.setForeground(Color.BLACK);
 
 		text1 = new JLabel();
+		text1.setHorizontalAlignment(JLabel.CENTER);
 		text1.setText("Player 1 Name");
-		text1.setFont(new Font("Chiller",BOLD,35));
+		text1.setFont(new Font("Chiller",BOLD,50));
+		text1.setForeground(Color.WHITE);
 		text1.setBounds(590,170,200,200);
 
 		textField1 = new JTextField();
 		textField1.setBounds(530,300,300,50);
 
 		text2 = new JLabel();
+		text2.setHorizontalAlignment(JLabel.CENTER);
 		text2.setText("Player 2 Name");
-		text2.setFont(new Font("Chiller",BOLD,35));
+		text2.setForeground(Color.WHITE);
+		text2.setFont(new Font("Chiller",BOLD,50));
 		text2.setBounds(590,280,200,200);
 
 		textField2 = new JTextField();
 		textField2.setBounds(530,300+100,300,50);
 
-		submit = new JButton("Start");
-		submit.setFont(new Font("Chiller",BOLD,80));
+		submit = new JButton("START NEW GAME");
+		submit.setFont(new Font("Chiller",Font.ITALIC,80));
+		submit.setBackground(Color.DARK_GRAY);
+		submit.setForeground(Color.WHITE);
 		submit.setBounds(530+90,300+100+100,100,5);
 		submit.addActionListener(this);
 
 
 		JPanel empty = new JPanel();
 		empty.setVisible(true);
+		empty.setBackground(Color.BLACK);
 		empty.setPreferredSize(new Dimension(200,this.getHeight()));
 		this.add(empty,BorderLayout.EAST);
 
 		JPanel empty2 = new JPanel();
 		empty2.setVisible(true);
+		empty2.setBackground(Color.BLACK);
 		empty2.setPreferredSize(new Dimension(200,this.getHeight()));
 		this.add(empty2,BorderLayout.WEST);
 
 		JPanel empty3 = new JPanel();
 		empty3.setVisible(true);
+		empty3.setBackground(Color.BLACK);
 		empty3.setPreferredSize(new Dimension(this.getWidth(),110));
 		this.add(empty3,BorderLayout.NORTH);
 
 		JLabel empty4 = new JLabel();
 		empty4.setVisible(true);
+		empty4.setBackground(Color.BLACK);
 		empty4.setPreferredSize(new Dimension(this.getWidth(),110));
 
 
 		JPanel centeralign = new JPanel();
 		centeralign.setLayout(new GridLayout(8,0));
+		centeralign.setBackground(Color.BLACK);
 		centeralign.setPreferredSize(new Dimension(200,300));
-		this.add(centeralign, BorderLayout.CENTER);
+		this.add(centeralign);
 		centeralign.add(text1);
 		centeralign.add(textField1);
 		centeralign.add(text2);
