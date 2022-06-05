@@ -91,9 +91,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         this.controller = controller;
         setTitle("GAME STARTED!");
         addMouseListener(this);
-        setVisible(true);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setVisible(true);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(0, 0, 1920, 1080);
 
         //Board (CENTER)
@@ -259,6 +259,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
         for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
             JLabel championAndStat = new JLabel();
+            championAndStat.setHorizontalAlignment(JLabel.CENTER);
             championAndStat.setOpaque(true);
             Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
 
@@ -294,10 +295,13 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         JPanel wholeMove = new JPanel(new GridLayout(2,1));
         DpadMode = new JPanel(new GridLayout(1,3));
         labelmoveLED = new JLabel("MOVE MODE");
+        labelmoveLED.setHorizontalAlignment(JLabel.CENTER);
         labelmoveLED.setOpaque(true);
         labelattackLED = new JLabel("ATTACK MODE");
+        labelattackLED.setHorizontalAlignment(JLabel.CENTER);
         labelattackLED.setOpaque(true);
         labelcastAbilityLED = new JLabel("CAST ABILITY MODE");
+        labelcastAbilityLED.setHorizontalAlignment(JLabel.CENTER);
         labelcastAbilityLED.setOpaque(true);
 
         labelmoveLED.setBackground(Color.decode("#366938"));
@@ -479,6 +483,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             //System.out.println("===================================================================");
             for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
                 JLabel championAndStat = new JLabel();
+                championAndStat.setHorizontalAlignment(JLabel.CENTER);
                 championAndStat.setOpaque(true);
                 if (controller.getGame().getTurnOrder().getQueue()[i] != null) {
                     Champion c = (Champion) controller.getGame().getTurnOrder().getQueue()[i];
