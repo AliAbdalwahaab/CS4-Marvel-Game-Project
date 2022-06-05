@@ -48,7 +48,11 @@ public class GameOverScreen extends JFrame implements ActionListener{
 
     public GameOverScreen(GameController gameController) {
     	try {
-			this.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("Marvel Ultimate War.jpg")))));
+    	    ImageIcon img = new ImageIcon(ImageIO.read(new File("Marvel Background.png")));
+            int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+            int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+            img.setImage(img.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+			this.setContentPane(new JLabel(img));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -84,13 +88,16 @@ public class GameOverScreen extends JFrame implements ActionListener{
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
-        Info = new JLabel("" + gameController.getWinner() + " is the winner!");
+        JLabel ll = new JLabel("" + gameController.getWinner() + " is the winner!");
+        //ll.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        Info = ll;
+
         Info.setOpaque(false);
         Info.setHorizontalAlignment(JLabel.CENTER);
-        Info.setFont(new Font("Chiller",Font.BOLD,200));
-        Info.setForeground(Color.WHITE);
+        Info.setFont(new Font("Arial",Font.BOLD,70));
+        Info.setForeground(Color.BLACK);
         Exit = new JButton("Exit Marvel: Ultimate War");
-        Exit.setFont(new Font("Chiller", Font.ITALIC,40));
+        Exit.setFont(new Font("Arial", Font.ITALIC,40));
         Exit.addActionListener(this);
         Exit.setPreferredSize(new Dimension (100,50));
         Exit.setForeground(Color.WHITE);
@@ -109,5 +116,11 @@ public class GameOverScreen extends JFrame implements ActionListener{
         if(e.getSource() == Exit){
             this.dispose();
         }
+    }
+
+    public static void main(String[] args) {
+        GameController gm = new GameController(new Game(new Player("1"), new Player("2")));
+        gm.setWinner(new Player("KARINGE"));
+        new GameOverScreen(gm);
     }
 }
