@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class StartScreenGUI extends JComponent {
+
+    private Clip clip;
     JPanel contentPane;
     JLabel imageLabel = new JLabel();
     JLabel headerLabel = new JLabel();
@@ -36,7 +38,7 @@ public class StartScreenGUI extends JComponent {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Clip clip = null;
+        clip = null;
         try {
             clip = AudioSystem.getClip();
         } catch (LineUnavailableException e) {
@@ -66,10 +68,13 @@ public class StartScreenGUI extends JComponent {
         //f.add(label, SwingConstants.CENTER);
         f.setVisible(true);
         TimeUnit.SECONDS.sleep(21);
-
         f.dispose();
-        new CharacterSelectionView();
+        new CharacterSelectionView(this);
 
+    }
+
+    public Clip getClip() {
+        return this.clip;
     }
 }
 

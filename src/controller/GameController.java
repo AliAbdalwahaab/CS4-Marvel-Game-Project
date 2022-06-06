@@ -1,6 +1,7 @@
 package controller;
 
-import engine.*;
+import engine.Game;
+import engine.Player;
 import exceptions.*;
 import model.abilities.Ability;
 import model.abilities.AreaOfEffect;
@@ -8,10 +9,6 @@ import model.world.Champion;
 import model.world.Direction;
 
 import javax.swing.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-
-import static model.abilities.AreaOfEffect.SINGLETARGET;
 
 public class GameController {
     private Game game;

@@ -6,12 +6,15 @@ import model.effects.Effect;
 import model.world.Champion;
 import model.world.Cover;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
 import static model.abilities.AreaOfEffect.*;
 
@@ -85,6 +88,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     private Object[][] Board;
     private Object[][] buttonBoard;
+    private Clip clip;
     private boolean moveLED = true;
 
     public GameVIEW(GameController controller) {
@@ -95,6 +99,30 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(0, 0, 1920, 1080);
+
+        File audioFile = new File("Game music.wav").getAbsoluteFile();
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clip = null;
+        try {
+            clip = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+        try {
+            clip.open(audioInputStream);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
 
         //Board (CENTER)
         gameBoard = new JPanel();
@@ -1154,7 +1182,8 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     public void checkForGameOver(boolean b){
         controller.setGameOver();
-        if (controller.getGameOver() == true) {
+        if (controller.getGameOver()) {
+            clip.stop();
             JOptionPane.showMessageDialog(null,"Game Over! " + controller.getWinner() + " won!");
             this.dispose();
             new GameOverScreen(controller);

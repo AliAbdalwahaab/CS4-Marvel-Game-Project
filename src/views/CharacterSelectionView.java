@@ -24,7 +24,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 	//TODO: change chosen champion fonts
 
 	private Game currentGame;
-
+	private StartScreenGUI start;
 	private JTextField textField1;
 	private JTextField textField2;
 	private JButton submit;
@@ -53,7 +53,8 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 	private String firstPlayerName = "";
 	private String secondPlayerName = "";
 	
-	public CharacterSelectionView() {
+	public CharacterSelectionView(StartScreenGUI start) {
+		this.start = start;
 		addMouseListener(this);
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		this.setTitle("Game");
@@ -129,9 +130,9 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	public static void main(String[] args) {
-		new CharacterSelectionView();
-	}
+	//public static void main(String[] args) {
+		//new CharacterSelectionView(start);
+	//}
 	
 	public Game getcurrentGame() {
 		return this.currentGame;
@@ -224,7 +225,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 
 					currentGame.placeChampions();
 					currentGame.prepareChampionTurns();
-
+					start.getClip().stop();
 					new GameVIEW(new GameController(currentGame));
 				}
 			}
