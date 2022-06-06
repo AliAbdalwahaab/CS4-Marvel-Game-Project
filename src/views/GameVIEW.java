@@ -349,19 +349,19 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         JLabel lowerLeftEmpty = new JLabel("");
         JLabel lowerRightEmpty = new JLabel("");
         upDirection = new JButton("UP");
-        upDirection.setBackground(Color.RED);
+        upDirection.setBackground(controller.getGame().getFirstPlayer().getTeam().contains(controller.getCurrentChampion())?Color.decode("#4d8de8"):Color.RED);
         upDirection.setForeground(Color.white);
         leftDirection = new JButton("LEFT");
-        leftDirection.setBackground(Color.RED);
+        leftDirection.setBackground(controller.getGame().getFirstPlayer().getTeam().contains(controller.getCurrentChampion())?Color.decode("#4d8de8"):Color.RED);
         leftDirection.setForeground(Color.white);
         rightDirection = new JButton("RIGHT");
-        rightDirection.setBackground(Color.RED);
+        rightDirection.setBackground(controller.getGame().getFirstPlayer().getTeam().contains(controller.getCurrentChampion())?Color.decode("#4d8de8"):Color.RED);
         rightDirection.setForeground(Color.white);
         downDirection = new JButton("DOWN");
-        downDirection.setBackground(Color.RED);
+        downDirection.setBackground(controller.getGame().getFirstPlayer().getTeam().contains(controller.getCurrentChampion())?Color.decode("#4d8de8"):Color.RED);
         downDirection.setForeground(Color.white);
         attack = new JButton("ATTACK");
-        attack.setBackground(Color.RED);
+        attack.setBackground(controller.getGame().getFirstPlayer().getTeam().contains(controller.getCurrentChampion())?Color.decode("#4d8de8"):Color.RED);
         attack.setForeground(Color.white);
         upDirection.addActionListener(this);
         leftDirection.addActionListener(this);
@@ -495,6 +495,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             updateSouth();
             updateCenter();
+            updateButtonColors();
             updateLeftPanel();
             updateNorth();
             checkForGameOver(controller.getGameOver());
@@ -550,6 +551,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
 
             updateLeftPanel();
+            updateButtonColors();
             updateCenter();
             updateSouth();
 
@@ -581,6 +583,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             updateSouth();
             updateCenter();
+            updateButtonColors();
             updateLeftPanel();
             checkForGameOver(controller.getGameOver());
         } else if (e.getSource() == singleTargetButton) {
@@ -607,6 +610,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
             updateSouth();
             updateCenter();
+            updateButtonColors();
             updateLeftPanel();
             checkForGameOver(controller.getGameOver());
 
@@ -637,6 +641,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
 
             updateSouth();
+            updateButtonColors();
             updateCenter();
             updateLeftPanel();
             checkForGameOver(controller.getGameOver());
@@ -711,6 +716,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             setLEDActive();
 
             updateSouth();
+            updateButtonColors();
             updateCenter();
             updateLeftPanel();
             checkForGameOver(controller.getGameOver());
@@ -731,6 +737,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             setLEDActive();
 
             updateCenter();
+            updateButtonColors();
             updateSouth();
             updateLeftPanel();
             checkForGameOver(controller.getGameOver());
@@ -829,6 +836,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             }
 
             updateCenter();
+            updateButtonColors();
             updateSouth();
             updateLeftPanel();
             checkForGameOver(controller.getGameOver());
@@ -1188,5 +1196,13 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
             this.dispose();
             new GameOverScreen(controller);
         }
+    }
+
+    public void updateButtonColors() {
+        upDirection.setBackground(controller.getGame().getFirstPlayer().getTeam().contains(controller.getCurrentChampion())?Color.decode("#4d8de8"):Color.RED);
+        downDirection.setBackground(controller.getGame().getFirstPlayer().getTeam().contains(controller.getCurrentChampion())?Color.decode("#4d8de8"):Color.RED);
+        leftDirection.setBackground(controller.getGame().getFirstPlayer().getTeam().contains(controller.getCurrentChampion())?Color.decode("#4d8de8"):Color.RED);
+        rightDirection.setBackground(controller.getGame().getFirstPlayer().getTeam().contains(controller.getCurrentChampion())?Color.decode("#4d8de8"):Color.RED);
+        attack.setBackground(controller.getGame().getFirstPlayer().getTeam().contains(controller.getCurrentChampion())?Color.decode("#4d8de8"):Color.RED);
     }
 }
