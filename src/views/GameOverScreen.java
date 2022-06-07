@@ -2,42 +2,16 @@ package views;
 
 import controller.GameController;
 import engine.Game;
+import engine.Player;
 
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
+import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.concurrent.TimeUnit;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.colorchooser.ColorChooserComponentFactory;
-import javax.swing.plaf.metal.MetalIconFactory;
-import javax.swing.text.Document;
-
-import engine.Player;
-import model.abilities.Ability;
-import model.abilities.DamagingAbility;
-import model.abilities.HealingAbility;
-import model.effects.Effect;
-import model.abilities.*;
-import model.world.Champion;
-import model.world.Condition;
-import model.world.Cover;
-
-import static model.abilities.AreaOfEffect.*;
 
 public class GameOverScreen extends JFrame implements ActionListener{
 
@@ -47,6 +21,7 @@ public class GameOverScreen extends JFrame implements ActionListener{
     private ActionListener Exitlistener;
 
     public GameOverScreen(GameController gameController) {
+        this.setTitle("Marvel: Ultimate War");
     	try {
     	    ImageIcon img = new ImageIcon(ImageIO.read(new File("Marvel Background.png")));
             int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();

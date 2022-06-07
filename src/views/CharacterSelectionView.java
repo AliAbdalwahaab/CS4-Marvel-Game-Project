@@ -3,7 +3,7 @@ package views;
 import controller.GameController;
 import engine.Game;
 import engine.Player;
-import model.abilities.Ability;
+import model.abilities.*;
 import model.world.AntiHero;
 import model.world.Champion;
 import model.world.Hero;
@@ -56,7 +56,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		this.start = start;
 		addMouseListener(this);
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		this.setTitle("Game");
+		this.setTitle("Marvel: Ultimate War");
 		this.setBounds(0,0,1920,1080);
 		this.setLayout(new BorderLayout());
 		this.setForeground(Color.BLACK);
@@ -64,25 +64,29 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		text1 = new JLabel();
 		text1.setHorizontalAlignment(JLabel.CENTER);
 		text1.setText("Player 1 Name");
-		text1.setFont(new Font("Chiller",BOLD,50));
+		text1.setFont(new Font("Papyrus",BOLD,50));
 		text1.setForeground(Color.WHITE);
 		text1.setBounds(590,170,200,200);
 
 		textField1 = new JTextField();
 		textField1.setBounds(530,300,300,50);
+		textField1.setFont(new Font("Arial",Font.PLAIN,25));
+		textField1.setHorizontalAlignment(JLabel.CENTER);
 
 		text2 = new JLabel();
 		text2.setHorizontalAlignment(JLabel.CENTER);
 		text2.setText("Player 2 Name");
 		text2.setForeground(Color.WHITE);
-		text2.setFont(new Font("Chiller",BOLD,50));
+		text2.setFont(new Font("Papyrus",BOLD,50));
 		text2.setBounds(590,280,200,200);
 
 		textField2 = new JTextField();
 		textField2.setBounds(530,300+100,300,50);
+		textField2.setFont(new Font("Arial",Font.PLAIN,25));
+		textField2.setHorizontalAlignment(JLabel.CENTER);
 
 		submit = new JButton("START NEW GAME");
-		submit.setFont(new Font("Chiller",Font.ITALIC,80));
+		submit.setFont(new Font("Papyrus",Font.BOLD | Font.ITALIC,45));
 		submit.setBackground(Color.DARK_GRAY);
 		submit.setForeground(Color.WHITE);
 		submit.setBounds(530+90,300+100+100,100,5);
@@ -130,7 +134,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 	}
 	
 	//public static void main(String[] args) {
-		//new CharacterSelectionView(start);
+		//new CharacterSelectionView(new StartScreenGUI());
 	//}
 	
 	public Game getcurrentGame() {
@@ -287,10 +291,12 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		topPanel.setLayout(new GridLayout(0,2));
 		topPanel.setPreferredSize(new Dimension(200,200));
 		topPanel.setVisible(true);
+		topPanel.setBackground(Color.GRAY);
 
 		JTextArea player1Name = new JTextArea();
 		player1Name.setText("  "+currentGame.getFirstPlayer().getName());
-		player1Name.setFont(new Font("Chiller",BOLD,40));
+		player1Name.setOpaque(false);
+		player1Name.setFont(new Font("Papyrus",BOLD,30));
 		player1Name.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		//player1Name.setForeground(Color.white);
 
@@ -299,6 +305,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 
 		player1Leader = new JTextArea();
 		player1Leader.setText(" Not yet selected");
+		player1Leader.setOpaque(false);
 		player1Leader.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		player1Leader.setVisible(true);
 		player1Leader.setEditable(false);
@@ -306,6 +313,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 
 		player1Champ1 = new JTextArea();
 		player1Champ1.setText(" Not yet selected");
+		player1Champ1.setOpaque(false);
 		player1Champ1.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		player1Champ1.setVisible(true);
 		player1Champ1.setEditable(false);
@@ -313,6 +321,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 
 		player1Champ2 = new JTextArea();
 		player1Champ2.setText(" Not yet selected");
+		player1Champ2.setOpaque(false);
 		player1Champ2.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		player1Champ2.setVisible(true);
 		player1Champ2.setEditable(false);
@@ -337,12 +346,13 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player2Panel = new JPanel();
 		player2Panel.setLayout(new GridLayout(4,0));
 		player2Panel.setVisible(true);
-		player2Panel.setBackground(Color.BLACK);
+		//player2Panel.setBackground(Color.BLACK);
 
 		player2Panel.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),topPanel.getHeight()));
 
 		JTextArea player2Name = new JTextArea();
-		player2Name.setFont(new Font("Chiller",BOLD,40));
+		player2Name.setFont(new Font("Papyrus",BOLD,30));
+		player2Name.setOpaque(false);
 		player2Name.setText(currentGame.getSecondPlayer().getName());
 		player2Name.setEditable(false);
 		player2Name.setVisible(true);
@@ -352,6 +362,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 
 		player2Leader = new JTextArea();
 		player2Leader.setText("Not yet selected");
+		player2Leader.setOpaque(false);
 		player2Leader.setEditable(false);
 		player2Leader.setVisible(true);
 		player2Leader.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
@@ -361,12 +372,14 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player2Champ1 = new JTextArea();
 		player2Champ1.setText("Not yet selected");
 		player2Champ1.setEditable(false);
+		player2Champ1.setOpaque(false);
 		player2Champ1.setVisible(true);
 		player2Champ1.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		//player2Champ1.setForeground(Color.white);
 
 		player2Champ2 = new JTextArea();
 		player2Champ2.setText("Not yet selected");
+		player2Champ2.setOpaque(false);
 		player2Champ2.setEditable(false);
 		player2Champ2.setVisible(true);
 		player2Champ2.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
@@ -412,7 +425,23 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 			for (Champion c: currentGame.getAvailableChampions()) {
 				String abs = "";
 				for (Ability a: c.getAbilities()) {
-					abs += "- "+a.getName() + "\n";
+					String toAdd = "";
+					if (a instanceof DamagingAbility) {
+						toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount()+" HP";
+					} else if (a instanceof HealingAbility) {
+						toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount()+" HP";
+					} else if (a instanceof CrowdControlAbility) {
+						toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
+								+"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
+								+"Effect duration: "+((CrowdControlAbility) a).getEffect().getDuration()+" turn(s)";
+					}
+
+					abs+="- "+a.getName()+"\n"
+							+"Mana Cost: "+a.getManaCost()+"\n"
+							+"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
+							+"Cast Range: "+a.getCastRange()+"\n"
+							+"Area of Effect: "+a.getCastArea()+"\n"
+							+toAdd+"\n"+"\n";
 				}
 				if (((JButton) mouseEvent.getSource()).getText().equals(c.getName())) {
 					String toAdd = "";
@@ -434,7 +463,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 							+"ActionPoints: "+c.getMaxActionPointsPerTurn()+" "+"\n"
 							+"Speed: "+c.getSpeed()+" "+"\n"
 							+"Attack Damage: "+c.getAttackDamage()+" "+"\n"
-							+"Attack Range: "+c.getAttackRange()+" "+"\n"
+							+"Attack Range: "+c.getAttackRange()+" "+"\n"+"\n"
 							+"Abilities: " + "\n" + abs+"\n"
 							+"Leader Ability: "+"\n"+toAdd);
 

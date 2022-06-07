@@ -93,7 +93,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     public GameVIEW(GameController controller) {
         this.controller = controller;
-        setTitle("GAME STARTED!");
+        this.setTitle("Marvel: Ultimate War");
         addMouseListener(this);
         this.setVisible(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
