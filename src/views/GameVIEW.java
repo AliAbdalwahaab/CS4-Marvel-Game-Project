@@ -869,9 +869,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                     if (singleTargetBox.getSelectedItem() != null && ((String) singleTargetBox.getSelectedItem()).contains(a.getName())) {
                         String toAdd = "";
                         if (a instanceof DamagingAbility) {
-                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount();
+                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount()+" HP";
                         } else if (a instanceof HealingAbility) {
-                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount();
+                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount()+" HP";
                         } else if (a instanceof CrowdControlAbility) {
                             toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
                                     +"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
@@ -897,9 +897,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                     if (selfTargetBox.getSelectedItem() != null && ((String) selfTargetBox.getSelectedItem()).contains(a.getName())) {
                         String toAdd = "";
                         if (a instanceof DamagingAbility) {
-                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount();
+                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount()+" HP";
                         } else if (a instanceof HealingAbility) {
-                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount();
+                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount()+" HP";
                         } else if (a instanceof CrowdControlAbility) {
                             toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
                                     +"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
@@ -925,9 +925,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                     if (teamTargetBox.getSelectedItem() != null && ((String) teamTargetBox.getSelectedItem()).contains(a.getName())) {
                         String toAdd = "";
                         if (a instanceof DamagingAbility) {
-                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount();
+                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount()+" HP";
                         } else if (a instanceof HealingAbility) {
-                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount();
+                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount()+" HP";
                         } else if (a instanceof CrowdControlAbility) {
                             toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
                                     +"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
@@ -953,9 +953,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                     if (directionalTargetBox.getSelectedItem() != null && ((String) directionalTargetBox.getSelectedItem()).contains(a.getName())) {
                         String toAdd = "";
                         if (a instanceof DamagingAbility) {
-                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount();
+                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount()+" HP";
                         } else if (a instanceof HealingAbility) {
-                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount();
+                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount()+" HP";
                         } else if (a instanceof CrowdControlAbility) {
                             toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
                                     +"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
@@ -981,9 +981,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
                     if (surroundTargetBox.getSelectedItem() != null && ((String) surroundTargetBox.getSelectedItem()).contains(a.getName())) {
                         String toAdd = "";
                         if (a instanceof DamagingAbility) {
-                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount();
+                            toAdd += "Damage dealt: "+((DamagingAbility) a).getDamageAmount()+" HP";
                         } else if (a instanceof HealingAbility) {
-                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount();
+                            toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount()+" HP";
                         } else if (a instanceof CrowdControlAbility) {
                             toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
                                     +"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"

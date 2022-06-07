@@ -1,22 +1,21 @@
 package views;
 
+import controller.GameController;
+import engine.Game;
+import engine.Player;
+import model.abilities.Ability;
+import model.world.AntiHero;
+import model.world.Champion;
+import model.world.Hero;
+import model.world.Villain;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import controller.GameController;
-import engine.Game;
-import engine.Player;
-import model.abilities.Ability;
-import model.world.Champion;
 
 import static java.awt.Font.BOLD;
 
@@ -413,9 +412,21 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 			for (Champion c: currentGame.getAvailableChampions()) {
 				String abs = "";
 				for (Ability a: c.getAbilities()) {
-					abs += a.getName() + "\n";
+					abs += "- "+a.getName() + "\n";
 				}
 				if (((JButton) mouseEvent.getSource()).getText().equals(c.getName())) {
+					String toAdd = "";
+					if (c instanceof Hero) {
+						toAdd += "Removes all negative effects from the player’s entire"+"\n"+ "team and adds an " +
+								"Embrace effect to them"+"\n"+ "which lasts for 2 turns. " +"\n"+
+								"(Can only be used once in the entire game)";
+					} else if (c instanceof AntiHero) {
+						toAdd += "All champions on the board except for"+"\n"+"the leaders of each team " +
+								"will be stunned for 2 turns."+"\n"+"(Can only be used once in the entire game)";
+					} else if (c instanceof Villain) {
+						toAdd += "Immediately kills all enemy champions with less than"+"\n"+"30% health points. " +"\n"+
+								"(Can only be used once in the entire game)";
+					}
 					championInfo.setText("Name: "+c.getName()+" "+"\n"
 							+"Class: "+c.getHeroClass()+" "+"\n"
 							+"HP: "+c.getMaxHP()+" "+"\n"
@@ -424,7 +435,8 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 							+"Speed: "+c.getSpeed()+" "+"\n"
 							+"Attack Damage: "+c.getAttackDamage()+" "+"\n"
 							+"Attack Range: "+c.getAttackRange()+" "+"\n"
-							+"Abilities: " + "\n" + abs);
+							+"Abilities: " + "\n" + abs+"\n"
+							+"Leader Ability: "+"\n"+toAdd);
 
 					this.revalidate();
 					this.repaint();
