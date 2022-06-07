@@ -95,7 +95,9 @@ public class GameOverScreen extends JFrame implements ActionListener{
         Info.setOpaque(false);
         Info.setHorizontalAlignment(JLabel.CENTER);
         Info.setFont(new Font("Arial",Font.BOLD,70));
-        Info.setForeground(Color.BLACK);
+        Info.setForeground(Color.RED);
+        //Info.setBackground(Color.DARK_GRAY);
+
         Exit = new JButton("Exit Marvel: Ultimate War");
         Exit.setFont(new Font("Arial", Font.ITALIC,40));
         Exit.addActionListener(this);
