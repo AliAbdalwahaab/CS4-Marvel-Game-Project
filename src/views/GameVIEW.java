@@ -3,8 +3,11 @@ package views;
 import controller.GameController;
 import model.abilities.*;
 import model.effects.Effect;
+import model.world.AntiHero;
 import model.world.Champion;
 import model.world.Cover;
+import model.world.Hero;
+import model.world.Villain;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -90,6 +93,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     private Object[][] buttonBoard;
     private Clip clip;
     private boolean moveLED = true;
+    private Color clr;
 
     public GameVIEW(GameController controller) {
         this.controller = controller;
@@ -171,37 +175,63 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         abilitiesInfoText.setPreferredSize(new Dimension(150,250));
 
         abilitiesInfoText.setEditable(false);
+        clr = Color.decode(controller.getPlayer1().getTeam().contains(controller.getCurrentChampion()) ? controller.getPlayer1().getColor() : controller.getPlayer2().getColor());
         JLabel leaderAbility = new JLabel("Leader Ability");
+        leaderAbility.setForeground(Color.white);
         useLeaderAbility = new JButton("Use Leader Ability");
+        useLeaderAbility.setBackground(clr);
+        useLeaderAbility.setForeground(Color.white);
         useLeaderAbility.addActionListener(this);
+        useLeaderAbility.addMouseListener(this);
         useLeaderAbility.addMouseListener(this);
         boolean bool = (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() || controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion())?
         		(controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?
         				!(controller.getGame().isFirstLeaderAbilityUsed()):(controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion()?!(controller.getGame().isSecondLeaderAbilityUsed()):false)):false;
         useLeaderAbility.setEnabled(bool);
         JLabel singleTarget = new JLabel("Single Target");
+        singleTarget.setForeground(Color.white);
          singleTargetBox = new JComboBox();
+         singleTargetBox.setBackground(Color.LIGHT_GRAY);
          singleTargetButton = new JButton("Cast Single Target Ability");
+         singleTargetButton.setBackground(clr);
+         singleTargetButton.setForeground(Color.white);
          singleTargetButton.addActionListener(this);
          singleTargetButton.addMouseListener(this);
         JLabel selfTarget = new JLabel("Self Target");
+        selfTarget.setForeground(Color.white);
          selfTargetBox = new JComboBox();
+         selfTargetBox.setBackground(Color.LIGHT_GRAY);
         selfTargetButton = new JButton("Cast Self Target Ability");
+        selfTargetButton.setBackground(clr);
+        selfTargetButton.setForeground(Color.white);
         selfTargetButton.addActionListener(this);
         selfTargetButton.addMouseListener(this);
         JLabel teamTarget = new JLabel("Team Target");
+        teamTarget.setForeground(Color.white);
          teamTargetBox = new JComboBox();
+         teamTargetBox.setBackground(Color.LIGHT_GRAY);
         teamTargetButton = new JButton("Cast Team Target Ability");
+        teamTargetButton.setBackground(clr);
+        teamTargetButton.setForeground(Color.white);
         teamTargetButton.addActionListener(this);
         teamTargetButton.addMouseListener(this);
         JLabel directionalTarget = new JLabel("Directional Target");
+        directionalTarget.setForeground(Color.white);
          directionalTargetBox = new JComboBox();
+         directionalTargetBox.setBackground(Color.LIGHT_GRAY);
         directionalTargetButton = new JButton("Cast Directional Ability");
+        directionalTargetButton.setBackground(clr);
+        directionalTargetButton.setForeground(Color.white);
         directionalTargetButton.addActionListener(this);
         directionalTargetButton.addMouseListener(this);
         JLabel surroundTarget = new JLabel("Surround Target");
+        surroundTarget.setForeground(Color.white);
          surroundTargetBox = new JComboBox();
+         surroundTargetBox.setBackground(Color.LIGHT_GRAY);
+         
         surroundTargetButton = new JButton("Cast Surround Ability");
+        surroundTargetButton.setBackground(clr);
+        surroundTargetButton.setForeground(Color.white);
         surroundTargetButton.addActionListener(this);
         surroundTargetButton.addMouseListener(this);
 
@@ -267,6 +297,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         selectAbilities.add(directionalTarget);
         selectAbilities.add(directionalTargetBox);
         selectAbilities.add(directionalTargetButton);
+        selectAbilities.setBackground(Color.DARK_GRAY);
 
         abilitiesPanel.add(selectAbilities);
         abiltiesInfoPanel.add(abilitiesInfoText);
@@ -810,11 +841,11 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                 for (Ability a : c.getAbilities()) {
                     if (a instanceof DamagingAbility) {
-                        HoverChampAbilities.addItem(a.getName() + " - Damage: " + ((DamagingAbility) a).getDamageAmount() + " HP");
+                        HoverChampAbilities.addItem(a.getName() + " - Damage: " + ((DamagingAbility) a).getDamageAmount() + " HP" + " " + a.getCastArea());
                     } else if (a instanceof HealingAbility) {
-                        HoverChampAbilities.addItem(a.getName() + " - Heal: " + ((HealingAbility) a).getHealAmount() + " HP");
+                        HoverChampAbilities.addItem(a.getName() + " - Heal: " + ((HealingAbility) a).getHealAmount() + " HP" + " " + a.getCastArea());
                     } else if (a instanceof CrowdControlAbility) {
-                        HoverChampAbilities.addItem(a.getName() + " - Effect: " + ((CrowdControlAbility) a).getEffect().getName() + " - Duration: " + ((CrowdControlAbility) a).getEffect().getDuration());
+                        HoverChampAbilities.addItem(a.getName() + " - Effect: " + ((CrowdControlAbility) a).getEffect().getName() + " - Duration: " + ((CrowdControlAbility) a).getEffect().getDuration() + " " + a.getCastArea());
                     }
                 }
 
@@ -880,8 +911,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                         +"Mana Cost: "+a.getManaCost()+"\n"
+                        +"Required Action Points: " + a.getRequiredActionPoints() +"\n"
                         +"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
-                                +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
+                        +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
                         +"Cast Range: "+a.getCastRange()+"\n"
                         +"Area of Effect: "+a.getCastArea()+"\n"
                         +toAdd);
@@ -908,6 +940,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
+                                +"Required Action Points: " + a.getRequiredActionPoints() +"\n"
                                 +"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
                                 +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
@@ -936,6 +969,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
+                                +"Required Action Points: " + a.getRequiredActionPoints() +"\n"
                                 +"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
                                 +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
@@ -964,6 +998,7 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
+                                +"Required Action Points: " + a.getRequiredActionPoints() +"\n"
                                 +"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
                                 +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
@@ -992,8 +1027,10 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                         abilitiesInfoText.setText("Name: "+a.getName()+"\n"
                                 +"Mana Cost: "+a.getManaCost()+"\n"
+                                +"Required Action Points: " + a.getRequiredActionPoints() +"\n"
                                 +"Base Cooldown: "+a.getBaseCooldown()+" turn(s)"+"\n"
                                 +"Current Cooldown: "+a.getCurrentCooldown()+" turn(s)"+"\n"
+                                +"Required Action Points: "+a.getRequiredActionPoints()+"\n"
                                 +"Cast Range: "+a.getCastRange()+"\n"
                                 +"Area of Effect: "+a.getCastArea()+"\n"
                                 +toAdd);
@@ -1002,7 +1039,22 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
                 }
             }
+        } else if (mouseEvent.getSource() == useLeaderAbility && useLeaderAbility.isEnabled()) {
+        	String toAdd = "";
+			if (controller.getCurrentChampion() instanceof Hero) {
+				toAdd += "Removes all negative effects from the players entire team and adds an Embrace effect to them which lasts for 2 turns. " +"\n"+
+						"(Can only be used once in the entire game)";
+			} else if (controller.getCurrentChampion() instanceof AntiHero) {
+				toAdd += "All champions on the board except for the leaders of each team will be stunned for 2 turns."+"\n"+"(Can only be used once in the entire game)";
+			} else if (controller.getCurrentChampion() instanceof Villain) {
+				toAdd += "Immediately kills all enemy champions with less than 30% health points. " +"\n"+
+						"(Can only be used once in the entire game)";
+			}
+			abilitiesInfoText.setText(toAdd);
+			abilitiesInfoText.setLineWrap(true);
         }
+        abilitiesInfoText.setBackground(Color.DARK_GRAY);
+        abilitiesInfoText.setForeground(Color.white);
 
 
     }
@@ -1013,21 +1065,45 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     }
 
     public void updateLeftPanel() {
+    	clr = Color.decode(controller.getPlayer1().getTeam().contains(controller.getCurrentChampion()) ? controller.getPlayer1().getColor() : controller.getPlayer2().getColor());
+       
+    	useLeaderAbility.setBackground(clr);
+    	
+         singleTargetButton.setBackground(clr);
+         singleTargetButton.setForeground(Color.white);
+         
+       
+        selfTargetButton.setBackground(clr);
+        
+        
+        teamTargetButton.setBackground(clr);
+        
+        
+         
+        directionalTargetButton.setBackground(clr);
+        
+        
+        surroundTargetButton.setBackground(clr);
+        
         boolean bool = (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion() || controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion())?
                 (controller.getGame().getFirstPlayer().getLeader() == controller.getCurrentChampion()?
                         !(controller.getGame().isFirstLeaderAbilityUsed()):(controller.getGame().getSecondPlayer().getLeader() == controller.getCurrentChampion()?!(controller.getGame().isSecondLeaderAbilityUsed()):false)):false;
         useLeaderAbility.setEnabled(bool);
 
         singleTargetBox.removeAllItems();
+        singleTargetBox.setForeground(Color.white);
 
         selfTargetBox.removeAllItems();
-
+        selfTargetBox.setForeground(Color.white);
+        
         teamTargetBox.removeAllItems();
-
+        teamTargetBox.setForeground(Color.white);
+        
         directionalTargetBox.removeAllItems();
-
+        directionalTargetBox.setForeground(Color.white);
+        
         surroundTargetBox.removeAllItems();
-
+        surroundTargetBox.setForeground(Color.white);
 
         for (Ability a : controller.getCurrentChampion().getAbilities()) {
 
