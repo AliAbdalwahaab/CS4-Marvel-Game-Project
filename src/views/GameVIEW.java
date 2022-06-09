@@ -75,6 +75,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     private boolean castAbilityFlag = false;
     private boolean attackFlag = false;
     private boolean castSingleTarget = false;
+    private JPanel northPanel;
+    private JLabel leftLdrAbility;
+    private JLabel rightLdrAbility;
 
     private boolean attackLED = false;
 
@@ -409,6 +412,32 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         this.add(rightPanel, BorderLayout.EAST);
 
         // Hover Info (Page Start)
+        northPanel = new JPanel(new BorderLayout());
+        JPanel names = new JPanel(new BorderLayout());
+        JLabel vsText = new JLabel(controller.getPlayer1().getName() + "   vs   " + controller.getPlayer2().getName());
+        vsText.setBackground(Color.DARK_GRAY);
+        vsText.setFont(new Font("Arial",Font.BOLD,20));
+        vsText.setOpaque(true);
+        vsText.setHorizontalAlignment(JLabel.CENTER);
+        vsText.setForeground(Color.white);
+        leftLdrAbility = new JLabel("   Leader Ability: Not Used   ");
+        leftLdrAbility.setPreferredSize(new Dimension(270,names.getHeight()));
+        leftLdrAbility.setBackground(Color.decode(controller.getPlayer1().getColor()));
+        leftLdrAbility.setFont(new Font("Arial",Font.BOLD,15));
+        rightLdrAbility = new JLabel("   Leader Ability: Not Used   ");
+        rightLdrAbility.setPreferredSize(new Dimension(270, names.getHeight()));
+        rightLdrAbility.setBackground(Color.decode(controller.getPlayer2().getColor()));
+        leftLdrAbility.setOpaque(true);
+        leftLdrAbility.setForeground(Color.white);
+        leftLdrAbility.setHorizontalAlignment(JLabel.CENTER);
+        rightLdrAbility.setForeground(Color.white);
+        rightLdrAbility.setFont(new Font("Arial",Font.BOLD,15));
+        rightLdrAbility.setHorizontalAlignment(JLabel.CENTER);
+        rightLdrAbility.setOpaque(true);
+        names.add(vsText, BorderLayout.CENTER);
+        names.add(leftLdrAbility, BorderLayout.WEST);
+        names.add(rightLdrAbility, BorderLayout.EAST);
+
         HoverChampInfo =  new JPanel(new GridLayout(2, 4));
         HoverChampInfo.setBackground(Color.decode("#e8f743") );
         HoverChampName = new JLabel("Empty");
@@ -428,7 +457,9 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         HoverChampInfo.add(HoverChampAbilities);
         HoverChampInfo.add(HoverChampAppliedEffects);
         HoverChampInfo.setVisible(true);
-        this.add(HoverChampInfo, BorderLayout.NORTH);
+        northPanel.add(names, BorderLayout.NORTH);
+        northPanel.add(HoverChampInfo, BorderLayout.CENTER);
+        this.add(northPanel, BorderLayout.NORTH);
 
         // Current Champ info (Page End)
         CurrentChampInfo =  new JPanel(new GridLayout(2, 5));
@@ -519,6 +550,11 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         if (e.getSource() == useLeaderAbility){
                 controller.onUseLeaderAbilityClicked();
                 System.out.println("used leader ability");
+                if (controller.getPlayer1().getTeam().contains(controller.getCurrentChampion())) {
+                    leftLdrAbility.setText("   Leader Ability: Used   ");
+                } else {
+                    rightLdrAbility.setText("   Leader Ability: Used   ");
+                }
 
             updateSouth();
             updateCenter();
