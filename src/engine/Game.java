@@ -1231,12 +1231,15 @@ public class Game {
     public void endTurn() {
         turnOrder.remove();
 	if (turnOrder.isEmpty())
-	prepareChampionTurns();
+	    prepareChampionTurns();
 	while (!turnOrder.isEmpty() && hasEffect((Champion) turnOrder.peekMin(), "Stun")) {
 		Champion current = (Champion) turnOrder.peekMin();
 		updateTimers(current);
 		turnOrder.remove();
+        if (turnOrder.isEmpty())
+            prepareChampionTurns();
 	}
+
 	Champion current = (Champion) turnOrder.peekMin();
 	updateTimers(current);
 	current.setCurrentActionPoints(current.getMaxActionPointsPerTurn());
