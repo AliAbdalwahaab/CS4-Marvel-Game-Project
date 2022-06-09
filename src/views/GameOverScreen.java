@@ -25,7 +25,7 @@ public class GameOverScreen extends JFrame implements ActionListener{
         ImageIcon icon = new ImageIcon("The Hateful Hackers.png");
         this.setIconImage(icon.getImage());
     	try {
-    	    ImageIcon img = new ImageIcon(ImageIO.read(new File("Marvel Background.png")));
+    	    ImageIcon img = new ImageIcon(ImageIO.read(new File("Marvel Background.jpg")));
             int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
             int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
             img.setImage(img.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
@@ -65,18 +65,18 @@ public class GameOverScreen extends JFrame implements ActionListener{
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
-        JLabel ll = new JLabel("" + gameController.getWinner() + " wins!");
+        JLabel ll = new JLabel("" + gameController.getWinner() + " WINS!");
         //ll.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
         Info = ll;
 
         Info.setOpaque(false);
         Info.setHorizontalAlignment(JLabel.CENTER);
-        Info.setFont(new Font("Arial",Font.BOLD,70));
+        Info.setFont(new Font("Papyrus",Font.BOLD,70));
         Info.setForeground(Color.RED);
         //Info.setBackground(Color.DARK_GRAY);
 
         Exit = new JButton("Exit Marvel: Ultimate War");
-        Exit.setFont(new Font("Arial", Font.ITALIC,40));
+        Exit.setFont(new Font("Papyrus", Font.ITALIC,30));
         Exit.addActionListener(this);
         Exit.setPreferredSize(new Dimension (100,50));
         Exit.setForeground(Color.WHITE);
@@ -99,7 +99,7 @@ public class GameOverScreen extends JFrame implements ActionListener{
 
     public static void main(String[] args) {
         GameController gm = new GameController(new Game(new Player("1"), new Player("2")));
-        gm.setWinner(new Player("KARINGE"));
+        gm.setWinner(new Player("Tester"));
         new GameOverScreen(gm);
     }
 }

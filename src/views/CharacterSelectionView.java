@@ -365,6 +365,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player2Name.setBackground(Color.DARK_GRAY);
 		player2Name.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		player2Name.setForeground(Color.white);
+		player2Name.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
 
 		player2Leader = new JTextArea();

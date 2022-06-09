@@ -16,7 +16,6 @@ public class GameController {
     private boolean GameOver;
 
     public GameController(Game game) {
-        //TODO
         this.game = game;
     }
 
