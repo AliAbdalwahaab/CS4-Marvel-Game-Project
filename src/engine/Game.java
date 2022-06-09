@@ -451,7 +451,7 @@ public class Game {
                 }
                 break;
             case RIGHT:
-                for (int x = c.getLocation().y + 1; x <= BOARDWIDTH && range > 0; x++, range--) {
+                for (int x = c.getLocation().y + 1; x < BOARDWIDTH && range > 0; x++, range--) {
                     if (board[c.getLocation().x][x] != null) {
                         targets.add((Damageable) board[c.getLocation().x][x]);
                         //break;
@@ -1116,7 +1116,7 @@ public class Game {
                 }
                 break;
             case RIGHT:
-                for (int x = c.getLocation().y + 1; x <= BOARDWIDTH && range > 0; x++, range--) {
+                for (int x = c.getLocation().y + 1; x < BOARDWIDTH && range > 0; x++, range--) {
                     if (board[c.getLocation().x][x] != null) {
                         target = (Damageable) board[c.getLocation().x][x];
                         if ((team == 1 && firstPlayer.getTeam().contains(board[c.getLocation().x][x])) ||
