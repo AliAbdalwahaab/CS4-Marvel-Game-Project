@@ -310,11 +310,14 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         // TurnOrder + Movement &  Attack right (2 grids)
         rightPanel = new JPanel(new GridLayout(2,1));
         turnOrderPanel = new JPanel(new GridLayout(7,1));
-        JTextArea Title = new JTextArea("TURN ORDER");
+        JTextArea Title = new JTextArea("                     TURN ORDER");
+        Title.setOpaque(true);
+        Title.setBackground(Color.DARK_GRAY);
+        Title.setForeground(Color.WHITE);
         Title.setEditable(false);
         Title.setFont(new Font("Arial", Font.BOLD, 20));
-        turnOrderPanel.add(Title);
-        turnOrderPanel.setBackground(Color.decode("#f0b089"));
+        turnOrderPanel.add(Title, BorderLayout.CENTER);
+        turnOrderPanel.setBackground(Color.DARK_GRAY);
 
         for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
             JLabel championAndStat = new JLabel();
@@ -536,9 +539,14 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
            // System.out.println("Yeppp");
             controller.onEndTurnClicked();
             turnOrderPanel.removeAll();
-            JTextArea Title = new JTextArea("TURN ORDER");
+            JTextArea Title = new JTextArea("                    TURN ORDER");
+            Title.setOpaque(true);
+            Title.setBackground(Color.DARK_GRAY);
+            Title.setForeground(Color.WHITE);
             Title.setEditable(false);
             Title.setFont(new Font("Arial", Font.BOLD, 20));
+            turnOrderPanel.add(Title, BorderLayout.CENTER);
+            turnOrderPanel.setBackground(Color.DARK_GRAY);
             turnOrderPanel.add(Title);
             //System.out.println("===================================================================");
             for(int i = controller.getGame().getTurnOrder().getQueue().length-1; i>=0; i--){
