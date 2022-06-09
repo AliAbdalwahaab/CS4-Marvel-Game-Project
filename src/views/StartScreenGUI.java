@@ -41,12 +41,14 @@ public class StartScreenGUI extends JComponent {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
         clip = null;
         try {
             clip = AudioSystem.getClip();
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         }
+        
         try {
             clip.open(audioInputStream);
         } catch (LineUnavailableException e) {
@@ -73,7 +75,6 @@ public class StartScreenGUI extends JComponent {
         TimeUnit.SECONDS.sleep(23);
         f.dispose();
         new CharacterSelectionView(this);
-
     }
 
     public Clip getClip() {
