@@ -70,7 +70,7 @@ public class StartScreenGUI extends JComponent {
 
         //f.add(label, SwingConstants.CENTER);
         f.setVisible(true);
-        TimeUnit.SECONDS.sleep(21);
+        TimeUnit.SECONDS.sleep(23);
         f.dispose();
         new CharacterSelectionView(this);
 
