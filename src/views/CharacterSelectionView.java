@@ -32,6 +32,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 
 	JPanel infoPanel;
 	JTextArea championInfo;
+	
 
 	private JPanel centerPanel;
 	private ArrayList<JButton> btns;
@@ -431,9 +432,9 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 					} else if (a instanceof HealingAbility) {
 						toAdd += "Amount Healed: "+((HealingAbility) a).getHealAmount()+" HP";
 					} else if (a instanceof CrowdControlAbility) {
-						toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+"\n"
-								+"Effect type: "+((CrowdControlAbility) a).getEffect().getType()+"\n"
-								+"Effect duration: "+((CrowdControlAbility) a).getEffect().getDuration()+" turn(s)";
+						toAdd += "Effect: "+((CrowdControlAbility) a).getEffect().getName()+" "
+								+((CrowdControlAbility) a).getEffect().getType()+" "
+								+((CrowdControlAbility) a).getEffect().getDuration()+" turn(s)";
 					}
 
 					abs+="- "+a.getName()+"\n"
@@ -446,7 +447,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 				if (((JButton) mouseEvent.getSource()).getText().equals(c.getName())) {
 					String toAdd = "";
 					if (c instanceof Hero) {
-						toAdd += "Removes all negative effects from the player’s entire"+"\n"+ "team and adds an " +
+						toAdd += "Removes all negative effects from the players entire"+"\n"+ "team and adds an " +
 								"Embrace effect to them"+"\n"+ "which lasts for 2 turns. " +"\n"+
 								"(Can only be used once in the entire game)";
 					} else if (c instanceof AntiHero) {
@@ -466,6 +467,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 							+"Attack Range: "+c.getAttackRange()+" "+"\n"+"\n"
 							+"Abilities: " + "\n" + abs+"\n"
 							+"Leader Ability: "+"\n"+toAdd);
+				
 
 					this.revalidate();
 					this.repaint();
