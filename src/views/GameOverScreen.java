@@ -22,6 +22,8 @@ public class GameOverScreen extends JFrame implements ActionListener{
 
     public GameOverScreen(GameController gameController) {
         this.setTitle("Marvel: Ultimate War");
+        ImageIcon icon = new ImageIcon("The Hateful Hackers.png");
+        this.setIconImage(icon.getImage());
     	try {
     	    ImageIcon img = new ImageIcon(ImageIO.read(new File("Marvel Background.png")));
             int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -63,7 +65,7 @@ public class GameOverScreen extends JFrame implements ActionListener{
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
-        JLabel ll = new JLabel("" + gameController.getWinner() + " is the winner!");
+        JLabel ll = new JLabel("" + gameController.getWinner() + " wins!");
         //ll.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
         Info = ll;
 

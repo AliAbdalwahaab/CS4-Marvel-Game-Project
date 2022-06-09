@@ -25,11 +25,6 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
 
     private GameController controller;
     private JPanel gameBoard;
-//    private JPanel Abilities;
-//    private JButton CCAbility;
-//    private JButton DAbility;
-//    private JButton HAbility;
-//    private JButton LAbility;
 
     private JPanel CurrentChampInfo;
     private JLabel CurrentPlayerName;
@@ -98,9 +93,11 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
     public GameVIEW(GameController controller) {
         this.controller = controller;
         this.setTitle("Marvel: Ultimate War");
+        ImageIcon icon = new ImageIcon("The Hateful Hackers.png");
+        this.setIconImage(icon.getImage());
         addMouseListener(this);
         this.setVisible(true);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(0, 0, 1920, 1080);
 
@@ -350,10 +347,6 @@ public class GameVIEW extends JFrame implements ActionListener, MouseListener {
         }
 
         rightPanel.add(turnOrderPanel);
-
-        //JLabel empty2 = new JLabel("Karinge");
-        //empty2.setPreferredSize(new Dimension((int) (this.getWidth()*0.15),this.getHeight()));
-        //rightPanel.add(empty2);
         JPanel wholeMove = new JPanel(new GridLayout(2,1));
         DpadMode = new JPanel(new GridLayout(1,3));
         labelmoveLED = new JLabel("MOVE MODE");

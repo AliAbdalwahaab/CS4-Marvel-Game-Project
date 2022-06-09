@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import static java.awt.Font.BOLD;
 
 public class CharacterSelectionView extends JFrame implements ActionListener, MouseListener {
-	//TODO: change chosen champion fonts
 
 	private Game currentGame;
 	private StartScreenGUI start;
@@ -57,6 +56,8 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		this.start = start;
 		addMouseListener(this);
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		ImageIcon icon = new ImageIcon("The Hateful Hackers.png");
+		this.setIconImage(icon.getImage());
 		this.setTitle("Marvel: Ultimate War");
 		this.setBounds(0,0,1920,1080);
 		this.setLayout(new BorderLayout());
@@ -281,6 +282,8 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		championInfo = new JTextArea("Hover over Champion to display data");
 		championInfo.setEditable(false);
 		championInfo.setPreferredSize(new Dimension(300,250));
+		championInfo.setForeground(Color.WHITE);
+		championInfo.setBackground(Color.decode("#242323"));
 		infoPanel.add(championInfo);
 		this.add(infoPanel,BorderLayout.WEST);
 		this.revalidate();
@@ -296,10 +299,12 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 
 		JTextArea player1Name = new JTextArea();
 		player1Name.setText("  "+currentGame.getFirstPlayer().getName());
+		player1Name.setForeground(Color.WHITE);
+		player1Name.setBackground(Color.DARK_GRAY);
 		player1Name.setOpaque(false);
 		player1Name.setFont(new Font("Papyrus",BOLD,30));
 		player1Name.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
-		//player1Name.setForeground(Color.white);
+		player1Name.setForeground(Color.white);
 
 		player1Name.setVisible(true);
 		player1Name.setEditable(false);
@@ -310,7 +315,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player1Leader.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		player1Leader.setVisible(true);
 		player1Leader.setEditable(false);
-		//player1Leader.setForeground(Color.white);
+		player1Leader.setForeground(Color.white);
 
 		player1Champ1 = new JTextArea();
 		player1Champ1.setText(" Not yet selected");
@@ -318,7 +323,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player1Champ1.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		player1Champ1.setVisible(true);
 		player1Champ1.setEditable(false);
-		//player1Champ1.setForeground(Color.white);
+		player1Champ1.setForeground(Color.white);
 
 		player1Champ2 = new JTextArea();
 		player1Champ2.setText(" Not yet selected");
@@ -326,18 +331,17 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player1Champ2.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
 		player1Champ2.setVisible(true);
 		player1Champ2.setEditable(false);
-		//player1Champ2.setForeground(Color.white);
+		player1Champ2.setForeground(Color.white);
 
 		player1Panel = new JPanel();
 		player1Panel.setLayout(new GridLayout(4,0));
 		player1Panel.setVisible(true);
-		//player1Panel.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),topPanel.getHeight()));
 
 		player1Panel.add(player1Name);
 		player1Panel.add(player1Leader);
 		player1Panel.add(player1Champ1);
 		player1Panel.add(player1Champ2);
-		//player1Panel.setBackground(Color.BLACK);
+		player1Panel.setBackground(Color.BLACK);
 
 		topPanel.add(player1Panel);
 
@@ -347,7 +351,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player2Panel = new JPanel();
 		player2Panel.setLayout(new GridLayout(4,0));
 		player2Panel.setVisible(true);
-		//player2Panel.setBackground(Color.BLACK);
+		player2Panel.setBackground(Color.BLACK);
 
 		player2Panel.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),topPanel.getHeight()));
 
@@ -357,8 +361,10 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player2Name.setText(currentGame.getSecondPlayer().getName());
 		player2Name.setEditable(false);
 		player2Name.setVisible(true);
+		player2Name.setForeground(Color.WHITE);
+		player2Name.setBackground(Color.DARK_GRAY);
 		player2Name.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
-		//player2Name.setForeground(Color.white);
+		player2Name.setForeground(Color.white);
 
 
 		player2Leader = new JTextArea();
@@ -367,7 +373,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player2Leader.setEditable(false);
 		player2Leader.setVisible(true);
 		player2Leader.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
-		//player2Leader.setForeground(Color.white);;
+		player2Leader.setForeground(Color.white);
 
 
 		player2Champ1 = new JTextArea();
@@ -376,7 +382,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player2Champ1.setOpaque(false);
 		player2Champ1.setVisible(true);
 		player2Champ1.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
-		//player2Champ1.setForeground(Color.white);
+		player2Champ1.setForeground(Color.white);
 
 		player2Champ2 = new JTextArea();
 		player2Champ2.setText("Not yet selected");
@@ -384,7 +390,7 @@ public class CharacterSelectionView extends JFrame implements ActionListener, Mo
 		player2Champ2.setEditable(false);
 		player2Champ2.setVisible(true);
 		player2Champ2.setPreferredSize(new Dimension((int) 0.5*topPanel.getWidth(),20));
-		//player2Champ2.setForeground(Color.white);
+		player2Champ2.setForeground(Color.white);
 
 		player2Panel.add(player2Name);
 		player2Panel.add(player2Leader);

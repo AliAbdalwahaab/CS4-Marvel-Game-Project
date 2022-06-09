@@ -27,6 +27,8 @@ public class StartScreenGUI extends JComponent {
     public StartScreenGUI() throws MalformedURLException, InterruptedException {
         JFrame f = new JFrame();
         f.setTitle("Marvel: Ultimate War");
+        ImageIcon icon = new ImageIcon("The Hateful Hackers.png");
+        f.setIconImage(icon.getImage());
 
         f.setLayout(new BorderLayout());
 
