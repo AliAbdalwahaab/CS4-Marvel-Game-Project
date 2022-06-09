@@ -30,9 +30,10 @@ public class GameOverScreen extends JFrame implements ActionListener{
             int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
             img.setImage(img.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 			this.setContentPane(new JLabel(img));
-		} catch (IOException e) {
+	} catch (IOException e) {
 			e.printStackTrace();
-		}
+	}
+	    
 	File audioFile = new File("The Avengers Theme Win Screen.wav").getAbsoluteFile();
         AudioInputStream audioInputStream = null;
         try {
@@ -42,12 +43,14 @@ public class GameOverScreen extends JFrame implements ActionListener{
         } catch (IOException e) {
             e.printStackTrace();
         }
+	    
         Clip clip = null;
         try {
             clip = AudioSystem.getClip();
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         }
+	    
         try {
             clip.open(audioInputStream);
         } catch (LineUnavailableException e) {
