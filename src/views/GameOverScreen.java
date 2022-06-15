@@ -1,8 +1,6 @@
 package views;
 
 import controller.GameController;
-import engine.Game;
-import engine.Player;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
@@ -98,11 +96,5 @@ public class GameOverScreen extends JFrame implements ActionListener{
         if(e.getSource() == Exit){
             this.dispose();
         }
-    }
-
-    public static void main(String[] args) {
-        GameController gm = new GameController(new Game(new Player("1"), new Player("2")));
-        gm.setWinner(new Player("Tester"));
-        new GameOverScreen(gm);
     }
 }
