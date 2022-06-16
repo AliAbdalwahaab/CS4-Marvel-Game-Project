@@ -96,8 +96,6 @@ The turns will keep passing over the living champions till a player is able to d
 three champions of the opponent player. In this case, the game ends and the player with the
 living champion will be declared the winner.
 
-![img_1.png](img_1.png)
-
 ## Project Structure
 <details>
 <summary>Project Directory Tree:</summary>
@@ -173,3 +171,6 @@ This project was the issue of a whole semester of tireless work, sleepless night
 - [Mohamed Shamekh](https://github.com/shamekhjr)
 - [Omar Nour](https://github.com/Omar-Nour)
 - [Ali Abdalwahaab](https://github.com/AliAbdalwahaab)
+
+## Demo Run
+You can check a demo run of our project [here](https://www.linkedin.com/posts/mohamed-shamekh_csen401-marvelultimatewar-teameffort-activity-6943219740198744064-_JE1?utm_source=linkedin_share&utm_medium=member_desktop_web)
