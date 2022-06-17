@@ -174,5 +174,3 @@ This project was the issue of a whole semester of tireless work, sleepless night
 
 ## Demo Run
 You can check a demo run of our project [here](https://www.linkedin.com/posts/mohamed-shamekh_csen401-marvelultimatewar-teameffort-activity-6943219740198744064-_JE1?utm_source=linkedin_share&utm_medium=member_desktop_web)
-
-![The Hateful Hackers](The Hateful Hackers.png)
